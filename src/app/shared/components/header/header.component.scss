@@ -484,6 +484,7 @@ nz-header {
           border: none;
           position: relative;
           z-index: 1;
+          box-shadow: none;
 
           :host-context(body.dark-theme) & {
             color: vars.$text-color-dark !important;
@@ -632,7 +633,8 @@ nz-header {
         position: relative;
         z-index: 1;
         border: none;
-
+        background-color: transparent;
+        box-shadow: none;
         :host-context(body.dark-theme) & {
           color: vars.$text-color-dark !important;
         }
