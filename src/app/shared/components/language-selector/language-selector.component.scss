@@ -1,47 +1,98 @@
 @use '../../../../assets/scss/variables' as vars;
 
 :host {
-  .language-btn {
-    background-color: transparent ;
-    border: none ;
-    color: vars.$text-color-dark ;
-    padding: 0 ;
-    height: auto ;
-    box-shadow: none ;
-    display: flex ;
-    align-items: center ;
-    gap: 5px;
+  position: relative;
+  display: block;
+  
+  .custom-dropdown {
+    position: relative;
     
-    &:hover {
-      color: rgba(vars.$text-color-dark, 0.8) ;
+    .language-btn {
+      background-color: transparent !important;
+      border: none !important;
+      color: vars.$text-color-dark !important;
+      padding: 0 8px !important;
+      height: 28px !important;
+      font-size: 14px !important;
+      box-shadow: none !important;
+      
+      &:hover {
+        color: rgba(vars.$text-color-dark, 0.8) !important;
+      }
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 2000;
+      min-width: 120px;
+      padding: 5px 0;
+      margin: 2px 0 0;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      display: none;
+      
+      &.show {
+        display: block;
+      }
+      
+      .language-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          padding: 8px 15px;
+          cursor: pointer;
+          
+          &:hover {
+            background-color: rgba(vars.$primary-color, 0.1);
+          }
+          
+          &.selected {
+            background-color: rgba(vars.$primary-color, 0.1);
+            font-weight: 500;
+          }
+        }
+      }
     }
   }
 }
 
 // Dark theme styles
 :host-context([data-theme="dark"]) {
-  .language-btn {
-    color: vars.$text-color-dark !important;
-  }
-}
-
-// Selected language style
-::ng-deep .ant-dropdown-menu-item.selected {
-  background-color: rgba(vars.$primary-color, 0.1);
-  font-weight: 500;
-  
-  :host-context([data-theme="dark"]) & {
-    background-color: vars.$danger-color !important;
-    color: white !important;
+  .custom-dropdown {
+    .language-btn {
+      color: vars.$text-color-dark !important;
+    }
+    
+    .dropdown-menu {
+      background-color: vars.$component-background-dark;
+      border-color: vars.$border-color-dark;
+      
+      .language-list li {
+        color: vars.$text-color-dark;
+        
+        &.selected {
+          background-color: vars.$danger-color !important;
+          color: white !important;
+        }
+      }
+    }
   }
 }
 
 // RTL support
 :host-context(html[dir="rtl"]) {
-  .language-btn {
-    [nz-icon] {
-      margin-right: 0;
-      margin-left: 4px;
+  .custom-dropdown {
+    .language-btn {
+      [nz-icon] {
+        margin-right: 0;
+        margin-left: 4px;
+      }
     }
   }
 }

@@ -94,44 +94,44 @@ p {
   }
 }
 
-// Dark theme styles
-:host-context(body.dark-theme) {
-  nz-footer {
-    background-color: vars.$header-background;
-  }
+// // Dark theme styles
+// :host-context(body.dark-theme) {
+//   nz-footer {
+//     background-color: vars.$header-background;
+//   }
   
-  h3 {
-    color: vars.$text-color-heading-dark;
-  }
+//   h3 {
+//     color: vars.$text-color-heading-dark;
+//   }
   
-  p {
-    color: vars.$text-color-secondary-dark;
-  }
+//   p {
+//     color: vars.$text-color-secondary-dark;
+//   }
   
-  .footer-links {
-    li a {
-      color: vars.$text-color-secondary-dark;
-      transition: transform 0.4s;
+//   .footer-links {
+//     li a {
+//       color: vars.$text-color-secondary-dark;
+//       transition: transform 0.4s;
       
-      &:hover {
-        transform: translateX(5px);
-        // color: vars.$primary-color;
-      }
-    }
-  }
+//       &:hover {
+//         transform: translateX(5px);
+//         // color: vars.$primary-color;
+//       }
+//     }
+//   }
   
-  .footer-bottom {
-    border-top-color: vars.$border-color-split-dark;
+//   .footer-bottom {
+//     border-top-color: vars.$border-color-split-dark;
     
-    .copyright {
-      color: vars.$text-color-tertiary-dark;
-    }
+//     .copyright {
+//       color: vars.$text-color-tertiary-dark;
+//     }
     
-    .social-links a {
-      color: vars.$text-color-secondary-dark;
-    }
-  }
-}
+//     .social-links a {
+//       color: vars.$text-color-secondary-dark;
+//     }
+//   }
+// }
 
 // RTL specific styles
 :host-context(html[dir="rtl"]) {

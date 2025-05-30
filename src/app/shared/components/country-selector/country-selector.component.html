@@ -1,5 +1,5 @@
 <!-- Country Selector -->
-<button nz-button nz-dropdown [nzDropdownMenu]="countryMenu" class="country-btn">
+<button nz-button nz-dropdown [nzDropdownMenu]="countryMenu" class="country-btn" nzTrigger="click" nzPlacement="bottomLeft" [nzOverlayClassName]="'country-dropdown'" [nzOverlayStyle]="{zIndex: 2000}">
   <img [src]="getSelectedCountryFlag()" width="20" height="20" class="me-2" [alt]="selectedCountry + '_flag'">
   <span>{{ selectedCountry }}</span>
   <span nz-icon nzType="down" class="ms-2"></span>

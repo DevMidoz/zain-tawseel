@@ -1,23 +1,76 @@
 @use '../../../../assets/scss/variables' as vars;
 
 :host {
-  .country-btn {
-    background-color: transparent !important;
-    border: none !important;
-    color: vars.$text-color-dark !important;
-    padding: 0 !important;
-    height: auto !important;
-    box-shadow: none !important;
-    display: flex !important;
-    align-items: center !important;
+  position: relative;
+  display: block;
+  
+  .custom-dropdown {
+    position: relative;
     
-    &:hover {
-      color: rgba(vars.$text-color-dark, 0.8) !important;
+    .country-btn {
+      background-color: transparent !important;
+      border: none !important;
+      color: vars.$text-color-dark !important;
+      padding: 0 !important;
+      height: auto !important;
+      box-shadow: none !important;
+      display: flex !important;
+      align-items: center !important;
+      
+      &:hover {
+        color: rgba(vars.$text-color-dark, 0.8) !important;
+      }
+      
+      img {
+        border-radius: 2px;
+        margin-right: 4px;
+      }
     }
     
-    img {
-      border-radius: 2px;
-      margin-right: 4px;
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 2000;
+      min-width: 160px;
+      padding: 5px 0;
+      margin: 2px 0 0;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      display: none;
+      
+      &.show {
+        display: block;
+      }
+      
+      .country-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          padding: 8px 15px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          
+          &:hover {
+            background-color: rgba(vars.$primary-color, 0.1);
+          }
+          
+          &.selected {
+            background-color: rgba(vars.$primary-color, 0.1);
+            font-weight: 500;
+          }
+          
+          img {
+            margin-right: 8px;
+            border-radius: 2px;
+          }
+        }
+      }
     }
   }
 }

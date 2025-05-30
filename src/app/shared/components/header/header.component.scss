@@ -57,9 +57,7 @@ nz-header {
     }
     
     &.rtl-mode {
-      .top-row-content {
-        // flex-direction: row-reverse;
-      }
+      // RTL styles for top row if needed
     }
   }
   
@@ -92,9 +90,7 @@ nz-header {
     }
     
     &.rtl-mode {
-      .middle-row-content {
-        // flex-direction: row-reverse;
-      }
+      // RTL styles for middle row if needed
     }
   }
   
@@ -147,10 +143,8 @@ nz-header {
     }
     
     &.rtl-mode {
-
       .main-menu {
         direction: rtl;
-        // justify-content: flex-end;
       }
     }
   }
@@ -299,7 +293,7 @@ nz-header {
       background-color: vars.$component-background-light;
       color: vars.$text-color-light;
       .total-value {
-        // color: vars.$primary-color;
+        // Total value styles
       }
     }
     
@@ -447,7 +441,7 @@ nz-header {
     left: 0;
     width: 85%;
     max-width: 320px;
-    height: 100%;
+    height: calc(100% - 63px); // Adjust height to stop above the bottom nav
     background-color: vars.$component-background-light;
     z-index: 1001;
     transform: translateX(-100%);
@@ -488,6 +482,8 @@ nz-header {
           background-color: transparent;
           color: vars.$text-color-light !important;
           border: none;
+          position: relative;
+          z-index: 1;
 
           :host-context(body.dark-theme) & {
             color: vars.$text-color-dark !important;
@@ -496,7 +492,8 @@ nz-header {
         
         // Style for dropdown menu in sidebar header
         ::ng-deep .ant-dropdown {
-          z-index: 1050 !important; // Higher z-index to appear above sidebar
+          z-index: 1500 !important; // Higher z-index to appear above sidebar
+          position: fixed !important;
         }
       }
 
@@ -632,6 +629,9 @@ nz-header {
 
       ::ng-deep .language-btn {
         color: vars.$text-color-light !important;
+        position: relative;
+        z-index: 1;
+        border: none;
 
         :host-context(body.dark-theme) & {
           color: vars.$text-color-dark !important;
@@ -645,7 +645,8 @@ nz-header {
       
       // Style for dropdown menus in sidebar footer
       ::ng-deep .ant-dropdown {
-        z-index: 1050 !important; // Higher z-index to appear above sidebar
+        z-index: 1500 !important; // Higher z-index to appear above sidebar
+        position: fixed !important;
       }
     }
 
@@ -660,24 +661,7 @@ nz-header {
      
 }
 
-// Sidebar Overlay
-.sidebar-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-  
-  &.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-}
+// Mobile sidebar styles
 
 // RTL Support for Mobile Components
 html[dir="rtl"] {
@@ -702,12 +686,41 @@ html[dir="rtl"] {
 ::ng-deep {
   // Ensure dropdowns are rendered at the root level and not clipped by parent containers
   .ant-dropdown {
-    z-index: 1050 !important; // Higher z-index to appear above sidebar and other elements
+    z-index: 2000 !important; // Even higher z-index to appear above all elements
   }
   
   // Fix for dropdowns in the mobile sidebar
   .cdk-overlay-container {
-    z-index: 1050 !important; // Ensure overlay container is above sidebar
+    z-index: 2000 !important; // Ensure overlay container is above all elements
+  }
+  
+  // Make sure dropdown menus are visible
+  .ant-dropdown-menu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  // Fix for nz-dropdown components
+  nz-dropdown-menu {
+    pointer-events: auto !important;
+  }
+  
+  // Ensure dropdown content is visible
+  .ant-dropdown-menu-item, 
+  .ant-dropdown-menu-submenu-title {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  // Fix for overlay pane positioning
+  .cdk-overlay-pane {
+    transform: none !important;
+  }
+  
+  // Ensure the overlay is visible
+  .cdk-overlay-backdrop {
+    z-index: 1999 !important;
   }
 }
 
@@ -749,8 +762,7 @@ html[dir="rtl"] {
     display: flex;
   }
   
-  .mobile-sidebar,
-  .sidebar-overlay {
+  .mobile-sidebar {
     display: flex;
     flex-direction: column;
   }

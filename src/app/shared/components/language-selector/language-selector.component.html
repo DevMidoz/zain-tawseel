@@ -1,5 +1,5 @@
 <!-- Language Selector -->
-<button nz-button nz-dropdown [nzDropdownMenu]="languageMenu" class="language-btn">
+<button nz-button nz-dropdown [nzDropdownMenu]="languageMenu" class="language-btn" nzTrigger="click" nzPlacement="topRight" [nzOverlayClassName]="'language-dropdown'" [nzOverlayStyle]="{zIndex: 2000}">
   <span>{{ language() === 'en' ? 'EN' : 'AR' }}</span>
   <span nz-icon nzType="down"></span>
 </button>
