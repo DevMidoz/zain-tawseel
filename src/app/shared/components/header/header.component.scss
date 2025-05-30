@@ -436,12 +436,12 @@ nz-header {
   }
 }
 
-// Mobile Sidebar
 .mobile-sidebar {
   display: none; // Hide by default
   
   @media (max-width: 768px) {
-    display: block; // Show only on mobile
+    display: flex; // Show only on mobile and use flexbox layout
+    flex-direction: column; // Stack children vertically
     position: fixed;
     top: 0;
     left: 0;
@@ -458,53 +458,61 @@ nz-header {
     &.visible {
       transform: translateX(0);
     }
-  }
-  
-  .sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: vars.$body-background-light;
-    color: vars.$text-color-light;
-    border-bottom: 1px solid #e8e8e8;
     
-    .close-btn {
-      background: transparent;
-      border: none;
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background-color: vars.$body-background-light;
       color: vars.$text-color-light;
-      font-size: 20px;
-      cursor: pointer;
-
-      :host-context(body.dark-theme) & {
-        color: vars.$text-color-dark;
-      }
-    }
-    
-    .sidebar-country-selector {
-
-      ::ng-deep .country-btn {
-        background-color: transparent ;
-        color: vars.$text-color-light !important;
+      border-bottom: 1px solid #e8e8e8;
+      flex-shrink: 0; // Prevent header from shrinking
+      
+      .close-btn {
+        background: transparent;
         border: none;
+        color: vars.$text-color-light;
+        font-size: 20px;
+        cursor: pointer;
 
         :host-context(body.dark-theme) & {
-          color: vars.$text-color-dark !important;
+          color: vars.$text-color-dark;
         }
       }
-    }
+      
+      .sidebar-country-selector {
+        position: relative; // Add position relative for proper dropdown positioning
 
-    :host-context(body.dark-theme) & {
-      background-color: vars.$component-background-dark;
-      color: vars.$text-color-dark;
+        ::ng-deep .country-btn {
+          background-color: transparent;
+          color: vars.$text-color-light !important;
+          border: none;
+
+          :host-context(body.dark-theme) & {
+            color: vars.$text-color-dark !important;
+          }
+        }
+        
+        // Style for dropdown menu in sidebar header
+        ::ng-deep .ant-dropdown {
+          z-index: 1050 !important; // Higher z-index to appear above sidebar
+        }
+      }
+
+      :host-context(body.dark-theme) & {
+        background-color: vars.$component-background-dark;
+        color: vars.$text-color-dark;
+      }
     }
   }
   
   .sidebar-content {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1; // Take up available space
+    overflow-y: auto; // Allow scrolling for content
     padding: 15px 0;
     background-color: vars.$body-background-light;
+    min-height: 0; // Important for flexbox scrolling to work properly
 
     :host-context(body.dark-theme) & {
       background-color: vars.$component-background-dark;
@@ -607,12 +615,15 @@ nz-header {
     display: flex;
     justify-content: space-between;
     gap: 15px;
+    flex-shrink: 0; // Prevent footer from shrinking
+    position: relative; // Add position relative for proper dropdown positioning
     
     .theme-switcher,
     .language-switcher {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative; // Add position relative for proper dropdown positioning
       
       span {
         margin-right: 10px;
@@ -630,6 +641,11 @@ nz-header {
       ::ng-deep .language-btn,
       ::ng-deep .ant-switch {
         margin-left: auto;
+      }
+      
+      // Style for dropdown menus in sidebar footer
+      ::ng-deep .ant-dropdown {
+        z-index: 1050 !important; // Higher z-index to appear above sidebar
       }
     }
 
@@ -679,6 +695,19 @@ html[dir="rtl"] {
         padding: 12px 30px 12px 15px;
       }
     }
+  }
+}
+
+// Global styles for Ant Design dropdowns
+::ng-deep {
+  // Ensure dropdowns are rendered at the root level and not clipped by parent containers
+  .ant-dropdown {
+    z-index: 1050 !important; // Higher z-index to appear above sidebar and other elements
+  }
+  
+  // Fix for dropdowns in the mobile sidebar
+  .cdk-overlay-container {
+    z-index: 1050 !important; // Ensure overlay container is above sidebar
   }
 }
 
