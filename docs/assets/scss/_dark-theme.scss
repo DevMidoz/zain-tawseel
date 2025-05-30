@@ -1,0 +1,310 @@
+// Dark Theme Styles
+@use 'variables' as vars;
+@use 'sass:color';
+
+body.dark-theme {
+  background-color: vars.$body-background-dark;
+  color: vars.$text-color-dark;
+  
+  .ant-layout {
+    background-color: vars.$body-background-dark;
+  }
+  
+  .ant-layout-header {
+    background-color: vars.$header-background;
+    height: auto;
+    line-height: 75px;
+  }
+  
+  .ant-layout-footer {
+    background-color: vars.$header-background;
+  }
+  
+  // Fix typography elements
+  h1.ant-typography,
+  h2.ant-typography,
+  h3.ant-typography,
+  h4.ant-typography,
+  h5.ant-typography,
+  .ant-typography h1,
+  .ant-typography h2,
+  .ant-typography h3,
+  .ant-typography h4,
+  .ant-typography h5 {
+    color: vars.$text-color-heading-dark;
+  }
+  
+  .ant-typography {
+    color: vars.$text-color-dark;
+  }
+  
+  p.ant-typography {
+    color: vars.$text-color-dark;
+  }
+  
+  // Fix text colors for various components
+  .ant-card, .ant-modal, .ant-drawer, .ant-dropdown-menu, .ant-select-dropdown {
+    color: vars.$text-color-dark;
+  }
+  
+  // Button styles for dark theme
+  .ant-btn {
+    background-color: vars.$component-background-dark;
+    border-color: #434343;
+    color: vars.$text-color-dark;
+    
+    &:hover, &:focus {
+      color: color.adjust(vars.$primary-color, $lightness: 15%);
+      border-color: color.adjust(vars.$primary-color, $lightness: 15%);
+      background-color: vars.$component-background-dark;
+    }
+    
+    &.ant-btn-primary {
+      background-color: vars.$primary-color;
+      border-color: vars.$primary-color;
+      color: white;
+      
+      &:hover, &:focus {
+        background-color: color.adjust(vars.$primary-color, $lightness: 10%);
+        border-color: color.adjust(vars.$primary-color, $lightness: 10%);
+      }
+    }
+    
+    &.ant-btn-link {
+      color: color.adjust(vars.$primary-color, $lightness: 15%);
+      border-color: transparent;
+      background: transparent;
+      
+      &:hover, &:focus {
+        color: color.adjust(vars.$primary-color, $lightness: 25%);
+      }
+    }
+    
+    &.ant-btn-text {
+      border-color: transparent;
+      background: transparent;
+      color: vars.$text-color-dark;
+      
+      &:hover, &:focus {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+    }
+    
+    &.ant-btn-dangerous {
+      color: color.adjust(vars.$danger-color, $lightness: 10%);
+      border-color: color.adjust(vars.$danger-color, $lightness: 10%);
+      
+      &.ant-btn-primary {
+        background-color: vars.$danger-color;
+        border-color: vars.$danger-color;
+        color: white;
+      }
+    }
+  }
+  
+  // Fix background colors for various components
+  .ant-card, .ant-modal-content, .ant-drawer-content, .ant-dropdown-menu, .ant-select-dropdown {
+    background-color: vars.$component-background-dark;
+  }
+  
+  // Fix cart dropdown components specifically
+
+  .cart-dropdown .cart-header,
+  .cart-dropdown .cart-items-container,
+  .cart-dropdown .cart-actions-container,
+  .cart-dropdown .empty-cart {
+    background-color: rgba(vars.$component-background-light, 0.5) !important;
+  }
+
+  .ant-card.card-alt {
+    background-color: rgba(vars.$component-background-light,0.6);
+    color: vars.$text-color-dark;
+    
+    .ant-card-meta-title {
+      color: vars.$primary-color-light;
+    }
+    
+    .price {
+      color: vars.$text-color-light;
+    }
+    
+    &:hover {
+      background-color: rgba(vars.$component-background-light, 0.4);
+      color: vars.$text-color-dark;
+    }
+  }
+  
+  // Header menu styles for dark theme
+  .header-menu {
+    background-color: vars.$header-background;
+    
+    .ant-menu-submenu-title {
+      color: white;
+      
+      &:hover {
+        color: vars.$primary-color-dark;
+      }
+      
+      .ant-menu-submenu-arrow {
+        color: vars.$text-color-dark;
+      }
+      
+      &:hover .ant-menu-submenu-arrow {
+        color: vars.$primary-color-dark;
+      }
+    }
+    
+    .ant-menu-item {
+      color: white;
+      
+      &:hover {
+        color: vars.$primary-color-dark;
+      }
+      
+      &.ant-menu-item-selected {
+        color: vars.$primary-color-dark;
+      }
+    }
+  }
+  
+  // Dropdown submenu styles for dark theme
+  .ant-menu-submenu-popup {
+    .ant-menu {
+      background-color: vars.$component-background-dark;
+      
+      .ant-menu-item {
+        color: vars.$text-color-dark;
+        
+        &:hover {
+          color: vars.$text-color-dark;
+          background-color: rgba(vars.$primary-color-dark, 0.5);
+        }
+        
+        &.ant-menu-item-selected {
+          color: vars.$text-color-dark;
+          background-color: rgba(vars.$primary-color-dark, 0.5);
+        }
+      }
+      
+      .ant-menu-submenu-title {
+        color: vars.$text-color-dark;
+        
+        // &:hover {
+        //   color: vars.$primary-color-dark;
+        // }
+        
+        .ant-menu-submenu-arrow {
+          color: vars.$text-color-dark;
+        }
+        
+        &:hover .ant-menu-submenu-arrow {
+          color: vars.$text-color-dark;
+        }
+      }
+    }
+  }
+  
+  // Fix card titles and content
+  .ant-card-head {
+    background-color: vars.$header-background;
+    border-bottom-color: vars.$border-color-dark;
+    
+    .ant-card-head-title {
+      color: vars.$text-color-heading-dark;
+    }
+  }
+  
+  .ant-card-bordered {
+    border-color: vars.$border-color-dark;
+  }
+  
+  // Fix card icons
+  .feature-icon {
+    color: vars.$primary-color;
+  }
+  
+  // Menu styles
+  .ant-menu {
+    background-color: vars.$header-background;
+    color: vars.$text-color-tertiary-dark;
+    
+    &.ant-menu-dark .ant-menu-item-selected {
+      background-color: vars.$primary-color-dark;
+    }
+  }
+  
+  // Input styles
+  .ant-input, .ant-input-affix-wrapper {
+    background-color: vars.$component-background-dark;
+    border-color: vars.$border-color-dark;
+    color: vars.$text-color-dark;
+    
+    &:hover, &:focus {
+      border-color: vars.$primary-color-dark;
+    }
+    
+    .ant-input {
+      background-color: transparent;
+      color: vars.$text-color-dark;
+    }
+    
+    .ant-input-suffix {
+      color: vars.$text-color-dark;
+    }
+  }
+  
+  // Search container specific styles
+  .search-container {
+    .ant-input-affix-wrapper {
+      background-color: rgba(vars.$component-background-dark, 0.8);
+      border-color: vars.$border-color-dark;
+      
+      input {
+        color: vars.$text-color-dark;
+        
+        &::placeholder {
+          color: vars.$text-color-tertiary-dark;
+        }
+      }
+      
+      .ant-input-suffix {
+        color: vars.$text-color-tertiary-dark;
+      }
+    }
+  }
+  
+  // Button styles
+  .ant-btn {
+    &:not(.ant-btn-primary) {
+      background-color: vars.$component-background-dark;
+      border-color: vars.$border-color-dark;
+      color: vars.$text-color-dark;
+      
+      &:hover {
+        border-color: vars.$primary-color;
+        color: vars.$primary-color;
+      }
+    }
+  }
+  
+  
+  // Table styles
+  .ant-table {
+    background-color: vars.$component-background-dark;
+    color: vars.$text-color-dark;
+    
+    .ant-table-thead > tr > th {
+      background-color: vars.$header-background;
+      color: vars.$text-color-heading-dark;
+      border-bottom-color: vars.$border-color-dark;
+    }
+    
+    .ant-table-tbody > tr > td {
+      border-bottom-color: vars.$border-color-dark;
+    }
+    
+    .ant-table-tbody > tr:hover > td {
+      background-color: vars.$hover-color-dark;
+    }
+  }
+}

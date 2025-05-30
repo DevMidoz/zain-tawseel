@@ -1,0 +1,48 @@
+@use './variables' as vars;
+
+// Global dropdown styles
+.ant-dropdown {
+  .ant-dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    
+    .ant-dropdown-menu-item {
+      padding: 8px 16px;
+      
+      &:hover {
+        background-color: rgba(vars.$primary-color, 0.05);
+      }
+      
+      &.selected {
+        background-color: rgba(vars.$primary-color, 0.1);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Dark theme dropdown styles
+body.dark-theme {
+  .ant-dropdown {
+    .ant-dropdown-menu {
+      background-color: vars.$component-background-dark;
+      
+      .ant-dropdown-menu-item {
+        color: white !important;
+
+        .ant-menu-title-content {
+          color: white !important;
+        }
+        
+        &:hover {
+          background-color: rgba(vars.$component-background-light, 0.2);
+        }
+        
+        &.selected {
+          background-color: rgba(vars.$component-background-light, 0.3) !important;
+          color: vars.$text-color-dark !important;
+        }
+      }
+    }
+  }
+}

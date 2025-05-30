@@ -1,0 +1,293 @@
+// Spacing System (similar to Vuetify)
+// Usage:
+// m-{direction}-{size}  for margins
+// p-{direction}-{size}  for paddings
+//
+// Directions:
+// t: top
+// b: bottom
+// l: left
+// r: right
+// x: left and right
+// y: top and bottom
+// a: all sides (default if no direction specified)
+//
+// Sizes:
+// 0: 0
+// 1: 4px
+// 2: 8px
+// 3: 12px
+// 4: 16px
+// 5: 20px
+// 6: 24px
+// 7: 28px
+// 8: 32px
+// 9: 36px
+// 10: 40px
+// 11: 44px
+// 12: 48px
+// auto: auto
+
+// Spacing variables
+$spacer: 4px;
+$spacers: (
+  0: 0,
+  1: $spacer,
+  2: $spacer * 2,
+  3: $spacer * 3,
+  4: $spacer * 4,
+  5: $spacer * 5,
+  6: $spacer * 6,
+  7: $spacer * 7,
+  8: $spacer * 8,
+  9: $spacer * 9,
+  10: $spacer * 10,
+  11: $spacer * 11,
+  12: $spacer * 12,
+  auto: auto
+);
+
+// Margin classes
+@each $size, $value in $spacers {
+  // All sides (m-{size})
+  .m-#{$size} {
+    margin: $value !important;
+  }
+  
+  // Top (m-t-{size})
+  .m-t-#{$size} {
+    margin-top: $value !important;
+  }
+  
+  // Bottom (m-b-{size})
+  .m-b-#{$size} {
+    margin-bottom: $value !important;
+  }
+  
+  // Left (m-l-{size})
+  .m-l-#{$size} {
+    margin-left: $value !important;
+  }
+  
+  // Right (m-r-{size})
+  .m-r-#{$size} {
+    margin-right: $value !important;
+  }
+  
+  // X-axis (m-x-{size})
+  .m-x-#{$size} {
+    margin-left: $value !important;
+    margin-right: $value !important;
+  }
+  
+  // Y-axis (m-y-{size})
+  .m-y-#{$size} {
+    margin-top: $value !important;
+    margin-bottom: $value !important;
+  }
+}
+
+// Padding classes
+@each $size, $value in $spacers {
+  // All sides (p-{size})
+  .p-#{$size} {
+    padding: $value !important;
+  }
+  
+  // Top (p-t-{size})
+  .p-t-#{$size} {
+    padding-top: $value !important;
+  }
+  
+  // Bottom (p-b-{size})
+  .p-b-#{$size} {
+    padding-bottom: $value !important;
+  }
+  
+  // Left (p-l-{size})
+  .p-l-#{$size} {
+    padding-left: $value !important;
+  }
+  
+  // Right (p-r-{size})
+  .p-r-#{$size} {
+    padding-right: $value !important;
+  }
+  
+  // X-axis (p-x-{size})
+  .p-x-#{$size} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
+  
+  // Y-axis (p-y-{size})
+  .p-y-#{$size} {
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+}
+
+// RTL Support
+html[dir="rtl"] {
+  // Swap left and right for RTL
+  @each $size, $value in $spacers {
+    .m-l-#{$size} {
+      margin-left: 0 !important;
+      margin-right: $value !important;
+    }
+    
+    .m-r-#{$size} {
+      margin-right: 0 !important;
+      margin-left: $value !important;
+    }
+    
+    .p-l-#{$size} {
+      padding-left: 0 !important;
+      padding-right: $value !important;
+    }
+    
+    .p-r-#{$size} {
+      padding-right: 0 !important;
+      padding-left: $value !important;
+    }
+  }
+}
+
+// Responsive spacing
+// Usage: {property}-{breakpoint}-{direction}-{size}
+// Breakpoints: sm, md, lg, xl
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+@each $breakpoint, $width in $breakpoints {
+  @media (min-width: $width) {
+    @each $size, $value in $spacers {
+      // Margins
+      .m-#{$breakpoint}-#{$size} {
+        margin: $value !important;
+      }
+      
+      .m-#{$breakpoint}-t-#{$size} {
+        margin-top: $value !important;
+      }
+      
+      .m-#{$breakpoint}-b-#{$size} {
+        margin-bottom: $value !important;
+      }
+      
+      .m-#{$breakpoint}-l-#{$size} {
+        margin-left: $value !important;
+      }
+      
+      .m-#{$breakpoint}-r-#{$size} {
+        margin-right: $value !important;
+      }
+      
+      .m-#{$breakpoint}-x-#{$size} {
+        margin-left: $value !important;
+        margin-right: $value !important;
+      }
+      
+      .m-#{$breakpoint}-y-#{$size} {
+        margin-top: $value !important;
+        margin-bottom: $value !important;
+      }
+      
+      // Paddings
+      .p-#{$breakpoint}-#{$size} {
+        padding: $value !important;
+      }
+      
+      .p-#{$breakpoint}-t-#{$size} {
+        padding-top: $value !important;
+      }
+      
+      .p-#{$breakpoint}-b-#{$size} {
+        padding-bottom: $value !important;
+      }
+      
+      .p-#{$breakpoint}-l-#{$size} {
+        padding-left: $value !important;
+      }
+      
+      .p-#{$breakpoint}-r-#{$size} {
+        padding-right: $value !important;
+      }
+      
+      .p-#{$breakpoint}-x-#{$size} {
+        padding-left: $value !important;
+        padding-right: $value !important;
+      }
+      
+      .p-#{$breakpoint}-y-#{$size} {
+        padding-top: $value !important;
+        padding-bottom: $value !important;
+      }
+    }
+    
+    // RTL Support for responsive
+    html[dir="rtl"] {
+      @each $size, $value in $spacers {
+        .m-#{$breakpoint}-l-#{$size} {
+          margin-left: 0 !important;
+          margin-right: $value !important;
+        }
+        
+        .m-#{$breakpoint}-r-#{$size} {
+          margin-right: 0 !important;
+          margin-left: $value !important;
+        }
+        
+        .p-#{$breakpoint}-l-#{$size} {
+          padding-left: 0 !important;
+          padding-right: $value !important;
+        }
+        
+        .p-#{$breakpoint}-r-#{$size} {
+          padding-right: 0 !important;
+          padding-left: $value !important;
+        }
+      }
+    }
+  }
+}
+
+// Additional utility classes for common spacing needs
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.my-auto {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.m-auto {
+  margin: auto !important;
+}
+
+// For Bootstrap compatibility
+.me-2 {
+  margin-right: 8px !important;
+}
+
+.ms-2 {
+  margin-left: 8px !important;
+}
+
+html[dir="rtl"] {
+  .me-2 {
+    margin-right: 0 !important;
+    margin-left: 8px !important;
+  }
+  
+  .ms-2 {
+    margin-left: 0 !important;
+    margin-right: 8px !important;
+  }
+}
