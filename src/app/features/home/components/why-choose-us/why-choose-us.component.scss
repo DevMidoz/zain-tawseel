@@ -1,0 +1,116 @@
+@use '../../../../../assets/scss/variables' as vars;
+
+.why-choose-us-section {
+  padding: 40px 0;
+  max-width: 1800px;
+  margin: 0 auto;
+  
+  .section-header {
+    margin-bottom: 30px;
+    display: flex;
+    
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 0;
+    }
+  }
+  
+  .feature-card {
+    display: flex;
+    padding: 24px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    height: 100%;
+    background-color: rgba(vars.$component-background-light, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      
+      .feature-icon {
+        background-color: vars.$primary-color;
+        color: white;
+      }
+    }
+    
+    &.rtl-mode {
+      text-align: right;
+      
+      .feature-icon {
+        margin-right: 0;
+        margin-left: 20px;
+      }
+      
+      .feature-title,
+      .feature-description {
+        direction: rtl;
+      }
+    }
+    
+    :host-context([data-theme="dark"]) & {
+      background-color: rgba(vars.$component-background-dark, 0.5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      
+      .feature-title {
+        color: vars.$text-color-light;
+      }
+      
+      .feature-description {
+        color: vars.$text-color-secondary-dark;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      padding: 11px;
+    }
+  }
+  
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    border-radius: 50%;
+    background-color: rgba(vars.$primary-color, 0.1);
+    color: vars.$primary-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    transition: all 0.3s ease;
+    
+    i {
+      font-size: 24px;
+    }
+  }
+  
+  .feature-content {
+    flex: 1;
+  }
+  
+  .feature-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: vars.$primary-color;
+  }
+  
+  .feature-description {
+    font-size: 14px;
+    color: vars.$text-color-secondary-light;
+    
+    :host-context(body.dark-theme) & {
+      color: rgba(vars.$text-color-light, 0.85);
+    }
+    margin-bottom: 0;
+  }
+  
+  @media (max-width: 767px) {
+    .feature-card {
+      margin-bottom: 16px;
+    }
+  }
+}

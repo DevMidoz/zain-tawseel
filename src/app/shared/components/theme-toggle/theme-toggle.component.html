@@ -1,0 +1,13 @@
+<!-- Theme Toggle -->
+<nz-switch
+  [ngModel]="isDarkTheme()"
+  (ngModelChange)="toggleTheme()"
+  [nzCheckedChildren]="darkIcon"
+  [nzUnCheckedChildren]="lightIcon"
+></nz-switch>
+<ng-template #darkIcon>
+  <span nz-icon nzType="moon" nzTheme="fill"></span>
+</ng-template>
+<ng-template #lightIcon>
+  <span nz-icon nzType="sun" nzTheme="fill"></span>
+</ng-template>

@@ -1,0 +1,61 @@
+@use '../../../../assets/scss/variables' as vars;
+
+:host {
+  .country-btn {
+    background-color: transparent !important;
+    border: none !important;
+    color: vars.$text-color-dark !important;
+    padding: 0 !important;
+    height: auto !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    
+    &:hover {
+      color: rgba(vars.$text-color-dark, 0.8) !important;
+    }
+    
+    img {
+      border-radius: 2px;
+      margin-right: 4px;
+    }
+  }
+}
+
+// Dark theme styles
+:host-context([data-theme="dark"]) {
+  .country-btn {
+    color: vars.$text-color-dark !important;
+  }
+}
+
+// Selected country style
+::ng-deep .ant-dropdown-menu-item.selected {
+  background-color: rgba(vars.$primary-color, 0.1);
+  font-weight: 500;
+  
+  :host-context([data-theme="dark"]) & {
+    background-color: vars.$danger-color !important;
+    color: white !important;
+  }
+}
+
+// RTL support
+:host-context(html[dir="rtl"]) {
+  .country-btn {
+    [nz-icon] {
+      margin-right: 0;
+      margin-left: 4px;
+    }
+    
+    .me-2 {
+      margin-right: 0 ;
+      margin-left: 0.5rem ;
+    }
+    
+    .ms-2 {
+      margin-left: 0 ;
+      margin-right: 0.5rem ;
+    }
+  }
+}

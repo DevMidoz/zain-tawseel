@@ -1,0 +1,471 @@
+<nz-header>
+  <!-- Desktop Header -->
+  <div class="desktop-header">
+  <!-- First Row: Theme switcher, language selector, country selector -->
+  <div class="header-top-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="container">
+      <div class="top-row-content">
+        <!-- Left side (or right in Arabic) -->
+        <div class="top-row-left"></div>
+        
+        <!-- Right side (or left in Arabic) -->
+        <div class="top-row-right">
+          <!-- Country Selector Component -->
+          <app-country-selector></app-country-selector>
+          
+          <!-- Language Selector Component -->
+          <app-language-selector></app-language-selector>
+          
+          <!-- Theme Toggle Component -->
+          <app-theme-toggle></app-theme-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Second Row: Logo, search bar, login/register, cart -->
+  <div class="header-middle-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="container">
+      <div class="middle-row-content">
+        <!-- Logo -->
+        <div class="logo-container">
+          <a [routerLink]="['/']">
+            <div class="logo"></div>
+          </a>
+        </div>
+        
+        <!-- Search Bar (with autocomplete) -->
+        <div class="search-container">
+          <app-nz-input-group-alt [suffix]="suffixIconSearch" [compact]="false" [searchStyle]="true" [mode]="theme() === 'dark' ? 'dark' : 'light'">
+            <input 
+              nz-input 
+              placeholder="{{ 'APP.SEARCH' | translate }}" 
+              [(ngModel)]="searchValue"
+              (input)="onSearchInput()"
+            />
+          </app-nz-input-group-alt>
+          <ng-template #suffixIconSearch>
+            <nz-icon nzType="search" />
+          </ng-template>
+        </div>
+        
+        <!-- User Controls: Login/Register and Cart -->
+        <div class="user-controls">
+          <!-- Login/Register Button -->
+          <button nz-button nzType="default" class="auth-btn">
+            <span nz-icon nzType="user"></span>
+            <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
+          </button>
+          
+          <!-- Cart Dropdown -->
+          <button 
+            nz-button 
+            nz-dropdown 
+            nzSize="large"
+            [nzDropdownMenu]="cartMenu" 
+            nzTrigger="click"
+            class="cart-btn">
+            <span nz-icon nzType="shopping-cart"></span>
+            <span class="cart-count">{{ cartItems.length }}</span>
+          </button>
+
+          <nz-dropdown-menu #cartMenu="nzDropdownMenu">
+            <div class="cart-dropdown">
+              <div class="cart-header">
+                <h4>{{ 'APP.CART' | translate }}</h4>
+              </div>
+              <div class="cart-items-container">
+                @if (cartItems.length > 0) {
+                  <ul nz-menu>
+                    @for (item of cartItems; track item) {
+                      <li  class="cart-item">
+                        <div class="item-quantity">
+                          <span>{{ 'APP.QUANTITY' | translate }}: {{ item.quantity }}</span>
+                        </div>
+                        <div class="item-name">{{ item.name }}</div>
+                        <div class="item-price">{{ item.price | currency }}</div>
+                      </li>
+                    }
+                
+                    <li  class="cart-total">
+                      <div class="total-label">{{ 'APP.TOTAL' | translate }}</div>
+                      <div class="total-value">{{ cartTotal | currency }}</div>
+                    </li>
+                  </ul>
+                  <div class="cart-actions cart-actions-container">
+                    <button nz-button nzType="primary" class="checkout-btn">
+                      <span nz-icon nzType="shopping-cart"></span>
+                      <span>{{ 'APP.COMPLETE_ORDER' | translate }}</span>
+                    </button>
+                  </div>
+                } @else {
+                  <div class="empty-cart">
+                    <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+                    <p>{{ 'APP.EMPTY_CART' | translate }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          </nz-dropdown-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Third Row: Navigation menu -->
+  <div class="header-bottom-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="container">
+      <ul nz-menu nzMode="horizontal" class="main-menu">
+        <!-- Categories Menu -->
+        <li nz-submenu  nzTitle="{{ 'NAV.CATEGORIES' | translate }}" nzIcon="appstore">
+       
+          <ul>
+            <!-- Google Play -->
+            <li nz-submenu>
+              <span title nz-submenu-title>
+                <i class="fa-brands fa-google-play me-2"></i>
+                <span>{{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }}</span>
+              </span>
+              <ul>
+                <li nz-menu-item [routerLink]="['/categories/google-play/kuwait']">
+                  <i class="fa-brands fa-google-play me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/google-play/usa']">
+                  <i class="fa-brands fa-google-play me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/google-play/saudi-arabia']">
+                  <i class="fa-brands fa-google-play me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/google-play/uae']">
+                  <i class="fa-brands fa-google-play me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+                </li>
+              </ul>
+            </li>
+            
+            <!-- PlayStation -->
+            <li nz-submenu>
+              <span title nz-submenu-title>
+                <i class="fa-brands fa-playstation me-2"></i>
+                <span>{{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }}</span>
+              </span>
+              <ul>
+                <li nz-menu-item [routerLink]="['/categories/playstation/kuwait']">
+                  <i class="fa-brands fa-playstation me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/playstation/usa']">
+                  <i class="fa-brands fa-playstation me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/playstation/saudi-arabia']">
+                  <i class="fa-brands fa-playstation me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/playstation/uae']">
+                  <i class="fa-brands fa-playstation me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+                </li>
+              </ul>
+            </li>
+            
+            <!-- Nintendo -->
+            <li nz-submenu>
+              <span title nz-submenu-title>
+                <i class="fa-solid fa-gamepad me-2"></i>
+                <span>{{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }}</span>
+              </span>
+              <ul>
+                <li nz-menu-item [routerLink]="['/categories/nintendo/kuwait']">
+                  <i class="fa-solid fa-gamepad me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/nintendo/usa']">
+                  <i class="fa-solid fa-gamepad me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/nintendo/saudi-arabia']">
+                  <i class="fa-solid fa-gamepad me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/nintendo/uae']">
+                  <i class="fa-solid fa-gamepad me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+                </li>
+              </ul>
+            </li>
+            
+            <!-- PUBG -->
+            <li nz-submenu>
+              <span title nz-submenu-title>
+                <i class="fa-solid fa-gun me-2"></i>
+                <span>{{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }}</span>
+              </span>
+              <ul>
+                <li nz-menu-item [routerLink]="['/categories/pubg/kuwait']">
+                  <i class="fa-solid fa-gun me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/pubg/usa']">
+                  <i class="fa-solid fa-gun me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/pubg/saudi-arabia']">
+                  <i class="fa-solid fa-gun me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/pubg/uae']">   
+                  <i class="fa-solid fa-gun me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+                </li>
+              </ul>
+            </li>
+            
+            <!-- Xbox -->
+            <li nz-submenu>
+              <span title nz-submenu-title>
+                <i class="fa-brands fa-xbox me-2"></i>
+                <span>{{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }}</span>
+              </span>
+              <ul>
+                <li nz-menu-item [routerLink]="['/categories/xbox/kuwait']">
+                  <i class="fa-brands fa-xbox me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/xbox/usa']">
+                  <i class="fa-brands fa-xbox me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/xbox/saudi-arabia']">
+                  <i class="fa-brands fa-xbox me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+                </li>
+                <li nz-menu-item [routerLink]="['/categories/xbox/uae']">
+                  <i class="fa-brands fa-xbox me-2"></i>
+                  {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Offers Menu Item -->
+        <li nz-menu-item [routerLink]="['/offers']">
+          <i class="fa-solid fa-tags"></i>
+          <span>{{ 'NAV.OFFERS' | translate }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  
+  <!-- Mobile Header -->
+  <div class="mobile-header">
+    <div class="mobile-header-content">
+      <!-- Logo -->
+      <div class="logo">
+        <a [routerLink]="['/']">
+          <img src="assets/svgs/zain_tawseel_icon.svg" alt="Zain Tawseel Logo">
+        </a>
+      </div>
+      
+      <!-- Search Bar -->
+      <div class="search-container">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input 
+            type="text" 
+            nz-input 
+            [(ngModel)]="searchValue" 
+            [nzAutocomplete]="auto"
+            (input)="onSearchInput()"
+            [placeholder]="'APP.SEARCH' | translate"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+        <nz-autocomplete #auto>
+          <nz-auto-option *ngFor="let option of searchOptions" [nzValue]="option">
+            {{ option }}
+          </nz-auto-option>
+        </nz-autocomplete>
+      </div>
+    </div>
+  </div>
+</nz-header>
+
+<!-- Mobile Bottom Navigation Bar -->
+<div class="mobile-bottom-nav">
+  <div class="nav-item" (click)="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+    <span>{{ 'NAV.MENU' | translate }}</span>
+  </div>
+  <div class="nav-item" [routerLink]="['/auth/login']">
+    <i class="fa-solid fa-user"></i>
+    <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
+  </div>
+  <div class="nav-item" (click)="toggleCart()">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>{{ 'APP.CART' | translate }}</span>
+    <span class="cart-badge" *ngIf="cartItems.length > 0">{{ cartItems.length }}</span>
+  </div>
+</div>
+
+<!-- Mobile Sidebar Menu -->
+<div class="mobile-sidebar" [class.visible]="sidebarVisible">
+  <div class="sidebar-header">
+    <button class="close-btn" (click)="toggleSidebar()">
+      <i class="fa-solid fa-times"></i>
+    </button>
+    
+    <!-- Country Selector -->
+    <div class="sidebar-country-selector">
+      <div class="country-options">
+        <app-country-selector></app-country-selector>
+      </div>
+    </div>
+  </div>
+  
+  <div class="sidebar-content">
+    <nz-collapse>
+      <!-- Categories -->
+      <nz-collapse-panel [nzHeader]="'NAV.CATEGORIES' | translate" >
+        <nz-collapse>
+          <!-- Google Play -->
+          <nz-collapse-panel [nzHeader]="'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate">
+            <ul class="sidebar-submenu">
+              <li [routerLink]="['/categories/google-play/kuwait']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-google-play me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+              </li>
+              <li [routerLink]="['/categories/google-play/usa']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-google-play me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/google-play/saudi-arabia']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-google-play me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/google-play/uae']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-google-play me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.GOOGLE_PLAY' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+              </li>
+            </ul>
+          </nz-collapse-panel>
+          
+          <!-- PlayStation -->
+          <nz-collapse-panel [nzHeader]="'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate">
+            <ul class="sidebar-submenu">
+              <li [routerLink]="['/categories/playstation/kuwait']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-playstation me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+              </li>
+              <li [routerLink]="['/categories/playstation/usa']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-playstation me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/playstation/saudi-arabia']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-playstation me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/playstation/uae']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-playstation me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PLAYSTATION' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+              </li>
+            </ul>
+          </nz-collapse-panel>
+          
+          <!-- Nintendo -->
+          <nz-collapse-panel [nzHeader]="'NAV.CATEGORY_ITEMS.NINTENDO' | translate">
+            <ul class="sidebar-submenu">
+              <li [routerLink]="['/categories/nintendo/kuwait']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gamepad me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+              </li>
+              <li [routerLink]="['/categories/nintendo/usa']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gamepad me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/nintendo/saudi-arabia']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gamepad me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/nintendo/uae']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gamepad me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.NINTENDO' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+              </li>
+            </ul>
+          </nz-collapse-panel>
+          
+          <!-- PUBG -->
+          <nz-collapse-panel [nzHeader]="'NAV.CATEGORY_ITEMS.PUBG' | translate">
+            <ul class="sidebar-submenu">
+              <li [routerLink]="['/categories/pubg/kuwait']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gun me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+              </li>
+              <li [routerLink]="['/categories/pubg/usa']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gun me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/pubg/saudi-arabia']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gun me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/pubg/uae']" (click)="toggleSidebar()">
+                <i class="fa-solid fa-gun me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.PUBG' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+              </li>
+            </ul>
+          </nz-collapse-panel>
+          
+          <!-- Xbox -->
+          <nz-collapse-panel [nzHeader]="'NAV.CATEGORY_ITEMS.XBOX' | translate">
+            <ul class="sidebar-submenu">
+              <li [routerLink]="['/categories/xbox/kuwait']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-xbox me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.KUWAIT' | translate }}
+              </li>
+              <li [routerLink]="['/categories/xbox/usa']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-xbox me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.USA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/xbox/saudi-arabia']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-xbox me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.SAUDI_ARABIA' | translate }}
+              </li>
+              <li [routerLink]="['/categories/xbox/uae']" (click)="toggleSidebar()">
+                <i class="fa-brands fa-xbox me-2"></i>
+                {{ 'NAV.CATEGORY_ITEMS.XBOX' | translate }} - {{ 'NAV.COUNTRIES.UAE' | translate }}
+              </li>
+            </ul>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </nz-collapse-panel>
+      
+      <!-- Offers - Direct list item -->
+      <div class="sidebar-menu-item" [routerLink]="['/offers']" (click)="toggleSidebar()">
+        <i class="fa-solid fa-tags me-2"></i>
+        {{ 'NAV.OFFERS' | translate }}
+      </div>
+    </nz-collapse>
+  </div>
+  
+  <div class="sidebar-footer">
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+      <app-theme-toggle></app-theme-toggle>
+    </div>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <app-language-selector></app-language-selector>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" [class.visible]="sidebarVisible" (click)="toggleSidebar()"></div>

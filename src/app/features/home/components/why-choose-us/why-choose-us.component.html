@@ -1,0 +1,21 @@
+<section class="why-choose-us-section" [dir]="language() === 'ar' ? 'rtl' : 'ltr'">
+  <div class="section-header">
+    <h2 nz-typography>{{ 'HOME.WHY_CHOOSE_US.TITLE' | translate }}</h2>
+  </div>
+  
+  <div nz-row [nzGutter]="[16, 24]">
+    @for (feature of features; track feature.id) {
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+        <div class="feature-card" [class.rtl-mode]="language() === 'ar'">
+          <div class="feature-icon">
+            <i [class]="feature.icon"></i>
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">{{ feature.title | translate }}</h3>
+            <p class="feature-description">{{ feature.description | translate }}</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

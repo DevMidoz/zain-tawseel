@@ -1,0 +1,155 @@
+@use '../../../../assets/scss/variables' as vars;
+
+nz-footer {
+  padding: 40px 0 20px;
+  background-color: vars.$header-background;
+  color: white;
+}
+
+.footer-container {
+  max-width: 1800px;
+    margin: 0 auto;
+  padding: 0 16px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: white;
+}
+
+p {
+  color: vars.$text-color-dark;
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  li {
+    margin-bottom: 8px;
+    transition: transform 0.4s;
+    
+    a {
+      color: vars.$text-color-dark;
+      text-decoration: none;
+    }
+    
+    &:hover {
+      transform: translateX(3px);
+    }
+
+    :host-context(html[dir="rtl"]) & {
+      &:hover {
+        transform: translateX(-3px);
+      }
+    }
+  }
+}
+
+.contact-info {
+  p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    
+    span[nz-icon] {
+      margin-right: 8px;
+      color: vars.$primary-color;
+    }
+  }
+}
+
+.footer-bottom {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid vars.$border-color-split-dark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  
+  .copyright {
+    color: vars.$text-color-tertiary-dark;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 16px;
+    
+    a {
+      color: vars.$text-color-dark;
+      font-size: 20px;
+      transition: color 0.3s;
+      
+      &:hover {
+        color: vars.$primary-color;
+      }
+    }
+  }
+}
+
+// Dark theme styles
+:host-context(body.dark-theme) {
+  nz-footer {
+    background-color: vars.$header-background;
+  }
+  
+  h3 {
+    color: vars.$text-color-heading-dark;
+  }
+  
+  p {
+    color: vars.$text-color-secondary-dark;
+  }
+  
+  .footer-links {
+    li a {
+      color: vars.$text-color-secondary-dark;
+      transition: transform 0.4s;
+      
+      &:hover {
+        transform: translateX(5px);
+        // color: vars.$primary-color;
+      }
+    }
+  }
+  
+  .footer-bottom {
+    border-top-color: vars.$border-color-split-dark;
+    
+    .copyright {
+      color: vars.$text-color-tertiary-dark;
+    }
+    
+    .social-links a {
+      color: vars.$text-color-secondary-dark;
+    }
+  }
+}
+
+// RTL specific styles
+:host-context(html[dir="rtl"]) {
+  .contact-info p span[nz-icon] {
+    margin-right: 0;
+    margin-left: 8px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 576px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    .copyright {
+      margin-bottom: 16px;
+    }
+  }
+}

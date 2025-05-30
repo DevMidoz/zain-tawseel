@@ -1,0 +1,35 @@
+<nz-footer>
+  <div class="footer-container">
+    <div nz-row [nzGutter]="[24, 24]">
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8">
+        <h3>{{ 'APP.TITLE' | translate }}</h3>
+        <p>{{ 'FOOTER.ABOUT_US' | translate }}</p>
+      </div>
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8">
+        <h3>{{ 'FOOTER.QUICK_LINKS' | translate }}</h3>
+        <ul class="footer-links">
+          <li><a [routerLink]="['/']">{{ 'NAV.HOME' | translate }}</a></li>
+          <li><a [routerLink]="['/offers']">{{ 'NAV.OFFERS' | translate }}</a></li>
+        </ul>
+      </div>
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+        <h3>{{ 'FOOTER.CONTACT_US' | translate }}</h3>
+        <div class="contact-info">
+          <p> <i class="fa-solid fa-envelope me-2"></i> zaintawseel.com</p>
+          <p><i class="fa-solid fa-phone me-2"></i> +965 123 456 789</p>
+          <p><i class="fa-solid fa-location-dot me-2"></i> {{ 'FOOTER.ADDRESS' | translate }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="copyright">
+        &copy; {{ currentYear }} {{ 'APP.TITLE' | translate }}. {{ 'FOOTER.RIGHTS' | translate }}
+      </div>
+      <div class="social-links">
+        <a href="#" target="_blank"><span nz-icon nzType="facebook" nzTheme="outline"></span></a>
+        <a href="#" target="_blank"><span nz-icon nzType="twitter" nzTheme="outline"></span></a>
+        <a href="#" target="_blank"><span nz-icon nzType="instagram" nzTheme="outline"></span></a>
+      </div>
+    </div>
+  </div>
+</nz-footer>

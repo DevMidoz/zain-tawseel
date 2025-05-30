@@ -1,0 +1,15 @@
+<!-- Language Selector -->
+<button nz-button nz-dropdown [nzDropdownMenu]="languageMenu" class="language-btn">
+  <span>{{ language() === 'en' ? 'EN' : 'AR' }}</span>
+  <span nz-icon nzType="down"></span>
+</button>
+<nz-dropdown-menu #languageMenu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="setLanguage('en')" [class.selected]="language() === 'en'">
+      {{ 'APP.LANGUAGE.EN' | translate }}
+    </li>
+    <li nz-menu-item (click)="setLanguage('ar')" [class.selected]="language() === 'ar'">
+      {{ 'APP.LANGUAGE.AR' | translate }}
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -1,0 +1,26 @@
+<!-- Country Selector -->
+<button nz-button nz-dropdown [nzDropdownMenu]="countryMenu" class="country-btn">
+  <img [src]="getSelectedCountryFlag()" width="20" height="20" class="me-2" [alt]="selectedCountry + '_flag'">
+  <span>{{ selectedCountry }}</span>
+  <span nz-icon nzType="down" class="ms-2"></span>
+</button>
+<nz-dropdown-menu #countryMenu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item (click)="setCountry('Kuwait')" [class.selected]="selectedCountry === 'Kuwait'">
+      <img src="assets/images/kuwait_flag.webp" width="20" height="20" alt="KUWAIT_flag" class="me-2">
+      {{ 'APP.COUNTRY.KUWAIT' | translate }}
+    </li>
+    <li nz-menu-item (click)="setCountry('USA')" [class.selected]="selectedCountry === 'USA'">
+      <img src="assets/images/usa_flag.webp" width="20" height="20" alt="USA_flag" class="me-2">
+      {{ 'APP.COUNTRY.USA' | translate }}
+    </li>
+    <li nz-menu-item (click)="setCountry('Saudi Arabia')" [class.selected]="selectedCountry === 'Saudi Arabia'">
+      <img src="assets/images/saudi_flag.webp" width="20" height="20" alt="SA_flag" class="me-2">
+      {{ 'APP.COUNTRY.SAUDI_ARABIA' | translate }}
+    </li>
+    <li nz-menu-item (click)="setCountry('UAE')" [class.selected]="selectedCountry === 'UAE'">
+      <img src="assets/images/uae_flag.webp" width="20" height="20" alt="UAE_flag" class="me-2">
+      {{ 'APP.COUNTRY.UAE' | translate }}
+    </li>
+  </ul>
+</nz-dropdown-menu>

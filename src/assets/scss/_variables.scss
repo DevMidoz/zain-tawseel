@@ -1,0 +1,41 @@
+// Variables for the Zain Tawseel application
+
+// Main Brand Colors
+$primary-color: #182245;
+$primary-color-light: #2d3a6a; // Lighter version of primary for hover states
+$primary-color-dark: #0d1326; // Darker version of primary
+$header-background: #182245;
+$body-background-light: #f0f2f5;
+$body-background-dark: #0e1428;
+$component-background-dark: #1f2b50;
+$component-background-light: #e1e3f0;
+$danger-color: #ff4d4f;
+
+
+// Text Colors - Light Theme
+$text-color-light: rgba(0, 0, 0, 0.85);
+$text-color-secondary-light: rgb(129, 129, 129);
+$text-color-tertiary-light: rgba(0, 0, 0, 0.45);
+
+// Text Colors - Dark Theme
+$text-color-dark: rgba(255, 255, 255, 0.85);
+$text-color-secondary-dark: rgba(75, 75, 75);
+$text-color-tertiary-dark: rgba(255, 255, 255, 0.65);
+$text-color-heading-dark: rgba(255, 255, 255, 0.95);
+
+// Border Colors
+$border-color-light: #e8e8e8;
+$border-color-dark: #303030;
+$border-color-dark1: #c1c1c1;
+$border-color-dark2: #a7a5a5;
+$border-color-split-dark: rgba(255, 255, 255, 0.15);
+
+// Hover States
+$hover-color-dark: #273459;
+
+// Responsive Breakpoints
+$screen-xs: 480px;
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;

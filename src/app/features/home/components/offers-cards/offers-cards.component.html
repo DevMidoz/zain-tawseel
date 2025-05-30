@@ -1,0 +1,90 @@
+<section class="offers-section">
+  <div class="section-header">
+    <h2 nz-typography>{{ 'HOME.OFFERS' | translate }}</h2>
+  </div>
+  
+  <!-- Loading state -->
+  @if (isLoading) {
+    <div class="offers-loading">
+      <div class="desktop-view" nz-row [nzGutter]="[16, 16]">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" [nzXl]="4">
+            <div class="skeleton-card">
+              <nz-skeleton-element nzType="image" [nzActive]="true" class="card-image-skeleton"></nz-skeleton-element>
+              <nz-skeleton-element nzType="input" [nzActive]="true" class="card-title-skeleton"></nz-skeleton-element>
+              <nz-skeleton-element nzType="input" [nzActive]="true" class="card-price-skeleton"></nz-skeleton-element>
+              <div class="card-buttons-skeleton">
+                <nz-skeleton-element nzType="button" [nzActive]="true"></nz-skeleton-element>
+                <nz-skeleton-element nzType="button" [nzActive]="true"></nz-skeleton-element>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+  
+  <!-- Error state -->
+  @if (hasError) {
+    <div class="offers-error">
+      <p>{{ 'COMMON.ERROR_LOADING' | translate }}</p>
+      <button nz-button nzType="primary" (click)="loadOffers(translateService.currentLang)">
+        {{ 'COMMON.RETRY' | translate }}
+      </button>
+    </div>
+  }
+  
+  <!-- Offers content -->
+  @if (!isLoading && !hasError) {
+    <!-- No offers found -->
+    @if (offers.length === 0) {
+      <div class="no-offers">
+        <p>{{ 'HOME.NO_OFFERS' | translate }}</p>
+      </div>
+    } @else {
+      <!-- Desktop View: Grid Layout -->
+      <div class="desktop-view" nz-row [nzGutter]="[16, 16]">
+        @for (offer of offers; track offer.id) {
+          <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" [nzXl]="4">
+            <app-nz-card-alt
+              [title]="offer.title"
+              [image]="offer.image"
+              [price]="offer.price"
+              [originalPrice]="offer.originalPrice"
+              [currency]="offer.currency"
+              [discount]="offer.discount"
+              [buyNowText]="'HOME.BUY_NOW' | translate"
+              [showAddToCart]="true"
+              (addToCartClicked)="addToCart(offer)"
+              (buyNowClicked)="buyNow(offer)">
+            </app-nz-card-alt>
+          </div>
+        }
+      </div>
+      
+      <!-- Mobile View: Carousel -->
+      <div class="mobile-view">
+        <owl-carousel-o [options]="offersCarouselOptions" #offersCarousel>
+          @for (offer of offers; track offer.id) {
+            <ng-template carouselSlide [id]="offer.id.toString()">
+              <div class="card-wrapper">
+                <app-nz-card-alt
+                  [title]="offer.title"
+                  [image]="offer.image"
+                  [price]="offer.price"
+                  [originalPrice]="offer.originalPrice"
+                  [currency]="offer.currency"
+                  [discount]="offer.discount"
+                  [buyNowText]="'HOME.BUY_NOW' | translate"
+                  [showAddToCart]="true"
+                  (addToCartClicked)="addToCart(offer)"
+                  (buyNowClicked)="buyNow(offer)">
+                </app-nz-card-alt>
+              </div>
+            </ng-template>
+          }
+        </owl-carousel-o>
+      </div>
+    }
+  }
+</section>

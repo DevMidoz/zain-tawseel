@@ -1,0 +1,73 @@
+// Responsive Design
+@use 'variables' as vars;
+
+// Mobile styles
+@media (max-width: vars.$screen-sm) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .ant-layout-content {
+    padding: 20px !important;
+  }
+  
+  // Adjust header for mobile
+  .header-container {
+    padding: 0 8px;
+  }
+  
+  .header-controls {
+    gap: 5px;
+  }
+  
+  // Adjust footer for mobile
+  .footer-container {
+    padding: 0 8px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    .copyright {
+      margin-bottom: 16px;
+    }
+  }
+  
+}
+
+// Tablet styles
+@media (min-width: (vars.$screen-sm + 1)) and (max-width: vars.$screen-lg) {
+  .tablet-hidden {
+    display: none !important;
+  }
+  
+  .ant-layout-content {
+    padding: 85px 24px !important;
+  }
+  
+  // Adjust header for tablet
+  .header-container {
+    padding: 0 12px;
+  }
+  
+  .search-container {
+    max-width: 200px;
+  }
+}
+
+// Desktop styles
+@media (min-width: (vars.$screen-lg + 1)) {
+  .desktop-hidden {
+    display: none !important;
+  }
+  
+  // Center content on large screens
+  .header-container,
+  .footer-container,
+  .inner-content {
+     max-width: 1800px;
+    margin: 0 auto;
+  }
+}

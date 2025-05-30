@@ -1,0 +1,14 @@
+<input 
+  nz-input
+  [type]="type"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [nzSize]="size"
+  [attr.maxlength]="maxLength"
+  [(ngModel)]="value"
+  (ngModelChange)="onInputChange($event)"
+  (blur)="onBlur($event)"
+  (focus)="onFocus($event)"
+  [class.dark-mode]="currentTheme === 'dark'"
+  [class.light-mode]="currentTheme === 'light'"
+/>

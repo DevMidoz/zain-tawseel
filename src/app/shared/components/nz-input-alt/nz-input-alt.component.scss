@@ -1,0 +1,38 @@
+@use '../../../../assets/scss/variables' as vars;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+:host-context([data-theme="light"]) input {
+  background-color: white;
+  color: vars.$text-color-dark;
+  
+  &::placeholder {
+    color: vars.$text-color-tertiary-light;
+  }
+  
+  &:hover, &:focus {
+    border-color: vars.$primary-color;
+  }
+}
+
+:host-context([data-theme="dark"]) input {
+  background-color: rgba(vars.$component-background-dark, 0.8);
+  color: vars.$text-color-light;
+  border-color: vars.$border-color-dark;
+  
+  &::placeholder {
+    color: vars.$text-color-tertiary-dark;
+  }
+  
+  &:hover, &:focus {
+    border-color: vars.$primary-color;
+  }
+}

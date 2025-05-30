@@ -1,0 +1,47 @@
+@use '../../../../assets/scss/variables' as vars;
+
+:host {
+  .language-btn {
+    background-color: transparent ;
+    border: none ;
+    color: vars.$text-color-dark ;
+    padding: 0 ;
+    height: auto ;
+    box-shadow: none ;
+    display: flex ;
+    align-items: center ;
+    gap: 5px;
+    
+    &:hover {
+      color: rgba(vars.$text-color-dark, 0.8) ;
+    }
+  }
+}
+
+// Dark theme styles
+:host-context([data-theme="dark"]) {
+  .language-btn {
+    color: vars.$text-color-dark !important;
+  }
+}
+
+// Selected language style
+::ng-deep .ant-dropdown-menu-item.selected {
+  background-color: rgba(vars.$primary-color, 0.1);
+  font-weight: 500;
+  
+  :host-context([data-theme="dark"]) & {
+    background-color: vars.$danger-color !important;
+    color: white !important;
+  }
+}
+
+// RTL support
+:host-context(html[dir="rtl"]) {
+  .language-btn {
+    [nz-icon] {
+      margin-right: 0;
+      margin-left: 4px;
+    }
+  }
+}

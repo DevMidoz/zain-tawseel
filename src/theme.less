@@ -1,0 +1,75 @@
+
+// Custom Theming for NG-ZORRO
+// For more information: https://ng.ant.design/docs/customize-theme/en
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// Override less variables to here
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+// Light Theme Variables
+@primary-color: #1890ff;
+@layout-header-background: #182245;
+@layout-body-background: #f0f2f5;
+@layout-footer-background: #f0f2f5;
+@menu-bg: #182245;
+@menu-item-color: rgba(0, 0, 0, 0.65);
+@menu-highlight-color: @primary-color;
+@menu-item-active-bg: #e6f7ff;
+
+// Dark Theme Variables
+.dark-theme {
+  // Main colors
+  @primary-color: #1890ff;
+  @layout-header-background: #182245;
+  @layout-body-background: #0e1428;
+  @layout-footer-background: #0e1428;
+  @menu-bg: #182245;
+  
+  // Text colors
+  @text-color: rgba(255, 255, 255, 0.85);
+  @text-color-secondary: rgba(255, 255, 255, 0.65);
+  @heading-color: rgba(255, 255, 255, 0.95);
+  @menu-item-color: rgba(255, 255, 255, 0.75);
+  @menu-highlight-color: #fff;
+  
+  // Component colors
+  @component-background: #1f2b50;
+  @menu-item-active-bg: #1890ff;
+  @background-color-base: #1f2b50;
+  @border-color-base: #434343;
+  @border-color-split: #303030;
+  @item-hover-bg: #1f2b50;
+  @item-active-bg: #1f2b50;
+  
+  // Table colors
+  @table-header-bg: #1f2b50;
+  @table-row-hover-bg: #273459;
+  
+  // Layout
+  @layout-trigger-background: #182245;
+  @layout-trigger-color: #fff;
+  
+  // Dropdown
+  @dropdown-menu-bg: #1f2b50;
+  @dropdown-menu-submenu-disabled-bg: #1f2b50;
+  
+  // Popover
+  @popover-bg: #1f2b50;
+  
+  // Modal
+  @modal-content-bg: #1f2b50;
+  
+  // Card
+  @card-background: #1f2b50;
+  
+  // Drawer
+  @drawer-bg: #1f2b50;
+}
+
+// Responsive breakpoints
+@screen-xs: 480px;
+@screen-sm: 576px;
+@screen-md: 768px;
+@screen-lg: 992px;
+@screen-xl: 1200px;
+@screen-xxl: 1600px;

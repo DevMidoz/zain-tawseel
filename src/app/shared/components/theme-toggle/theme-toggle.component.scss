@@ -1,0 +1,32 @@
+@use '../../../../assets/scss/variables' as vars;
+
+:host {
+  display: inline-block;
+  
+  ::ng-deep .ant-switch {
+    background-color: rgba(vars.$body-background-dark, 0.5);
+    
+    &.ant-switch-checked {
+      background-color: vars.$body-background-dark;
+    }
+    
+    .ant-switch-handle {
+      &::before {
+        background-color: white;
+      }
+    }
+    
+    .anticon {
+      color: white;
+    }
+  }
+}
+
+// Dark theme styles
+:host-context([data-theme="dark"]) {
+  ::ng-deep .ant-switch {
+    &:not(.ant-switch-checked) {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+  }
+}

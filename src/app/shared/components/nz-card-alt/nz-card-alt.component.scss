@@ -1,0 +1,178 @@
+@use '../../../../assets/scss/variables' as vars;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card-alt {
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  }
+  
+  ::ng-deep {
+    .ant-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      // height: calc(100% - 180px); // Adjust based on image container height
+    }
+    
+    .ant-card-meta {
+      margin-bottom: 8px;
+      flex: 0 0 auto;
+    }
+    
+    .ant-card-meta-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 0;
+      white-space: normal;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+  
+  .card-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 280px;
+    
+    @media (max-width: 768px) {
+      height: 185px;
+    }
+    
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+      background-color: vars.$danger-color;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 24px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 24px;
+    }
+  }
+  
+  .price-container {
+    margin: 10px 0;
+    // min-height: 52px; // Ensure consistent height with or without original price
+    display: flex;
+    // flex: 1 1 auto; // Allow this to grow and fill available space
+    align-items: center;
+
+    @media (max-width: 768px) {
+      margin: 5px 0;
+    }
+    
+    .price {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .price-wrapper {
+      display: flex;
+      align-items: center;
+      
+      .original-price {
+        font-size: 15px;
+        text-decoration: line-through;
+        color: vars.$text-color-secondary-light;
+        font-weight: 600;
+        margin: 2px 3px 1px 3px;
+        
+        :host-context(body.dark-theme) & {
+          color: vars.$text-color-secondary-dark;
+        }
+      }
+      
+      .current-price {
+        font-size: 18px;
+        font-weight: 600;
+        color: vars.$primary-color;
+        
+        :host-context(body.dark-theme) & {
+          color: vars.$primary-color-dark;
+        }
+      }
+    }
+  }
+  
+  .card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+    
+    .buy-now-container {
+      flex: 1;
+      
+      .buy-now-btn {
+        height: 40px;
+        border-radius: 8px;
+      }
+    }
+    
+    .cart-btn-container {
+      width: 40px;
+      
+      .add-to-cart-btn {
+        height: 40px;
+        width: 40px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        
+        // Light theme styles
+        background-color: vars.$component-background-light;
+        color: vars.$primary-color;
+        border-color: transparent;
+        
+        &:hover {
+          background-color: rgba(vars.$primary-color-light, 0.3);
+          color: vars.$primary-color;
+        }
+        
+        :host-context([data-theme="dark"]) & {
+          // Dark theme styles
+          background-color: rgba(vars.$component-background-dark, 0.5);
+          color: vars.$text-color-light;
+          border-color: vars.$border-color-dark;
+          
+          &:hover {
+            background-color: rgba(vars.$primary-color, 0.2);
+            color: vars.$primary-color-light;
+          }
+        }
+      }
+    }
+  }
+  
+}

@@ -1,0 +1,61 @@
+<section class="categories-section">
+  <div class="section-header">
+    <h2 nz-typography>{{ 'HOME.BROWSE_CATEGORIES' | translate }}</h2>
+    <div class="navigation-buttons">
+      <button nz-button nzType="default" class="prev-btn" (click)="categoriesCarousel.prev()" [disabled]="isLoading || hasError">
+        <i class="fa-solid" [ngClass]="isRtl ? 'fa-arrow-right' : 'fa-arrow-left'"></i>
+      </button>
+      <button nz-button nzType="default" class="next-btn" (click)="categoriesCarousel.next()" [disabled]="isLoading || hasError">
+        <i class="fa-solid" [ngClass]="isRtl ? 'fa-arrow-left' : 'fa-arrow-right'"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Loading state -->
+  @if (isLoading) {
+    <div class="categories-loading">
+      <div class="skeleton-container">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="skeleton-item">
+            <nz-skeleton-element nzType="image" [nzActive]="true" class="category-image-skeleton"></nz-skeleton-element>
+            <nz-skeleton-element nzType="input" [nzActive]="true" class="category-name-skeleton"></nz-skeleton-element>
+          </div>
+        }
+      </div>
+    </div>
+  }
+  
+  <!-- Error state -->
+  @if (hasError) {
+    <div class="categories-error">
+      <p>{{ 'COMMON.ERROR_LOADING' | translate }}</p>
+      <button nz-button nzType="primary" (click)="loadCategories(translateService.currentLang)">
+        {{ 'COMMON.RETRY' | translate }}
+      </button>
+    </div>
+  }
+  
+  <!-- Categories carousel -->
+  @if (!isLoading && !hasError && categories.length > 0) {
+    <owl-carousel-o [options]="categoriesCarouselOptions" #categoriesCarousel>
+      @for (category of categories; track category.id) {
+        <ng-template carouselSlide [id]="category.id.toString()">
+          <div class="category-item">
+            <a [routerLink]="[category.link]" class="category-link">
+              <div class="category-image-container" [style.background-image]="'url(' + category.image + ')'">
+              </div>
+              <h3 class="category-name">{{ category.name }}</h3>
+            </a>
+          </div>
+        </ng-template>
+      }
+    </owl-carousel-o>
+  }
+  
+  <!-- No categories found -->
+  @if (!isLoading && !hasError && categories.length === 0) {
+    <div class="no-categories">
+      <p>{{ 'HOME.NO_CATEGORIES' | translate }}</p>
+    </div>
+  }
+</section>

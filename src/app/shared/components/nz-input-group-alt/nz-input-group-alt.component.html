@@ -1,0 +1,13 @@
+<nz-input-group 
+  [nzAddOnBefore]="addOnBefore" 
+  [nzAddOnAfter]="addOnAfter" 
+  [nzPrefix]="prefix" 
+  [nzSuffix]="suffix"
+  [nzCompact]="compact"
+  [nzSize]="size"
+  [class.dark-mode]="currentTheme === 'dark'"
+  [class.light-mode]="currentTheme === 'light'"
+  [class.search-style]="searchStyle"
+>
+  <ng-content></ng-content>
+</nz-input-group>

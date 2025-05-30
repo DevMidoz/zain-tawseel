@@ -1,0 +1,30 @@
+<section class="member-reviews-section">
+  <div class="section-header">
+    <h2 nz-typography>
+      {{ 'HOME.MEMBER_REVIEWS.TITLE' | translate }}
+    </h2>
+  </div>
+  
+  <owl-carousel-o [options]="reviewsCarouselOptions" #reviewsCarousel>
+    @for (review of reviews; track review.id) {
+      <ng-template carouselSlide [id]="review.id.toString()">
+        <div class="review-card" [class.rtl-mode]="language() === 'ar'">
+          <div class="review-header">
+            <div class="user-info">
+              <div class="user-details">
+                <h3 class="user-name">{{ review.name }}</h3>
+                <span class="review-date">{{ formatDate(review.date) }}</span>
+              </div>
+            </div>
+            <div class="rating">
+              <nz-rate [ngModel]="review.rating" nzDisabled [nzAllowHalf]="true"></nz-rate>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>{{ review.review | translate }}</p>
+          </div>
+        </div>
+      </ng-template>
+    }
+  </owl-carousel-o>
+</section>
