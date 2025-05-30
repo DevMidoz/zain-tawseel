@@ -1,0 +1,106 @@
+{
+  "APP": {
+    "TITLE": "Zain Tawseel",
+    "WELCOME": "Welcome to Zain Tawseel",
+    "LANGUAGE": {
+      "EN": "EN",
+      "AR": "AR"
+    },
+    "COUNTRY": {
+      "CURRENT": "Kuwait",
+      "KUWAIT": "Kuwait",
+      "USA": "USA",
+      "SAUDI_ARABIA": "Saudi Arabia",
+      "UAE": "UAE"
+    },
+    "THEME": "Theme",
+    "LIGHT": "Light",
+    "DARK": "Dark",
+    "SEARCH": "What are you looking for ?",
+    "LOGIN_REGISTER": "Login / Register",
+    "CART": "Shopping Cart",
+    "EMPTY_CART": "Your cart is empty",
+    "QUANTITY": "Qty",
+    "TOTAL": "Total",
+    "COMPLETE_ORDER": "Complete Order",
+    "FEATURES": {
+      "DESCRIPTION": "A modern Angular application with powerful features",
+      "SIGNALS": "Modern state management with Angular Signals for reactive applications",
+      "NGZORRO": "Beautiful UI components from NgZorro Ant Design",
+      "LOCALIZATION": "Full support for Arabic and English languages",
+      "THEMES": "Customizable light and dark themes"
+    }
+  },
+  "NAV": {
+    "HOME": "Home",
+    "MENU": "Menu",
+    "CONTACT": "Contact",
+    "CATEGORIES": "Categories",
+    "CATEGORY_ITEMS": {
+      "GOOGLE_PLAY": "Google Play",
+      "PLAYSTATION": "PlayStation",
+      "NINTENDO": "Nintendo",
+      "PUBG": "PUBG",
+      "XBOX": "Xbox"
+    },
+    "COUNTRIES": {
+      "KUWAIT": "Kuwait",
+      "USA": "USA",
+      "SAUDI_ARABIA": "Saudi Arabia",
+      "UAE": "UAE"
+    },
+    "OFFERS": "Offers"
+  },
+  "COMMON": {
+    "ERROR_LOADING": "There was an error loading the content. Please try again.",
+    "RETRY": "Retry"
+  },
+  "HOME": {
+    "BROWSE_CATEGORIES": "Browse By Category",
+    "OFFERS": "Offers you can't miss",
+    "BUY_NOW": "Buy Now",
+    "ADD_TO_CART": "Add to Cart",
+    "NO_CATEGORIES": "No categories found",
+    "NO_OFFERS": "No offers available at the moment",
+    "BANNER": {
+      "TITLE": "Discover Premium Digital Products",
+      "SUBTITLE": "Find the best digital cards, games, and subscriptions at unbeatable prices",
+      "BUTTON": "Shop Now"
+    },
+    "WHY_CHOOSE_US": {
+      "TITLE": "Why Zain?",
+      "BEST_PRICES": {
+        "TITLE": "Best Prices",
+        "DESCRIPTION": "We offer the most competitive prices in the market, guaranteed."
+      },
+      "COMPETITIVE_OFFERS": {
+        "TITLE": "Competitive Offers",
+        "DESCRIPTION": "Regular promotions and special deals on our most popular products."
+      },
+      "PREMIUM_SUPPORT": {
+        "TITLE": "Premium Support",
+        "DESCRIPTION": "24/7 customer support to help you with any questions or issues."
+      },
+      "VARIETY_PRODUCTS": {
+        "TITLE": "Variety of Products",
+        "DESCRIPTION": "Wide selection of digital products from top brands worldwide."
+      }
+    },
+    "MEMBER_REVIEWS": {
+      "TITLE": "What Our Customers Say",
+      "REVIEW1": "I've been using Zain Tawseel for all my gaming needs. The prices are unbeatable and delivery is instant!",
+      "REVIEW2": "Great selection of products and excellent customer service. Highly recommended!",
+      "REVIEW3": "The best place to buy digital cards. Fast, reliable, and secure transactions every time.",
+      "REVIEW4": "I love the special offers and discounts. Zain Tawseel is my go-to for all digital purchases."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_US": "Zain Tawseel is a modern delivery service that connects customers with their favorite products quickly and efficiently.",
+    "QUICK_LINKS": "Quick Links",
+    "CONTACT_US": "Contact Us",
+    "ADDRESS": "Kuwait, Kuwait City",
+    "RIGHTS": "All Rights Reserved"
+  }
+}
+
+
