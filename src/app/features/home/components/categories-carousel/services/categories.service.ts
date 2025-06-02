@@ -28,7 +28,7 @@ export interface CategoriesResponse {
 })
 export class CategoriesService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/gc-maincategories`;
+  private apiUrl = `${environment.apiUrl}/gc-categories`;
 
   /**
    * Get main categories from the API
@@ -42,7 +42,8 @@ export class CategoriesService {
     });
 
     const body = {
-      country_code: countryCode
+      country_code: countryCode,
+      parent_id: 16,
     };
 
     return new Observable<Category[]>(observer => {

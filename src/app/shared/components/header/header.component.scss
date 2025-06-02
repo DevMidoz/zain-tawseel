@@ -145,6 +145,34 @@ nz-header {
     &.rtl-mode {
       .main-menu {
         direction: rtl;
+        
+        li {
+          li .fa-solid,
+          li .fa-brands {
+            margin-right: 0;
+            margin-left: 8px;
+          }
+          
+          .category-icon {
+            margin-right: 0;
+            margin-left: 8px;
+          }
+          
+          nz-icon[nzType="loading"] {
+            margin-right: 0;
+            margin-left: 8px;
+          }
+          
+          // RTL support for subcategory items
+          li.ant-menu-item {
+            .category-icon, 
+            .fa-solid, 
+            .fa-brands {
+              margin-right: 0;
+              margin-left: 8px;
+            }
+          }
+        }
       }
     }
   }
@@ -515,6 +543,36 @@ nz-header {
     :host-context(body.dark-theme) & {
       background-color: vars.$component-background-dark;
     }
+    
+    .loading-container,
+    .empty-categories {
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: vars.$text-color-secondary-light;
+      
+      :host-context(body.dark-theme) & {
+        color: vars.$text-color-tertiary-dark;
+      }
+      
+      nz-icon {
+        margin-bottom: 10px;
+        font-size: 24px;
+        
+        html[dir="rtl"] & {
+          margin-right: 0;
+          margin-left: 10px;
+        }
+      }
+      
+      i {
+        font-size: 18px;
+      }
+    }
 
     ::ng-deep .ant-collapse {
       background-color: transparent;
@@ -567,6 +625,23 @@ nz-header {
         background-color: rgba(vars.$component-background-dark, 0.3);
         border-bottom: 1px solid vars.$border-color-dark2;
         
+        &.loading-item {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 10px;
+          
+          nz-icon {
+            margin-right: 10px;
+            font-size: 18px;
+            
+            html[dir="rtl"] & {
+              margin-right: 0;
+              margin-left: 10px;
+            }
+          }
+        }
+        
         &:hover {
           background-color: rgba(vars.$component-background-dark, 0.5);
         }
@@ -586,9 +661,41 @@ nz-header {
       align-items: center;
       transition: background-color 0.2s;
       
-      i {
+      li .fa-solid,
+      li .fa-brands {
         margin-right: 8px;
         font-size: 16px;
+      }
+      
+      .category-icon {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+      
+      // Subcategory item styles
+      li.ant-menu-item {
+        .category-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+      
+      nz-icon[nzType="loading"] {
+        margin-right: 8px;
+        font-size: 16px;
+        animation: spin 1s infinite linear;
+      }
+      
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
       
       &:hover {

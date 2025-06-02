@@ -42,11 +42,6 @@
       -webkit-line-clamp: 2;
       line-clamp: 2;
       -webkit-box-orient: vertical;
-      
-      @media (max-width: 768px) {
-        font-size: 14px;
-        height: 38px;
-      }
     }
   }
   
@@ -111,10 +106,6 @@
         font-weight: 600;
         margin: 2px 3px 1px 3px;
         
-        @media (max-width: 768px) {
-          font-size: 13px;
-        }
-        
         :host-context(body.dark-theme) & {
           color: vars.$text-color-secondary-dark;
         }
@@ -124,10 +115,6 @@
         font-size: 18px;
         font-weight: 600;
         color: vars.$primary-color;
-        
-        @media (max-width: 768px) {
-          font-size: 16px;
-        }
         
         :host-context(body.dark-theme) & {
           color: vars.$primary-color-dark;
