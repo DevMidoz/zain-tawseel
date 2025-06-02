@@ -53,7 +53,10 @@
   },
   "COMMON": {
     "ERROR_LOADING": "There was an error loading the content. Please try again.",
-    "RETRY": "Retry"
+    "RETRY": "Retry",
+    "LOADING": "Loading...",
+    "NO_CATEGORIES": "No categories found",
+    "NO_SUBCATEGORIES": "No subcategories found"
   },
   "HOME": {
     "BROWSE_CATEGORIES": "Browse By Category",
