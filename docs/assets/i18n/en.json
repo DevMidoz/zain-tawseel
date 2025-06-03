@@ -35,6 +35,8 @@
     "HOME": "Home",
     "MENU": "Menu",
     "CONTACT": "Contact",
+    "ABOUT_US": "About Us",
+    "CONTACT_US": "Contact Us",
     "CATEGORIES": "Categories",
     "CATEGORY_ITEMS": {
       "GOOGLE_PLAY": "Google Play",
@@ -65,6 +67,8 @@
     "ADD_TO_CART": "Add to Cart",
     "NO_CATEGORIES": "No categories found",
     "NO_OFFERS": "No offers available at the moment",
+    "BEST_SELLER" : "Best Seller",
+    "SHOW_MORE": "Show More",
     "BANNER": {
       "TITLE": "Discover Premium Digital Products",
       "SUBTITLE": "Find the best digital cards, games, and subscriptions at unbeatable prices",
@@ -98,11 +102,19 @@
     }
   },
   "FOOTER": {
-    "ABOUT_US": "Zain Tawseel is a modern delivery service that connects customers with their favorite products quickly and efficiently.",
+    "ABOUT_US": "Zain Tawseel, Your destination for Gift Cards & Accessories.",
     "QUICK_LINKS": "Quick Links",
     "CONTACT_US": "Contact Us",
     "ADDRESS": "Kuwait, Kuwait City",
-    "RIGHTS": "All Rights Reserved"
+    "RIGHTS": "All Rights Reserved",
+    "HELP": "Help",
+    "HOW_TO_BUY": "How to Buy",
+    "TERMS": "Terms & Conditions",
+    "PRIVACY": "Privacy Policy",
+    "FAQ": "FAQ",
+    "DOWNLOAD_APP": "Download Our App",
+    "APP_DESCRIPTION": "Get the best shopping experience with our mobile app",
+    "ERROR_LOADING": "Error loading content"
   }
 }
 
