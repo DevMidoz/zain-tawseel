@@ -1,8 +1,7 @@
-import { Component, inject, signal, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal, OnInit, OnDestroy, ViewChild, PLATFORM_ID, ElementRef, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CarouselModule, CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -13,9 +12,15 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { HttpClientModule } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
+// Import Swiper core and required modules
+import { register } from 'swiper/element/bundle';
+// Register Swiper custom elements
+register();
+
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
 import { OffersService, Offer } from './services/offers.service';
+import { trackByIndexAndId, trackByValue } from '@shared/utils/track-by.util';
 
 // Import the NzCardAlt component
 import { NzCardAltComponent } from '@shared/components/nz-card-alt/nz-card-alt.component';
@@ -35,17 +40,18 @@ import { NzCardAltComponent } from '@shared/components/nz-card-alt/nz-card-alt.c
     NzSkeletonModule,
     NzGridModule,
     HttpClientModule,
-    CarouselModule,
     NzCardAltComponent
   ],
   templateUrl: './offers-cards.component.html',
-  styleUrls: ['./offers-cards.component.scss']
+  styleUrls: ['./offers-cards.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class OffersCardsComponent implements OnInit, OnDestroy {
+export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   private themeService = inject(ThemeService);
   public translateService = inject(TranslateService);
   private languageService = inject(LanguageService);
   private offersService = inject(OffersService);
+  private platformId = inject(PLATFORM_ID);
   
   // Use signals for reactive state
   theme = this.themeService.theme;
@@ -56,39 +62,70 @@ export class OffersCardsComponent implements OnInit, OnDestroy {
   isLoading = true;
   hasError = false;
   
-  @ViewChild('offersCarousel') offersCarousel!: CarouselComponent;
+  @ViewChild('swiperEl') swiperEl!: ElementRef;
   
-  // Offers carousel options with responsive breakpoints
-  offersCarouselOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: false,
-    dots: true,
-    navSpeed: 600,
-    autoplay: false,
-    autoplayTimeout: 5000,
-    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-    responsive: {
-      0: {
-        items: 2
-      },
-      600: {
-        items: 3
-      },
-      900: {
-        items: 4
-      },
-      1200: {
-        items: 5
-      }
+  // Swiper configuration
+  swiperParams = {
+    slidesPerView: 2,
+    spaceBetween: 16,
+    navigation: true,
+    pagination: {
+      clickable: true
     },
-    nav: false,
-    rtl: this.language() === 'ar'
+    loop: false,
+    // rewind: false, // Prevent rewinding to the first slide after the last slide
+    // autoplay: {
+    //   delay: 5000,
+    //   disableOnInteraction: false
+    // },
+    // // Prevent swiping beyond the last slide with a natural stop
+    // resistance: true,
+    // resistanceRatio: 0.85,
+    // Ensure proper behavior at the end of slides
+    // freeMode: false,
+    // Add padding at the end to ensure the last slide is fully visible
+    // slidesOffsetAfter: 16,
+    // Detect edge swipes and handle them properly
+    // edgeSwipeDetection: true,
+    // Prevent swiping to infinity
+    // watchSlidesProgress: true,
+    breakpoints: {
+      // All breakpoints use slidesPerView: 'auto' to maintain the card width
+      // and let the container determine how many cards fit
+      0: {
+        slidesPerView: 2,
+        spaceBetween: 8
+      },
+      // when window width is >= 480px
+      480: {
+        slidesPerView: 2,
+        spaceBetween: 12
+      },
+      // when window width is >= 600px
+      600: {
+        slidesPerView: 2,
+        spaceBetween: 16
+      },
+      // when window width is >= 900px
+      900: {
+        slidesPerView: 2,
+        spaceBetween: 16
+      },
+      // when window width is >= 1200px
+      1200: {
+        slidesPerView: 2,
+        spaceBetween: 16
+      }
+    }
   };
   
   // Offers data
   offers: Offer[] = [];
+  
+  // Limited offers for desktop view (max 6)
+  get displayedOffers(): Offer[] {
+    return this.offers.slice(5, 11);
+  }
   
   addToCart(offer: Offer): void {
     console.log('Added to cart:', offer);
@@ -111,6 +148,7 @@ export class OffersCardsComponent implements OnInit, OnDestroy {
     // Use 'KWT' as default country code - this could be made dynamic in the future
     this.offersSubscription = this.offersService.getOffers('KWT', lang).subscribe({
       next: (data) => {
+        console.log('Loaded offer IDs:', JSON.stringify(data.map(o => o.id)));
         this.offers = data;
         this.isLoading = false;
       },
@@ -123,28 +161,40 @@ export class OffersCardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Update RTL setting when language changes
-    this.offersCarouselOptions = {
-      ...this.offersCarouselOptions,
-      rtl: this.language() === 'ar'
-    };
-    
-    // Load offers on init
-    this.loadOffers(this.translateService.currentLang);
-    
     // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe((event: any) => {
-      // Update carousel direction
-      this.offersCarouselOptions = {
-        ...this.offersCarouselOptions,
-        rtl: event.lang === 'ar'
-      };
-      
-      // Only reload offers if the language changes
-      if (event.lang !== this.translateService.currentLang) {
-        this.loadOffers(event.lang);
-      }
+    this.langSubscription = this.translateService.onLangChange.subscribe(event => {
+      this.loadOffers(event.lang);
+      this.updateSwiperDirection();
     });
+    
+    // Initial load of offers
+    this.loadOffers(this.translateService.currentLang);
+  }
+  
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateSwiperDirection();
+    }
+  }
+  
+  /**
+   * Update Swiper direction based on current language
+   */
+  private updateSwiperDirection(): void {
+    if (isPlatformBrowser(this.platformId) && this.swiperEl?.nativeElement) {
+      // Update RTL setting based on current language
+      const isRtl = this.language() === 'ar';
+      const swiperInstance = this.swiperEl.nativeElement;
+      
+      // Set direction and update swiper
+      swiperInstance.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+      
+      // If swiper is already initialized, update it
+      if (swiperInstance.swiper) {
+        swiperInstance.swiper.changeLanguageDirection(isRtl ? 'rtl' : 'ltr');
+        swiperInstance.swiper.update();
+      }
+    }
   }
   
   ngOnDestroy(): void {
@@ -155,5 +205,14 @@ export class OffersCardsComponent implements OnInit, OnDestroy {
     if (this.offersSubscription) {
       this.offersSubscription.unsubscribe();
     }
+  }
+
+  // Tracking functions for the @for loops
+  trackByOfferIdAndIndex(index: number, offer: Offer): string {
+    return trackByIndexAndId(index, offer);
+  }
+
+  trackByIndex(index: number, item: number): string {
+    return trackByValue(index, item);
   }
 }

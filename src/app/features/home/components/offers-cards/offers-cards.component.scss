@@ -9,11 +9,45 @@
   
   .section-header {
     margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
     h2 {
       font-size: 24px;
       font-weight: 600;
       margin-bottom: 0;
+    }
+    
+    .show-more-btn {
+      font-size: 14px;
+      font-weight: 600;
+      height: 32px;
+      padding: 0 15px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      
+      i {
+        transition: transform 0.3s ease;
+      }
+      
+      &:hover i {
+        transform: translateX(5px);
+      }
+      
+      :host-context([dir="rtl"]) & {
+        &:hover i {
+          transform: translateX(-5px);
+        }
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 12px;
+        height: 28px;
+        padding: 0 10px;
+      }
     }
   }
   
@@ -100,11 +134,97 @@
   
   // Mobile view (carousel)
   .mobile-view {
-    display: none; // Hide by default
+    display: none;
+  
+    @media (max-width: 767px) {
+      display: flex;
+      max-height: 320px;
+    }
     
-    @media (max-width: 768px) {
-      display: block; // Show only on mobile
-      // margin-bottom: 40px; // Add bottom margin for dots
+    .offers-swiper {
+      width: 100%;
+      height: 100%;
+      padding-bottom: 40px; // Space for pagination
+      
+      ::ng-deep {
+        .swiper-wrapper {
+          display: flex;
+          align-items: stretch;
+        }
+        
+        .swiper-slide {
+          width: auto !important; // Allow slides to size based on content
+          height: auto !important;
+          flex-shrink: 0;
+        }
+      }
+      
+      swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto; // Allow slide height to adjust to content
+        width: 180px !important; // Fixed width for cards
+        margin-right: 16px; // Space between cards
+        padding-bottom: 10px;
+        
+        app-nz-card-alt {
+          width: 100%;
+          display: block;
+        }
+        
+        @media (max-width: 480px) {
+          width: 160px !important; // Slightly smaller on mobile
+        }
+        
+        @media (max-width: 360px) {
+          width: 140px !important; // Even smaller on very small screens
+        }
+      }
+      
+      // Adjust card sizing for mobile
+      @media (max-width: 480px) {
+        ::ng-deep {
+          .ant-card {
+            // .ant-card-cover {
+            //   img {
+            //     height: 120px; // Smaller images on very small screens
+            //   }
+            // }
+            
+            .ant-card-body {
+              padding: 12px 8px;
+              
+              .card-title {
+                font-size: 14px;
+                line-height: 1.2;
+                margin-bottom: 8px;
+                height: 34px; // Limit to 2 lines
+              }
+              
+              .price-container {
+                margin-bottom: 0px;
+                
+                .price {
+                  font-size: 16px;
+                }
+                
+                .original-price {
+                  font-size: 12px;
+                }
+              }
+              
+              .button-container {
+                button {
+                  padding: 0 8px;
+                  height: 28px;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
     
     .card-wrapper {

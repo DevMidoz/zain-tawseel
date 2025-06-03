@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
 import { CategoriesService, Category } from './services/categories.service';
+import { trackByIndexAndId, trackByValue } from '@shared/utils/track-by.util';
 
 @Component({
   selector: 'app-categories-carousel',
@@ -140,5 +141,14 @@ export class CategoriesCarouselComponent implements OnInit, OnDestroy {
       ...this.categoriesCarouselOptions,
       rtl: this.isRtl
     };
+  }
+
+  // Tracking functions for @for loops
+  trackByCategory(index: number, category: Category): string {
+    return trackByIndexAndId(index, category);
+  }
+
+  trackByIndex(index: number, item: number): string {
+    return trackByValue(index, item);
   }
 }

@@ -29,6 +29,7 @@ import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
 import { CategoriesService, Category } from '../../../features/home/components/categories-carousel/services/categories.service';
 import { SubcategoriesService, Subcategory } from '../../../features/home/components/categories-carousel/services/subcategories.service';
+import { trackByIndexAndId } from '@shared/utils/track-by.util';
 
 // Using Subcategory interface from the imported service
 
@@ -224,5 +225,18 @@ export class HeaderComponent implements OnInit {
   // Check if dark theme is active
   isDarkTheme(): boolean {
     return this.themeService.theme() === 'dark';
+  }
+
+  // Tracking functions for @for loops
+  trackByCartItem(index: number, item: CartItem): string {
+    return trackByIndexAndId(index, item);
+  }
+
+  trackByCategory(index: number, category: Category): string {
+    return trackByIndexAndId(index, category);
+  }
+
+  trackBySubcategory(index: number, subcategory: Subcategory): string {
+    return trackByIndexAndId(index, subcategory);
   }
 }

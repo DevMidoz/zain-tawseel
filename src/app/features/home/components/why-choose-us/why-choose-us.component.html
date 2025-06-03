@@ -4,7 +4,7 @@
   </div>
   
   <div nz-row [nzGutter]="[16, 24]">
-    @for (feature of features; track feature.id) {
+    @for (feature of features; track trackByFeature($index, feature)) {
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
         <div class="feature-card" [class.rtl-mode]="language() === 'ar'">
           <div class="feature-icon">

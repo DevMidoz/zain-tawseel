@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
+import { trackByIndexAndId } from '@shared/utils/track-by.util';
 
 @Component({
   selector: 'app-member-reviews',
@@ -137,5 +138,10 @@ export class MemberReviewsComponent implements OnInit, OnDestroy {
       month: 'short',
       day: 'numeric'
     }).format(date);
+  }
+
+  // Tracking function for the @for loop
+  trackByReview(index: number, review: any): string {
+    return trackByIndexAndId(index, review);
   }
 }

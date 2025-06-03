@@ -2,7 +2,7 @@
   <ng-template #coverTemplate>
     <div class="card-image-container">
       @if (discount > 0) {
-        <div class="discount-badge">{{ discount }}%</div>
+        <div class="discount-badge">{{ 'HOME.BEST_SELLER' | translate }}</div>
       }
       <img [src]="image" [alt]="title">
     </div>

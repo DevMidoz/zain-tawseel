@@ -1,34 +1,70 @@
 <nz-footer>
   <div class="footer-container">
+    <!-- Main Footer Content -->
     <div nz-row [nzGutter]="[24, 24]">
-      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8">
-        <h3>{{ 'APP.TITLE' | translate }}</h3>
-        <p>{{ 'FOOTER.ABOUT_US' | translate }}</p>
+      <!-- Brand Section -->
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" class="brand-section">
+        <div class="logo-container">
+          <img src="assets/svgs/zain_tawseel_logo.svg" alt="{{ 'APP.TITLE' | translate }}" class="footer-logo" />
+        </div>
+        <p class="tagline">{{ 'FOOTER.ABOUT_US' | translate }}</p>
+        <div class="social-links">
+          <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a> 
+          <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+        </div>
       </div>
-      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8">
-        <h3>{{ 'FOOTER.QUICK_LINKS' | translate }}</h3>
-        <ul class="footer-links">
-          <li><a [routerLink]="['/']">{{ 'NAV.HOME' | translate }}</a></li>
-          <li><a [routerLink]="['/offers']">{{ 'NAV.OFFERS' | translate }}</a></li>
-        </ul>
+      
+      <!-- Help Section -->
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" class="links-section">
+        <h3>{{ 'FOOTER.HELP' | translate }}</h3>
+        <div class="footer-links-container">
+          <ul class="footer-links">
+            <li><a [routerLink]="['/about']">{{ 'NAV.ABOUT_US' | translate }}</a></li>
+            <li><a [routerLink]="['/how-to-buy']">{{ 'FOOTER.HOW_TO_BUY' | translate }}</a></li>
+            <li><a [routerLink]="['/terms']">{{ 'FOOTER.TERMS' | translate }}</a></li>
+          </ul>
+          <ul class="footer-links">
+            <li><a [routerLink]="['/privacy']">{{ 'FOOTER.PRIVACY' | translate }}</a></li>
+            <li><a [routerLink]="['/faq']">{{ 'FOOTER.FAQ' | translate }}</a></li>
+            <li><a [routerLink]="['/contact']">{{ 'NAV.CONTACT_US' | translate }}</a></li>
+          </ul>
+        </div>
       </div>
-      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
-        <h3>{{ 'FOOTER.CONTACT_US' | translate }}</h3>
-        <div class="contact-info">
-          <p> <i class="fa-solid fa-envelope me-2"></i> zaintawseel.com</p>
-          <p><i class="fa-solid fa-phone me-2"></i> +965 123 456 789</p>
-          <p><i class="fa-solid fa-location-dot me-2"></i> {{ 'FOOTER.ADDRESS' | translate }}</p>
+      
+      <!-- Download App Section -->
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" class="download-section">
+        <h3>{{ 'FOOTER.DOWNLOAD_APP' | translate }}</h3>
+        <p>{{ 'FOOTER.APP_DESCRIPTION' | translate }}</p>
+        <div class="app-badges">
+          <a href="#" target="_blank" class="app-badge">
+            @if (isArabic()) {
+              <img src="assets/images/GooglePlay_AR.png" alt="Google Play" />
+            } @else {
+              <img src="assets/images/GooglePlay_EN.png" alt="Google Play" />
+            }
+          </a>
+          <a href="#" target="_blank" class="app-badge">
+            @if (isArabic()) {
+              <img src="assets/svgs/Download_on_the_App_Store_Badge_AR.svg" alt="App Store" />
+            } @else {
+              <img src="assets/svgs/Download_on_the_App_Store_Badge_EN.svg" alt="App Store" />
+            }
+          </a>
         </div>
       </div>
     </div>
+    
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
       <div class="copyright">
         &copy; {{ currentYear }} {{ 'APP.TITLE' | translate }}. {{ 'FOOTER.RIGHTS' | translate }}
       </div>
-      <div class="social-links">
-        <a href="#" target="_blank"><span nz-icon nzType="facebook" nzTheme="outline"></span></a>
-        <a href="#" target="_blank"><span nz-icon nzType="twitter" nzTheme="outline"></span></a>
-        <a href="#" target="_blank"><span nz-icon nzType="instagram" nzTheme="outline"></span></a>
+      <div class="payment-methods">
+        <img src="assets/images/payment-visa.png" alt="Visa" class="payment-icon Visa" />
+        <img src="assets/images/payment-applepay.png" alt="ApplePay" class="payment-icon ApplePay" />
+        <img src="assets/images/payment-mastercard.png" alt="Mastercard" class="payment-icon Mastercard" />
+        <img src="assets/images/payment-knet.png" alt="KNET" class="payment-icon KNET" />
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
+import { trackByIndexAndId } from '@shared/utils/track-by.util';
 
 @Component({
   selector: 'app-why-choose-us',
@@ -56,4 +57,9 @@ export class WhyChooseUsComponent {
       icon: 'fa-solid fa-box-open'
     }
   ];
+
+  // Tracking function for the @for loop
+  trackByFeature(index: number, feature: any): string {
+    return trackByIndexAndId(index, feature);
+  }
 }

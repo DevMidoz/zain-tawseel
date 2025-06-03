@@ -12,6 +12,7 @@ import { CategoriesCarouselComponent } from './components/categories-carousel/ca
 import { OffersCardsComponent } from './components/offers-cards/offers-cards.component';
 import { WhyChooseUsComponent } from './components/why-choose-us/why-choose-us.component';
 import { MemberReviewsComponent } from './components/member-reviews/member-reviews.component';
+import { MainBannerComponent } from './components/main-banner/main-banner.component';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ import { MemberReviewsComponent } from './components/member-reviews/member-revie
     CategoriesCarouselComponent,
     OffersCardsComponent,
     WhyChooseUsComponent,
+    MainBannerComponent,
     MemberReviewsComponent
   ],
   templateUrl: './home.component.html',

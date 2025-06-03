@@ -15,7 +15,7 @@
   @if (isLoading) {
     <div class="categories-loading">
       <div class="skeleton-container">
-        @for (i of [1,2,3,4,5,6]; track i) {
+        @for (i of [1,2,3,4,5,6]; track trackByIndex($index, i)) {
           <div class="skeleton-item">
             <nz-skeleton-element nzType="image" [nzActive]="true" class="category-image-skeleton"></nz-skeleton-element>
             <nz-skeleton-element nzType="input" [nzActive]="true" class="category-name-skeleton"></nz-skeleton-element>
@@ -38,7 +38,7 @@
   <!-- Categories carousel -->
   @if (!isLoading && !hasError && categories.length > 0) {
     <owl-carousel-o [options]="categoriesCarouselOptions" #categoriesCarousel>
-      @for (category of categories; track category.id) {
+      @for (category of categories; track trackByCategory($index, category)) {
         <ng-template carouselSlide [id]="category.id.toString()">
           <div class="category-item">
             <a [routerLink]="[category.link]" class="category-link">

@@ -1,0 +1,25 @@
+<section class="main-banner-section">
+      <!-- Loading state -->
+      @if (isLoading) {
+        <div class="banner-loading">
+          <nz-skeleton-element nzType="image" [nzActive]="true" class="banner-skeleton"></nz-skeleton-element>
+        </div>
+      }
+      
+      <!-- Error state -->
+      @if (hasError) {
+        <div class="banner-error">
+          <p>{{ 'COMMON.ERROR_LOADING' | translate }}</p>
+          <button nz-button nzType="primary" (click)="loadBanner(language())">
+            {{ 'COMMON.RETRY' | translate }}
+          </button>
+        </div>
+      }
+      
+      <!-- Banner content -->
+      @if (!isLoading && !hasError && banner) {
+        <div class="main-banner">
+          <img [src]="banner.img" [alt]="banner.name" class="banner-image">
+        </div>
+      }
+</section>

@@ -6,7 +6,7 @@
   </div>
   
   <owl-carousel-o [options]="reviewsCarouselOptions" #reviewsCarousel>
-    @for (review of reviews; track review.id) {
+    @for (review of reviews; track trackByReview($index, review)) {
       <ng-template carouselSlide [id]="review.id.toString()">
         <div class="review-card" [class.rtl-mode]="language() === 'ar'">
           <div class="review-header">

@@ -1,72 +1,183 @@
 @use '../../../../assets/scss/variables' as vars;
 
 nz-footer {
-  padding: 40px 0 20px;
+  padding: 60px 0 20px;
   background-color: vars.$header-background;
   color: white;
 }
 
 .footer-container {
-  max-width: 1800px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 16px;
 }
 
 h3 {
   font-size: 18px;
-  margin-bottom: 16px;
-  font-weight: 500;
+  margin-bottom: 24px;
+  font-weight: 600;
   color: white;
-}
-
-p {
-  color: vars.$text-color-dark;
-  margin-bottom: 8px;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  position: relative;
   
-  li {
-    margin-bottom: 8px;
-    transition: transform 0.4s;
-    
-    a {
-      color: vars.$text-color-dark;
-      text-decoration: none;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: vars.$primary-color-light;
+  }
+  
+  :host-context(html[dir="rtl"]) & {
+    &:after {
+      left: auto;
+      right: 0;
     }
-    
-    &:hover {
-      transform: translateX(3px);
+  }
+
+  @media (max-width: vars.$screen-md) {
+    &:after {
+      left: 135px;
     }
 
     :host-context(html[dir="rtl"]) & {
-      &:hover {
-        transform: translateX(-3px);
+      &:after {
+        left: auto;
+        right: 135px;
       }
     }
   }
 }
 
-.contact-info {
-  p {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
+p {
+  color: vars.$text-color-dark;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+// Brand section styles
+.brand-section {
+  margin-bottom: 24px;
+  
+  .logo-container {
+    margin-bottom: 16px;
     
-    span[nz-icon] {
-      margin-right: 8px;
-      color: vars.$primary-color;
+    .footer-logo {
+      max-height: 40px;
+      margin-bottom: 16px;
+    }
+  }
+  
+  .tagline {
+    margin-bottom: 24px;
+    max-width: 300px;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+      
+      i {
+        font-size: 16px;
+      }
+      
+      &:hover {
+        background-color: vars.$primary-color-light;
+        transform: translateY(-3px);
+      }
     }
   }
 }
 
+// Links section styles
+.links-section {
+  .footer-links-container {
+    display: flex;
+    gap: 40px;
+    
+    // // For RTL support
+    // :host-context(html[dir="rtl"]) & {
+    //   flex-direction: row-reverse;
+    // }
+    @media (max-width: vars.$screen-md) {
+      justify-content: center;
+    }
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 120px;
+    
+    li {
+      margin-bottom: 12px;
+      transition: transform 0.3s;
+      
+      a {
+        color: vars.$text-color-dark;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s;
+        display: inline-block;
+        
+        &:hover {
+          color: white;
+        }
+      }
+      
+      &:hover {
+        transform: translateX(5px);
+      }
+
+      :host-context(html[dir="rtl"]) & {
+        &:hover {
+          transform: translateX(-5px);
+        }
+      }
+    }
+  }
+}
+
+// Download section styles
+.download-section {
+  .app-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+    
+    .app-badge {
+      img {
+        height: 40px;
+        transition: transform 0.1s;
+      }
+      
+      &:hover img {
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+// Footer bottom styles
 .footer-bottom {
-  margin-top: 32px;
-  padding-top: 16px;
-  border-top: 1px solid vars.$border-color-split-dark;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,60 +189,69 @@ p {
     margin-bottom: 8px;
   }
   
-  .social-links {
+  .payment-methods {
     display: flex;
-    gap: 16px;
+    gap: 10px;
+    align-items: center;
     
-    a {
-      color: vars.$text-color-dark;
-      font-size: 20px;
-      transition: color 0.3s;
-      
-      &:hover {
-        color: vars.$primary-color;
-      }
+    .payment-icon {
+      height: 24px;
+    }
+    .payment-icon.Visa, .payment-icon.ApplePay{
+      height: 35px;
     }
   }
 }
 
-// // Dark theme styles
-// :host-context(body.dark-theme) {
-//   nz-footer {
-//     background-color: vars.$header-background;
-//   }
+// Responsive styles
+@media (max-width: 767px) {
+  nz-footer {
+    padding: 40px 0 90px;
+  }
   
-//   h3 {
-//     color: vars.$text-color-heading-dark;
-//   }
-  
-//   p {
-//     color: vars.$text-color-secondary-dark;
-//   }
-  
-//   .footer-links {
-//     li a {
-//       color: vars.$text-color-secondary-dark;
-//       transition: transform 0.4s;
-      
-//       &:hover {
-//         transform: translateX(5px);
-//         // color: vars.$primary-color;
-//       }
-//     }
-//   }
-  
-//   .footer-bottom {
-//     border-top-color: vars.$border-color-split-dark;
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
     
-//     .copyright {
-//       color: vars.$text-color-tertiary-dark;
-//     }
+    .copyright {
+      margin-bottom: 16px;
+      text-align: center;
+    }
+  }
+  
+  .brand-section {
+    text-align: center;
     
-//     .social-links a {
-//       color: vars.$text-color-secondary-dark;
-//     }
-//   }
-// }
+    .tagline {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .social-links {
+      justify-content: center;
+    }
+    
+    h3:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  .links-section, .download-section {
+    text-align: center;
+    
+    h3:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  .app-badges {
+    justify-content: center;
+  }
+}
 
 // RTL specific styles
 :host-context(html[dir="rtl"]) {

@@ -77,7 +77,7 @@
               <div class="cart-items-container">
                 @if (cartItems.length > 0) {
                   <ul nz-menu>
-                    @for (item of cartItems; track item) {
+                    @for (item of cartItems; track trackByCartItem($index, item)) {
                       <li  class="cart-item">
                         <div class="item-quantity">
                           <span>{{ 'APP.QUANTITY' | translate }}: {{ item.quantity }}</span>
@@ -135,7 +135,7 @@
           } @else {
             <ul>
               <!-- Dynamic Categories -->
-              @for (category of categories; track category.id) {
+              @for (category of categories; track trackByCategory($index, category)) {
                 <li nz-submenu (mouseenter)="loadSubcategories(category.id)">
                   <span title nz-submenu-title>
                     <!-- Use category image if available, otherwise use a default icon -->
@@ -164,7 +164,7 @@
                     } 
                     <!-- Display subcategories -->
                     @else if (subcategories[category.id]) {
-                      @for (subcategory of subcategories[category.id]; track subcategory.id) {
+                      @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
                         <li nz-menu-item [routerLink]="['/categories/' + category.id + '/' + subcategory.id]">
                           <!-- @if (subcategory.image) {
                             <img [src]="subcategory.image" alt="{{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}" class="category-icon me-2" />
@@ -291,7 +291,7 @@
           
           <!-- Dynamic Categories -->
           @else {
-            @for (category of categories; track category.id) {
+            @for (category of categories; track trackByCategory($index, category)) {
               <nz-collapse-panel [nzHeader]="category.name" (nzActiveChange)="$event && loadSubcategories(category.id)">
                 <ul class="sidebar-submenu">
                   <!-- Loading state for subcategories -->
@@ -312,7 +312,7 @@
                   
                   <!-- Display subcategories -->
                   @else if (subcategories[category.id]) {
-                    @for (subcategory of subcategories[category.id]; track subcategory.id) {
+                    @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
                       <li [routerLink]="['/categories/' + category.id + '/' + subcategory.id]" (click)="toggleSidebar()">
                         <i class="fa-solid fa-tag me-2"></i>
                         {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
