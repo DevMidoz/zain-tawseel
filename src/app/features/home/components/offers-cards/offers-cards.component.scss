@@ -1,24 +1,29 @@
-@use '../../../../../assets/scss/variables' as vars;
+@use "../../../../../assets/scss/variables" as vars;
 
 .offers-section {
   margin-bottom: 40px;
+  width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: vars.$screen-md) {
     margin-bottom: 20px;
   }
-  
+
   .section-header {
     margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     h2 {
       font-size: 24px;
       font-weight: 600;
       margin-bottom: 0;
+
+      @media (max-width: vars.$screen-sm) {
+        font-size: 17px;
+      }
     }
-    
+
     .show-more-btn {
       font-size: 14px;
       font-weight: 600;
@@ -28,21 +33,21 @@
       display: flex;
       align-items: center;
       transition: all 0.3s ease;
-      
+
       i {
         transition: transform 0.3s ease;
       }
-      
+
       &:hover i {
         transform: translateX(5px);
       }
-      
+
       :host-context([dir="rtl"]) & {
         &:hover i {
           transform: translateX(-5px);
         }
       }
-      
+
       @media (max-width: 480px) {
         font-size: 12px;
         height: 28px;
@@ -50,12 +55,12 @@
       }
     }
   }
-  
+
   // Loading state styles
   .offers-loading {
     width: 100%;
     padding: 20px 0;
-    
+
     .skeleton-card {
       padding: 16px;
       border-radius: 8px;
@@ -64,35 +69,35 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 16px;
-      
+
       :host-context(body.dark-theme) & {
         background-color: #1f1f1f;
       }
-      
+
       .card-image-skeleton {
         width: 100%;
         height: 150px;
         margin-bottom: 16px;
       }
-      
+
       .card-title-skeleton {
         width: 80%;
         height: 20px;
         margin-bottom: 12px;
       }
-      
+
       .card-price-skeleton {
         width: 50%;
         height: 24px;
         margin-bottom: 20px;
       }
-      
+
       .card-buttons-skeleton {
         display: flex;
         justify-content: space-between;
         gap: 8px;
         margin-top: auto;
-        
+
         nz-skeleton-element {
           flex: 1;
           height: 36px;
@@ -100,187 +105,102 @@
       }
     }
   }
-  
+
   // Error and empty state styles
-  .offers-error, .no-offers {
+  .offers-error,
+  .no-offers {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px 0;
     text-align: center;
-    
+
     p {
       font-size: 18px;
       margin-bottom: 20px;
       color: vars.$text-color-light;
-      
+
       :host-context(body.dark-theme) & {
         color: vars.$text-color-dark;
       }
     }
-    
+
     button {
       min-width: 120px;
     }
   }
-  
+
   // Desktop view (grid layout)
   .desktop-view {
+    width: 100%;
+    margin: 0 auto;
+
     @media (max-width: 768px) {
       display: none; // Hide on mobile
     }
+
+    // Special handling for tablet view (4 cards per row)
+    @media (min-width: 769px) and (max-width: 991px) {
+      [nz-col] {
+        // Additional styling for tablet cards
+        app-nz-card-alt {
+          display: block;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    // Desktop view styles
+    @media (min-width: 992px) {
+      [nz-col] {
+        padding: 6px;
+      }
+    }
   }
-  
+
   // Mobile view (carousel)
   .mobile-view {
     display: none;
-  
+
     @media (max-width: 767px) {
-      display: flex;
-      max-height: 320px;
+      display: block;
+      width: 100%;
+      position: relative;
+      padding-bottom: 30px; // Space for pagination
     }
-    
+
     .offers-swiper {
       width: 100%;
-      height: 100%;
-      padding-bottom: 40px; // Space for pagination
-      
-      ::ng-deep {
-        .swiper-wrapper {
-          display: flex;
-          align-items: stretch;
-        }
-        
-        .swiper-slide {
-          width: auto !important; // Allow slides to size based on content
-          height: auto !important;
-          flex-shrink: 0;
-        }
-      }
-      
-      swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: auto; // Allow slide height to adjust to content
-        width: 180px !important; // Fixed width for cards
-        margin-right: 16px; // Space between cards
-        padding-bottom: 10px;
-        
-        app-nz-card-alt {
-          width: 100%;
-          display: block;
-        }
-        
-        @media (max-width: 480px) {
-          width: 160px !important; // Slightly smaller on mobile
-        }
-        
-        @media (max-width: 360px) {
-          width: 140px !important; // Even smaller on very small screens
-        }
-      }
-      
-      // Adjust card sizing for mobile
-      @media (max-width: 480px) {
-        ::ng-deep {
-          .ant-card {
-            // .ant-card-cover {
-            //   img {
-            //     height: 120px; // Smaller images on very small screens
-            //   }
-            // }
-            
-            .ant-card-body {
-              padding: 12px 8px;
-              
-              .card-title {
-                font-size: 14px;
-                line-height: 1.2;
-                margin-bottom: 8px;
-                height: 34px; // Limit to 2 lines
-              }
-              
-              .price-container {
-                margin-bottom: 0px;
-                
-                .price {
-                  font-size: 16px;
-                }
-                
-                .original-price {
-                  font-size: 12px;
-                }
-              }
-              
-              .button-container {
-                button {
-                  padding: 0 8px;
-                  height: 28px;
-                  font-size: 12px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    
-    .card-wrapper {
-      padding: 10px 5px;
-      
-      app-nz-card-alt {
-        width: 100%;
+      margin: 0 auto;
+
+      .offer-card-wrapper {
+        padding: 2px; // Small padding to prevent edge touching
+        height: 100%;
         display: block;
       }
     }
-    
-    ::ng-deep {
-      .owl-dots {
-        margin-top: 15px;
-        
-        .owl-dot {
-          span {
-            background-color: #d9d9d9;
-          }
-          
-          &.active span {
-            background-color: vars.$primary-color;
-          }
-        }
-      }
-      
-      .owl-stage {
-        display: flex;
-        padding-bottom: 5px;
-      }
-      
-      .owl-item {
-        display: flex;
-        justify-content: center;
-      }
-    }
   }
-  
+
   .offer-card {
     height: 100%;
     border-radius: 24px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
-    
+
     ::ng-deep .ant-card-body {
       padding: 16px;
     }
-    
+
     ::ng-deep .ant-card-meta {
       margin-bottom: 10px;
-      
+
       .ant-card-meta-title {
         font-size: 16px;
         font-weight: 500;
@@ -295,7 +215,7 @@
         -webkit-box-orient: vertical;
       }
     }
-    
+
     .offer-image-container {
       height: 200px;
       // background-size: contain;
@@ -306,7 +226,7 @@
       display: flex;
       justify-content: center;
       padding-top: 17px;
-      
+
       .discount-badge {
         position: absolute;
         top: 10px;
@@ -320,54 +240,55 @@
         font-size: 12px;
       }
     }
-    
+
     .price-container {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
-      
+
       .price {
         font-size: 18px;
         font-weight: bold;
         color: vars.$primary-color;
       }
     }
-    
+
     .offer-actions {
       display: flex;
       width: 100%;
       gap: 10px;
-      
+
       .buy-now-container {
         flex: 7;
       }
-      
+
       .cart-btn-container {
         flex: 3;
       }
     }
   }
-  
+
   // Style the card actions
   ::ng-deep .ant-card-actions {
     display: flex;
     padding: 0;
     background-color: transparent;
     border-top: none;
-    
+
     > li {
       width: 100%;
       margin: 0;
-      
+
       &:first-child {
         width: 60%;
       }
-      
+
       &:last-child {
         width: 40%;
       }
-      
-      .buy-now-btn, .add-to-cart-btn {
+
+      .buy-now-btn,
+      .add-to-cart-btn {
         height: 40px;
         border: none;
         display: flex;
@@ -377,24 +298,66 @@
         border-radius: 7px !important;
         overflow: hidden;
       }
-      
+
       .buy-now-btn {
         background-color: vars.$primary-color !important;
         border-color: vars.$primary-color !important;
         color: white;
         font-weight: 500;
-        
-        &:hover, &:focus {
+
+        &:hover,
+        &:focus {
           background-color: vars.$primary-color-light !important;
           border-color: vars.$primary-color-light !important;
         }
       }
-      
+
       .add-to-cart-btn {
         color: vars.$primary-color;
-        
+
         span[nz-icon] {
           font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+// Global swiper overrides
+:host ::ng-deep {
+  swiper-container {
+    // Fix issues with swiper looping
+    --swiper-theme-color: var(--primary-color, #1890ff);
+
+    // Add custom swiper styles
+    swiper-slide {
+      height: auto !important; // Allow slides to be their natural height
+      width: 180px !important; // Fixed width for cards
+      margin-right: 16px;
+
+      @media (max-width: 480px) {
+        width: 160px !important; // Slightly smaller on mobile
+      }
+
+      @media (max-width: 360px) {
+        width: 140px !important; // Even smaller on very small screens
+      }
+    }
+
+    // Pagination styles
+    .swiper-pagination {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      .swiper-pagination-bullet {
+        margin: 0 4px;
+        background-color: var(--primary-color, #1890ff);
+        opacity: 0.3;
+
+        &.swiper-pagination-bullet-active {
+          opacity: 1;
         }
       }
     }

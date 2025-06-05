@@ -38,6 +38,8 @@
     "ABOUT_US": "من نحن",
     "CONTACT_US": "اتصل بنا",
     "CATEGORIES": "الفئات",
+    "PRIVACY_POLICY": "سياسة الخصوصية",
+    "TERMS_CONDITIONS": "الشروط والأحكام",
     "CATEGORY_ITEMS": {
       "GOOGLE_PLAY": "جوجل بلاي",
       "PLAYSTATION": "بلايستيشن",
@@ -67,7 +69,7 @@
     "ADD_TO_CART": "أضف إلى السلة",
     "NO_CATEGORIES": "لم يتم العثور على فئات",
     "NO_OFFERS": "لا توجد عروض متاحة حاليًا",
-    "BEST_SELLER" : "الأكثر مبيعًا",
+    "BEST_SELLER": "الأكثر مبيعًا",
     "SHOW_MORE": "عرض المزيد",
     "BANNER": {
       "TITLE": "اكتشف المنتجات الرقمية الممتازة",

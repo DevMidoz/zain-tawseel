@@ -1,8 +1,10 @@
-@use '../../../../assets/scss/variables' as vars;
+@use "../../../../assets/scss/variables" as vars;
 
 :host {
-  display: flex;
+  display: block;
   height: 100%;
+  width: 100%;
+  padding: 0;
 }
 
 .ant-card {
@@ -11,35 +13,57 @@
 }
 
 .card-alt {
-  // height: 100%;
-  border-radius: 24px;
+  border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (min-width: 1200px) {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 
+    @media (min-width: 1200px) {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
   }
-  
+
   ::ng-deep {
     .ant-card-body {
       padding: 16px;
       display: flex;
       flex-direction: column;
       flex: 1 1 auto;
-      // height: calc(100% - 180px); // Adjust based on image container height
+
+      @media (min-width: 1200px) {
+        padding: 20px;
+      }
+
+      @media (max-width: 992px) {
+        padding: 12px;
+      }
     }
-    
+
     .ant-card-meta {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       flex: 1 1 auto;
+
+      @media (min-width: 1200px) {
+        margin-bottom: 14px;
+      }
     }
-    
+
     .ant-card-meta-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 0;
       white-space: normal;
@@ -48,25 +72,45 @@
       -webkit-line-clamp: 2;
       line-clamp: 2;
       -webkit-box-orient: vertical;
+      line-height: 1.4;
+
+      @media (min-width: 1200px) {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
       @media (max-width: 768px) {
         font-size: 12px;
       }
-      
+    }
+
+    // Make card cover take proper width
+    .ant-card-cover {
+      width: 100%;
     }
   }
-  
+
   .card-image-container {
     position: relative;
-    display: flex;
-    justify-content: center;
-    //align-items: center;
-    // padding: 10px;
-    height: 100%;
+    display: block;
+    overflow: hidden;
     width: 100%;
-    // @media (max-width: 768px) {
-    //   height: 185px;
-    // }
-    
+    height: 100%; // Increased height for large screens
+    background-color: #f8f8f8;
+    border-radius: 12px 12px 0 0;
+
+    @media (max-width: 1200px) {
+      height: 200px; // Medium height for medium screens
+    }
+
+    @media (max-width: 992px) {
+      height: 170px; // Default height for smaller screens
+    }
+
+    :host-context(body.dark-theme) & {
+      background-color: #121a36;
+    }
+
     .discount-badge {
       position: absolute;
       top: 10px;
@@ -79,43 +123,44 @@
       font-size: 12px;
       font-weight: bold;
     }
-    
+
     img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // Cover the entire container
       object-position: center;
-      border-radius: 20px;
+      transition: transform 0.3s ease;
     }
   }
-  
+
   .price-container {
-    margin: 10px 0;
-    // min-height: 52px; // Ensure consistent height with or without original price
+    margin: 8px 0;
     display: flex;
-    // flex: 1 1 auto; // Allow this to grow and fill available space
     align-items: center;
+
+    @media (min-width: 1200px) {
+      margin: 12px 0;
+    }
 
     @media (max-width: 768px) {
       margin: 5px 0;
     }
-    
-    .price {
-      font-size: 18px;
-      font-weight: 600;
-    }
-    
+
     .price-wrapper {
       display: flex;
       align-items: center;
-      
+
       .original-price {
         font-size: 14px;
         text-decoration: line-through;
         color: vars.$text-color-secondary-light;
         font-weight: 600;
-        margin: 2px 3px 1px 3px;
-        
+        margin: 2px 5px 1px 5px;
+
+        @media (min-width: 1200px) {
+          font-size: 16px;
+        }
+
         :host-context(body.dark-theme) & {
           color: vars.$text-color-secondary-dark;
         }
@@ -123,12 +168,16 @@
           font-size: 12px;
         }
       }
-      
+
       .current-price {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
         color: vars.$primary-color;
-        
+
+        @media (min-width: 1200px) {
+          font-size: 18px;
+        }
+
         :host-context(body.dark-theme) & {
           color: vars.$primary-color-dark;
         }
@@ -139,24 +188,48 @@
       }
     }
   }
-  
+
   .card-actions {
     display: flex;
     gap: 8px;
-    margin-top: 16px;
-    
+    margin-top: 12px;
+
+    @media (min-width: 1200px) {
+      gap: 12px;
+      margin-top: 16px;
+    }
+
     .buy-now-container {
       flex: 1;
-      
+
       .buy-now-btn {
         height: 40px;
         border-radius: 8px;
+        font-size: 14px;
+
+        @media (min-width: 1200px) {
+          height: 44px;
+          font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+          height: 36px;
+          font-size: 12px;
+        }
       }
     }
-    
+
     .cart-btn-container {
       width: 40px;
-      
+
+      @media (min-width: 1200px) {
+        width: 44px;
+      }
+
+      @media (max-width: 768px) {
+        width: 36px;
+      }
+
       .add-to-cart-btn {
         height: 40px;
         width: 40px;
@@ -166,23 +239,35 @@
         justify-content: center;
         border-radius: 8px;
         transition: all 0.3s ease;
-        
+        font-size: 16px;
         // Light theme styles
         background-color: vars.$component-background-light;
         color: vars.$primary-color;
-        border-color: transparent;
-        
+        border: none;
+
+        @media (min-width: 1200px) {
+          height: 44px;
+          width: 44px;
+          font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+          height: 36px;
+          width: 36px;
+          font-size: 14px;
+        }
+
         &:hover {
           background-color: rgba(vars.$primary-color-light, 0.3);
           color: vars.$primary-color;
         }
-        
+
         :host-context([data-theme="dark"]) & {
           // Dark theme styles
           background-color: rgba(vars.$component-background-dark, 0.5);
           color: vars.$text-color-light;
           border-color: vars.$border-color-dark;
-          
+
           &:hover {
             background-color: rgba(vars.$primary-color, 0.2);
             color: vars.$primary-color-light;
@@ -191,5 +276,58 @@
       }
     }
   }
-  
+}
+
+// Specific tablet view adjustments
+@media (min-width: 769px) and (max-width: 991px) {
+  .card-alt {
+    ::ng-deep {
+      .ant-card-body {
+        padding: 10px;
+      }
+
+      .ant-card-meta-title {
+        font-size: 13px;
+        line-height: 1.3;
+      }
+    }
+
+    .card-image-container {
+      height: 150px;
+    }
+
+    .price-container {
+      margin: 6px 0;
+
+      .price-wrapper {
+        .current-price {
+          font-size: 14px;
+        }
+
+        .original-price {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .card-actions {
+      gap: 6px;
+      margin-top: 10px;
+
+      .buy-now-container .buy-now-btn {
+        height: 36px;
+        font-size: 13px;
+      }
+
+      .cart-btn-container {
+        width: 36px;
+
+        .add-to-cart-btn {
+          height: 36px;
+          width: 36px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }

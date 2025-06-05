@@ -1,26 +1,30 @@
 <!-- Country Selector -->
-<button nz-button nz-dropdown [nzDropdownMenu]="countryMenu" class="country-btn" nzTrigger="click" nzPlacement="bottomLeft" [nzOverlayClassName]="'country-dropdown'" [nzOverlayStyle]="{zIndex: 2000}">
-  <img [src]="getSelectedCountryFlag()" width="20" height="20" class="me-2" [alt]="selectedCountry + '_flag'">
-  <span>{{ selectedCountry }}</span>
+<button nz-button nz-dropdown [nzDropdownMenu]="countryMenu" class="country-btn" nzTrigger="click"
+  nzPlacement="bottomLeft" [nzOverlayClassName]="'country-dropdown'" [nzOverlayStyle]="{zIndex: 2000}">
+  @if (selectedCountry) {
+  <img [src]="selectedCountry.flag_picture" width="20" height="15" class="me-2"
+    [alt]="selectedCountry.country_code + '_flag'">
+  <span>{{ getCountryName(selectedCountry) }}</span>
+  } @else {
+  <span>{{ 'APP.LOADING' | translate }}</span>
+  }
   <span nz-icon nzType="down" class="ms-2"></span>
 </button>
+
 <nz-dropdown-menu #countryMenu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item (click)="setCountry('Kuwait')" [class.selected]="selectedCountry === 'Kuwait'">
-      <img src="assets/images/kuwait_flag.webp" width="20" height="20" alt="KUWAIT_flag" class="me-2">
-      {{ 'APP.COUNTRY.KUWAIT' | translate }}
+    @if (!loading) {
+    @for (country of countries; track country.country_code) {
+    <li nz-menu-item (click)="setCountry(country)"
+      [class.selected]="selectedCountry?.country_code === country.country_code">
+      <img [src]="country.flag_picture" width="20" height="15" [alt]="country.country_code + '_flag'" class="me-2">
+      {{ getCountryName(country) }}
     </li>
-    <li nz-menu-item (click)="setCountry('USA')" [class.selected]="selectedCountry === 'USA'">
-      <img src="assets/images/usa_flag.webp" width="20" height="20" alt="USA_flag" class="me-2">
-      {{ 'APP.COUNTRY.USA' | translate }}
+    }
+    } @else {
+    <li nz-menu-item>
+      <span>{{ 'APP.LOADING' | translate }}</span>
     </li>
-    <li nz-menu-item (click)="setCountry('Saudi Arabia')" [class.selected]="selectedCountry === 'Saudi Arabia'">
-      <img src="assets/images/saudi_flag.webp" width="20" height="20" alt="SA_flag" class="me-2">
-      {{ 'APP.COUNTRY.SAUDI_ARABIA' | translate }}
-    </li>
-    <li nz-menu-item (click)="setCountry('UAE')" [class.selected]="selectedCountry === 'UAE'">
-      <img src="assets/images/uae_flag.webp" width="20" height="20" alt="UAE_flag" class="me-2">
-      {{ 'APP.COUNTRY.UAE' | translate }}
-    </li>
+    }
   </ul>
 </nz-dropdown-menu>

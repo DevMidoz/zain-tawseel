@@ -1,0 +1,90 @@
+@use "../../../assets/scss/variables" as vars;
+
+.terms-conditions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  .terms-conditions-content {
+    background-color: var(--component-background);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    h1 {
+      margin-bottom: 16px;
+      color: var(--heading-color);
+      font-size: 28px;
+    }
+
+    h2 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+      color: var(--heading-color);
+      font-size: 22px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.6;
+        font-size: 16px;
+      }
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Mobile styles
+  @media (max-width: vars.$screen-sm) {
+    padding: 0 12px;
+
+    .terms-conditions-content {
+      padding: 16px;
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      p,
+      li {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // Tablet styles
+  @media (min-width: (vars.$screen-sm + 1)) {
+    padding: 0 24px;
+
+    .terms-conditions-content {
+      padding: 32px;
+    }
+  }
+
+  // Desktop styles
+  @media (min-width: (vars.$screen-lg + 1)) {
+    padding: 0 32px;
+  }
+}

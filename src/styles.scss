@@ -2,28 +2,66 @@
 // Import theme variables directly in angular.json instead
 
 // Import SCSS modules using modern @use syntax
-@use 'assets/scss/variables' as vars;
-@use 'assets/scss/light-theme';
-@use 'assets/scss/dark-theme';
-@use 'assets/scss/rtl';
-@use 'assets/scss/responsive';
-@use 'assets/scss/spacing';
-@use 'assets/scss/dropdown';
+@use "assets/scss/variables" as vars;
+@use "assets/scss/light-theme";
+@use "assets/scss/dark-theme";
+@use "assets/scss/rtl";
+@use "assets/scss/responsive";
+@use "assets/scss/spacing";
+@use "assets/scss/dropdown";
 
 // Global styles
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Jost', Arial, Helvetica, sans-serif;
+  font-family: "Hanken Grotesk", Arial, Helvetica, sans-serif;
 }
 
 // Arabic font family
 html[lang="ar"] {
-  font-family: 'Tajawal', Arial, sans-serif;
-  
-  h1, h2, h3, h4, h5, h6, p, span, div, button, a, input, textarea, select, option {
-    font-family: 'Tajawal', Arial, sans-serif;
+  font-family: "Tajawal", Arial, sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  button,
+  a,
+  input,
+  textarea,
+  select,
+  option {
+    font-family: "Tajawal", Arial, sans-serif;
+  }
+}
+
+// English font family - explicitly set for clarity
+html[lang="en"] {
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  button,
+  a,
+  input,
+  textarea,
+  select,
+  option {
+    font-family: "Hanken Grotesk", Arial, sans-serif;
   }
 }
 
@@ -40,13 +78,15 @@ html[lang="ar"] {
 .ant-btn-primary {
   background-color: vars.$primary-color;
   border-color: vars.$primary-color;
-  
-  &:hover, &:focus {
+
+  &:hover,
+  &:focus {
     background-color: vars.$primary-color-light !important;
     border-color: vars.$primary-color-light !important;
   }
-  
-  &[disabled], &[disabled]:hover {
+
+  &[disabled],
+  &[disabled]:hover {
     background-color: rgba(vars.$primary-color, 0.6);
     border-color: rgba(vars.$primary-color, 0.6);
   }
@@ -63,7 +103,8 @@ html[lang="ar"] {
   background-color: vars.$component-background-light !important;
   border-color: vars.$component-background-light !important;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: vars.$primary-color !important;
   }
 }

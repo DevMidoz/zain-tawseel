@@ -1,0 +1,41 @@
+@use "../../../../assets/scss/variables" as vars;
+
+.breadcrumb-container {
+  padding: 16px 0;
+
+  ::ng-deep {
+    .ant-breadcrumb {
+      font-size: 14px;
+
+      .ant-breadcrumb-link {
+        a {
+          color: var(--primary-color);
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        span {
+          color: var(--text-color-secondary);
+        }
+      }
+
+      .ant-breadcrumb-separator {
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+
+  // Mobile styles
+  @media (max-width: vars.$screen-sm) {
+    padding: 12px 0;
+
+    ::ng-deep {
+      .ant-breadcrumb {
+        font-size: 12px;
+      }
+    }
+  }
+}

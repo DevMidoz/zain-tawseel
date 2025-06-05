@@ -10,28 +10,28 @@
         <p class="tagline">{{ 'FOOTER.ABOUT_US' | translate }}</p>
         <div class="social-links">
           <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a> 
+          <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
           <a href="#" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
         </div>
       </div>
-      
+
       <!-- Help Section -->
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" class="links-section">
         <h3>{{ 'FOOTER.HELP' | translate }}</h3>
         <div class="footer-links-container">
           <ul class="footer-links">
+            <li><a [routerLink]="['/categories']">{{ 'NAV.CATEGORIES' | translate }}</a></li>
+            <li><a [routerLink]="['/offers']">{{ 'NAV.OFFERS' | translate }}</a></li>
             <li><a [routerLink]="['/about']">{{ 'NAV.ABOUT_US' | translate }}</a></li>
-            <li><a [routerLink]="['/how-to-buy']">{{ 'FOOTER.HOW_TO_BUY' | translate }}</a></li>
-            <li><a [routerLink]="['/terms']">{{ 'FOOTER.TERMS' | translate }}</a></li>
           </ul>
           <ul class="footer-links">
-            <li><a [routerLink]="['/privacy']">{{ 'FOOTER.PRIVACY' | translate }}</a></li>
-            <li><a [routerLink]="['/faq']">{{ 'FOOTER.FAQ' | translate }}</a></li>
             <li><a [routerLink]="['/contact']">{{ 'NAV.CONTACT_US' | translate }}</a></li>
+            <li><a [routerLink]="['/privacy-policy']">{{ 'FOOTER.PRIVACY' | translate }}</a></li>
+            <li><a [routerLink]="['/terms-conditions']">{{ 'FOOTER.TERMS' | translate }}</a></li>
           </ul>
         </div>
       </div>
-      
+
       <!-- Download App Section -->
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" class="download-section">
         <h3>{{ 'FOOTER.DOWNLOAD_APP' | translate }}</h3>
@@ -39,22 +39,22 @@
         <div class="app-badges">
           <a href="#" target="_blank" class="app-badge">
             @if (isArabic()) {
-              <img src="assets/images/GooglePlay_AR.png" alt="Google Play" />
+            <img src="assets/images/GooglePlay_AR.png" alt="Google Play" />
             } @else {
-              <img src="assets/images/GooglePlay_EN.png" alt="Google Play" />
+            <img src="assets/images/GooglePlay_EN.png" alt="Google Play" />
             }
           </a>
           <a href="#" target="_blank" class="app-badge">
             @if (isArabic()) {
-              <img src="assets/svgs/Download_on_the_App_Store_Badge_AR.svg" alt="App Store" />
+            <img src="assets/svgs/Download_on_the_App_Store_Badge_AR.svg" alt="App Store" />
             } @else {
-              <img src="assets/svgs/Download_on_the_App_Store_Badge_EN.svg" alt="App Store" />
+            <img src="assets/svgs/Download_on_the_App_Store_Badge_EN.svg" alt="App Store" />
             }
           </a>
         </div>
       </div>
     </div>
-    
+
     <!-- Footer Bottom -->
     <div class="footer-bottom">
       <div class="copyright">

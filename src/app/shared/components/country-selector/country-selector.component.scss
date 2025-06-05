@@ -1,12 +1,12 @@
-@use '../../../../assets/scss/variables' as vars;
+@use "../../../../assets/scss/variables" as vars;
 
 :host {
   position: relative;
   display: block;
-  
+
   .custom-dropdown {
     position: relative;
-    
+
     .country-btn {
       background-color: transparent !important;
       border: none !important;
@@ -16,17 +16,18 @@
       box-shadow: none !important;
       display: flex !important;
       align-items: center !important;
-      
+
       &:hover {
         color: rgba(vars.$text-color-dark, 0.8) !important;
       }
-      
+
       img {
         border-radius: 2px;
         margin-right: 4px;
+        object-fit: cover;
       }
     }
-    
+
     .dropdown-menu {
       position: absolute;
       top: 100%;
@@ -40,31 +41,31 @@
       border-radius: 4px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
       display: none;
-      
+
       &.show {
         display: block;
       }
-      
+
       .country-list {
         list-style: none;
         padding: 0;
         margin: 0;
-        
+
         li {
           padding: 8px 15px;
           cursor: pointer;
           display: flex;
           align-items: center;
-          
+
           &:hover {
             background-color: rgba(vars.$primary-color, 0.1);
           }
-          
+
           &.selected {
             background-color: rgba(vars.$primary-color, 0.1);
             font-weight: 500;
           }
-          
+
           img {
             margin-right: 8px;
             border-radius: 2px;
@@ -86,7 +87,7 @@
 ::ng-deep .ant-dropdown-menu-item.selected {
   background-color: rgba(vars.$primary-color, 0.1);
   font-weight: 500;
-  
+
   :host-context([data-theme="dark"]) & {
     background-color: vars.$danger-color !important;
     color: white !important;
@@ -100,15 +101,15 @@
       margin-right: 0;
       margin-left: 4px;
     }
-    
+
     .me-2 {
-      margin-right: 0 ;
-      margin-left: 0.5rem ;
+      margin-right: 0;
+      margin-left: 0.5rem;
     }
-    
+
     .ms-2 {
-      margin-left: 0 ;
-      margin-right: 0.5rem ;
+      margin-left: 0;
+      margin-right: 0.5rem;
     }
   }
 }

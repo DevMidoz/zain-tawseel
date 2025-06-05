@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { environment } from '@env/environment';
+import { CountryFacade } from '../../../../../core/store/country/country.facade';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Offer {
   id: number;
@@ -36,38 +38,67 @@ export interface OffersResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OffersService {
   private http = inject(HttpClient);
+  private countryFacade = inject(CountryFacade);
+  private translateService = inject(TranslateService);
   private apiUrl = `${environment.apiUrl}/gc-offer`;
 
   /**
-   * Get offers from the API
-   * @param countryCode The country code (e.g., 'KWT', 'SAU', 'UAE')
-   * @param lang The language code (e.g., 'en', 'ar')
+   * Get offers from the API using the selected country code
    * @returns An Observable of Offer array
    */
-  getOffers(countryCode: string, lang: string): Observable<Offer[]> {
+  getOffers(): Observable<Offer[]> {
+    // Get current language
+    const lang = this.translateService.currentLang || 'en';
+
+    // Get the selected country code from the store
+    return this.countryFacade.selectedCountryCode$.pipe(
+      take(1),
+      switchMap((countryCode) => {
+        if (!countryCode) {
+          console.warn('No country code selected, using default API call');
+          return this.fetchOffers('', lang);
+        }
+
+        return this.fetchOffers(countryCode, lang);
+      })
+    );
+  }
+
+  /**
+   * Fetch offers from API with specific country code and language
+   * @param countryCode Country code
+   * @param lang Language code
+   * @returns Observable of offers
+   */
+  private fetchOffers(countryCode: string, lang: string): Observable<Offer[]> {
     const headers = new HttpHeaders({
-      'lang': lang
+      lang: lang,
     });
 
     const body = {
-      country_code: countryCode
+      country_code: countryCode,
     };
 
-    return new Observable<Offer[]>(observer => {
+    return new Observable<Offer[]>((observer) => {
       this.http.post<OffersResponse>(this.apiUrl, body, { headers }).subscribe({
         next: (response) => {
           if (response.status === 'Success' && response.data) {
             // Transform API response to Offer format
-            const offers = response.data.map(offer => {
+            const offers = response.data.map((offer) => {
               // Calculate discount percentage if product_price_before is available
               let discountPercentage = 0;
-              if (offer.product_price_before > 0 && offer.product_price < offer.product_price_before) {
+              if (
+                offer.product_price_before > 0 &&
+                offer.product_price < offer.product_price_before
+              ) {
                 discountPercentage = Math.round(
-                  ((offer.product_price_before - offer.product_price) / offer.product_price_before) * 100
+                  ((offer.product_price_before - offer.product_price) /
+                    offer.product_price_before) *
+                    100
                 );
               } else if (offer.offer === 1) {
                 // If offer flag is set but no price_before, use a default discount
@@ -82,10 +113,13 @@ export class OffersService {
                 title: lang === 'ar' ? offer.web_name_ar : offer.web_name_en,
                 image: offer.image,
                 price: offer.product_price,
-                originalPrice: offer.product_price_before > 0 ? offer.product_price_before : offer.product_price,
+                originalPrice:
+                  offer.product_price_before > 0
+                    ? offer.product_price_before
+                    : offer.product_price,
                 currency: offer.symbol,
                 discount: discountPercentage,
-                flag: flagCode
+                flag: flagCode,
               };
             });
             observer.next(offers);
@@ -97,7 +131,7 @@ export class OffersService {
         error: (error) => {
           console.error('Error fetching offers:', error);
           observer.error(error);
-        }
+        },
       });
     });
   }

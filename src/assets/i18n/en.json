@@ -38,6 +38,8 @@
     "ABOUT_US": "About Us",
     "CONTACT_US": "Contact Us",
     "CATEGORIES": "Categories",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "TERMS_CONDITIONS": "Terms & Conditions",
     "CATEGORY_ITEMS": {
       "GOOGLE_PLAY": "Google Play",
       "PLAYSTATION": "PlayStation",
@@ -67,7 +69,7 @@
     "ADD_TO_CART": "Add to Cart",
     "NO_CATEGORIES": "No categories found",
     "NO_OFFERS": "No offers available at the moment",
-    "BEST_SELLER" : "Best Seller",
+    "BEST_SELLER": "Best Seller",
     "SHOW_MORE": "Show More",
     "BANNER": {
       "TITLE": "Discover Premium Digital Products",
@@ -117,5 +119,3 @@
     "ERROR_LOADING": "Error loading content"
   }
 }
-
-
