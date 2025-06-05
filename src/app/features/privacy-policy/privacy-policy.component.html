@@ -1,70 +1,68 @@
 <div class="privacy-policy-container">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
     <div class="privacy-policy-content">
-        <h1 nz-typography>Privacy Policy</h1>
-        <p nz-typography class="last-updated">Last updated: January 1, 2024</p>
+        <h1 nz-typography>{{ 'PRIVACY_POLICY.TITLE' | translate }}</h1>
+        <p nz-typography class="last-updated">{{ 'PRIVACY_POLICY.LAST_UPDATED' | translate }}</p>
 
         <p nz-typography>
-            Zain Tawseel ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains
-            how we collect, use, disclose, and safeguard your information when you visit our website.
+            {{ 'PRIVACY_POLICY.INTRO' | translate }}
         </p>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Information We Collect</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.INFO_COLLECT.TITLE' | translate }}</h2>
         <p nz-typography>
-            We may collect information about you in a variety of ways. The information we may collect on the Site
-            includes:
+            {{ 'PRIVACY_POLICY.INFO_COLLECT.DESCRIPTION' | translate }}
         </p>
         <ul>
             <li nz-typography>
-                <strong>Personal Data:</strong> Name, email address, and phone number, if voluntarily provided.
+                <strong>{{ 'PRIVACY_POLICY.INFO_COLLECT.PERSONAL_DATA.TITLE' | translate }}:</strong> {{
+                'PRIVACY_POLICY.INFO_COLLECT.PERSONAL_DATA.DESCRIPTION' | translate }}
             </li>
             <li nz-typography>
-                <strong>Usage Data:</strong> IP address, browser type, and pages visited.
+                <strong>{{ 'PRIVACY_POLICY.INFO_COLLECT.USAGE_DATA.TITLE' | translate }}:</strong> {{
+                'PRIVACY_POLICY.INFO_COLLECT.USAGE_DATA.DESCRIPTION' | translate }}
             </li>
         </ul>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Use of Your Information</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.INFO_USE.TITLE' | translate }}</h2>
         <p nz-typography>
-            We use the information we collect to:
+            {{ 'PRIVACY_POLICY.INFO_USE.DESCRIPTION' | translate }}
         </p>
         <ul>
-            <li nz-typography>Provide and maintain our services</li>
-            <li nz-typography>Improve your experience on the website</li>
-            <li nz-typography>Contact you when necessary</li>
+            <li nz-typography>{{ 'PRIVACY_POLICY.INFO_USE.ITEMS.ITEM1' | translate }}</li>
+            <li nz-typography>{{ 'PRIVACY_POLICY.INFO_USE.ITEMS.ITEM2' | translate }}</li>
+            <li nz-typography>{{ 'PRIVACY_POLICY.INFO_USE.ITEMS.ITEM3' | translate }}</li>
         </ul>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Disclosure of Your Information</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.DISCLOSURE.TITLE' | translate }}</h2>
         <p nz-typography>
-            We do not sell, trade, or otherwise transfer your information to outside parties unless required by law or
-            for service provision.
+            {{ 'PRIVACY_POLICY.DISCLOSURE.DESCRIPTION' | translate }}
         </p>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Security</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.SECURITY.TITLE' | translate }}</h2>
         <p nz-typography>
-            We take reasonable measures to protect your personal information but cannot guarantee absolute security.
+            {{ 'PRIVACY_POLICY.SECURITY.DESCRIPTION' | translate }}
         </p>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Your Rights</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.RIGHTS.TITLE' | translate }}</h2>
         <p nz-typography>
-            You have the right to access, correct, or delete your personal information. Contact us if you wish to
-            exercise these rights.
+            {{ 'PRIVACY_POLICY.RIGHTS.DESCRIPTION' | translate }}
         </p>
 
         <nz-divider></nz-divider>
 
-        <h2 nz-typography>Contact Us</h2>
+        <h2 nz-typography>{{ 'PRIVACY_POLICY.CONTACT.TITLE' | translate }}</h2>
         <p nz-typography>
-            If you have any questions about this Privacy Policy, please contact us at:
+            {{ 'PRIVACY_POLICY.CONTACT.DESCRIPTION' | translate }}
             <a href="mailto:info&#64;zain-tawseel.com">info&#64;zain-tawseel.com</a>
         </p>
     </div>
