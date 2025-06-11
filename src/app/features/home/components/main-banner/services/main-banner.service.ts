@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap, take } from 'rxjs';
+import { Observable, switchMap, take, shareReplay } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CountryFacade } from '../../../../../core/store/country/country.facade';
@@ -11,7 +11,7 @@ export interface MainBanner {
   name: string;
 }
 
-interface MainBannerResponse {
+export interface MainBannerResponse {
   status: string;
   data: MainBanner[];
 }
@@ -25,6 +25,9 @@ export class MainBannerService {
   private countryFacade = inject(CountryFacade);
   private translateService = inject(TranslateService);
 
+  // Cache for API responses
+  private bannerCache: { [key: string]: Observable<MainBanner | null> } = {};
+
   /**
    * Get main banner data using the selected country code
    * @returns Observable with the first banner from the response
@@ -37,14 +40,37 @@ export class MainBannerService {
     return this.countryFacade.selectedCountryCode$.pipe(
       take(1),
       switchMap((countryCode) => {
-        if (!countryCode) {
-          console.warn('No country code selected, using default API call');
-          return this.fetchMainBanner('', lang);
+        const cacheKey = `${countryCode || 'default'}_${lang}`;
+
+        // Check if we have a cached response
+        if (this.bannerCache[cacheKey]) {
+          return this.bannerCache[cacheKey];
         }
 
-        return this.fetchMainBanner(countryCode, lang);
+        // If no country code, use default
+        if (!countryCode) {
+          console.warn('No country code selected, using default API call');
+          this.bannerCache[cacheKey] = this.fetchMainBanner('', lang).pipe(
+            shareReplay(1)
+          );
+          return this.bannerCache[cacheKey];
+        }
+
+        // Fetch and cache the response
+        this.bannerCache[cacheKey] = this.fetchMainBanner(
+          countryCode,
+          lang
+        ).pipe(shareReplay(1));
+        return this.bannerCache[cacheKey];
       })
     );
+  }
+
+  /**
+   * Clear the cache when needed (e.g., after a certain time period or when forced)
+   */
+  clearCache(): void {
+    this.bannerCache = {};
   }
 
   /**

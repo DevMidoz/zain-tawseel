@@ -1,7 +1,6 @@
 import {
   Component,
   inject,
-  signal,
   OnInit,
   OnDestroy,
   ViewChild,
@@ -21,7 +20,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { HttpClientModule } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 // Import Swiper JS
 import { register } from 'swiper/element/bundle';
@@ -73,6 +72,8 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   private swiperInstance: any = null;
   isLoading = true;
   hasError = false;
+  isBestSeller = false;
+  private currentLang = '';
 
   @ViewChild('swiperEl') swiperEl!: ElementRef;
 
@@ -83,6 +84,11 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   get displayedOffers(): Offer[] {
     // Take the first 6 offers for desktop view
     return this.offers.slice(0, 6);
+  }
+
+  // Get the section title based on whether we're showing offers or bestsellers
+  get sectionTitle(): string {
+    return this.isBestSeller ? 'HOME.BEST_SELLER' : 'HOME.OFFERS';
   }
 
   addToCart(offer: Offer): void {
@@ -103,10 +109,13 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.hasError = false;
 
     // Use the service without parameters - it will get country code from the store
+    this.offersSubscription?.unsubscribe();
     this.offersSubscription = this.offersService.getOffers().subscribe({
       next: (data) => {
-        console.log('Loaded offer IDs:', JSON.stringify(data.map((o) => o.id)));
         this.offers = data;
+        // Check if we're showing bestsellers - only if ALL items have isBestSeller flag
+        this.isBestSeller =
+          data.length > 0 && data.every((offer) => offer.isBestSeller === true);
         this.isLoading = false;
 
         // Initialize swiper after data is loaded
@@ -123,10 +132,18 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe(() => {
-      this.loadOffers();
-    });
+    // Store current language
+    this.currentLang = this.translateService.currentLang || 'en';
+
+    // Subscribe to language changes - only reload data if language actually changes
+    this.langSubscription = this.translateService.onLangChange
+      .pipe(filter((event) => event.lang !== this.currentLang))
+      .subscribe((event) => {
+        // Clear the service cache when language changes
+        this.offersService.clearCache();
+        this.currentLang = event.lang;
+        this.loadOffers();
+      });
 
     // Initial load of offers
     this.loadOffers();
@@ -212,19 +229,6 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Store reference for cleanup
       this.swiperInstance = swiperElement.swiper;
-
-      // Add event listeners
-      swiperElement.addEventListener('progress', (e: any) => {
-        // Check if we're at the end
-        const swiper = e.detail[0];
-        if (swiper && swiper.isEnd) {
-          console.log('Reached end of slides');
-          // We could add additional visual feedback here
-        }
-      });
-
-      // Log for debugging
-      console.log('Swiper initialized with params:', params);
     } catch (error) {
       console.error('Error initializing Swiper:', error);
     }
@@ -248,10 +252,10 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Tracking functions for the @for loops
   trackByOfferIdAndIndex(index: number, offer: Offer): string {
-    return trackByIndexAndId(index, offer);
+    return `${index}-${offer.id}`;
   }
 
   trackByIndex(index: number, item: number): string {
-    return trackByValue(index, item);
+    return index.toString();
   }
 }

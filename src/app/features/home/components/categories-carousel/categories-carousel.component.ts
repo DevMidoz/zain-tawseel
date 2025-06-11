@@ -12,12 +12,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { HttpClientModule } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
 import { CategoriesService, Category } from './services/categories.service';
-import { trackByIndexAndId, trackByValue } from '@shared/utils/track-by.util';
 
 @Component({
   selector: 'app-categories-carousel',
@@ -53,6 +52,7 @@ export class CategoriesCarouselComponent implements OnInit, OnDestroy {
   isRtl = false;
   isLoading = true;
   hasError = false;
+  private currentLang = '';
 
   // Categories carousel options
   categoriesCarouselOptions: OwlOptions = {
@@ -92,23 +92,30 @@ export class CategoriesCarouselComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
 
   ngOnInit(): void {
+    // Store current language
+    this.currentLang = this.translateService.currentLang || 'en';
+
     // Set initial RTL state
-    this.isRtl = this.translateService.currentLang === 'ar';
+    this.isRtl = this.currentLang === 'ar';
     this.updateCarouselDirection();
 
     // Load categories on init
     this.loadCategories();
 
-    // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe(
-      (event: any) => {
+    // Subscribe to language changes - only reload data if language actually changes
+    this.langSubscription = this.translateService.onLangChange
+      .pipe(filter((event) => event.lang !== this.currentLang))
+      .subscribe((event) => {
         this.isRtl = event.lang === 'ar';
         this.updateCarouselDirection();
 
+        // Clear the service cache when language changes
+        this.categoriesService.clearCache();
+        this.currentLang = event.lang;
+
         // Reload categories when language changes to ensure correct language is displayed
         this.loadCategories();
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
@@ -129,6 +136,7 @@ export class CategoriesCarouselComponent implements OnInit, OnDestroy {
     this.hasError = false;
 
     // Use the service without parameters - it will get country code from the store
+    this.categoriesSubscription?.unsubscribe();
     this.categoriesSubscription = this.categoriesService
       .getCategories()
       .subscribe({
@@ -153,10 +161,10 @@ export class CategoriesCarouselComponent implements OnInit, OnDestroy {
 
   // Tracking functions for @for loops
   trackByCategory(index: number, category: Category): string {
-    return trackByIndexAndId(index, category);
+    return `${index}-${category.id}`;
   }
 
   trackByIndex(index: number, item: number): string {
-    return trackByValue(index, item);
+    return index.toString();
   }
 }

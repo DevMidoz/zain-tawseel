@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, take } from 'rxjs';
+import { Observable, switchMap, take, shareReplay } from 'rxjs';
 import { environment } from '@env/environment';
 import { CountryFacade } from '../../../../../core/store/country/country.facade';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,13 +15,10 @@ export interface Category {
 export interface CategoriesResponse {
   status: string;
   data: {
-    image: string;
+    id: number;
     web_name_en: string;
     web_name_ar: string;
-    web_desc_ar: string | null;
-    web_desc_en: string | null;
-    id: number;
-    level: number;
+    image: string;
   }[];
 }
 
@@ -33,6 +30,9 @@ export class CategoriesService {
   private countryFacade = inject(CountryFacade);
   private translateService = inject(TranslateService);
   private apiUrl = `${environment.apiUrl}/gc-categories`;
+
+  // Cache for API responses
+  private categoriesCache: { [key: string]: Observable<Category[]> } = {};
 
   /**
    * Get main categories from the API using the selected country code
@@ -46,14 +46,37 @@ export class CategoriesService {
     return this.countryFacade.selectedCountryCode$.pipe(
       take(1),
       switchMap((countryCode) => {
-        if (!countryCode) {
-          console.warn('No country code selected, using default API call');
-          return this.fetchCategories('', lang);
+        const cacheKey = `${countryCode || 'default'}_${lang}`;
+
+        // Check if we have a cached response
+        if (this.categoriesCache[cacheKey]) {
+          return this.categoriesCache[cacheKey];
         }
 
-        return this.fetchCategories(countryCode, lang);
+        // If no country code, use default
+        if (!countryCode) {
+          console.warn('No country code selected, using default API call');
+          this.categoriesCache[cacheKey] = this.fetchCategories('', lang).pipe(
+            shareReplay(1)
+          );
+          return this.categoriesCache[cacheKey];
+        }
+
+        // Fetch and cache the response
+        this.categoriesCache[cacheKey] = this.fetchCategories(
+          countryCode,
+          lang
+        ).pipe(shareReplay(1));
+        return this.categoriesCache[cacheKey];
       })
     );
+  }
+
+  /**
+   * Clear the cache when needed (e.g., after a certain time period or when forced)
+   */
+  clearCache(): void {
+    this.categoriesCache = {};
   }
 
   /**

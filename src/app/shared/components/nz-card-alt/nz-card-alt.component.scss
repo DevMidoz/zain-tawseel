@@ -167,6 +167,15 @@
         @media (max-width: 768px) {
           font-size: 12px;
         }
+
+        .currency-icon {
+          display: inline-block;
+          vertical-align: middle;
+          margin-bottom: 2px;
+          margin-left: 2px;
+          width: 14px;
+          height: 14px;
+        }
       }
 
       .current-price {
@@ -184,6 +193,13 @@
 
         @media (max-width: 768px) {
           font-size: 12px;
+        }
+
+        .currency-icon {
+          display: inline-block;
+          vertical-align: middle;
+          margin-bottom: 2px;
+          margin-left: 2px;
         }
       }
     }

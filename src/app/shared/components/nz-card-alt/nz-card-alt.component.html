@@ -12,9 +12,23 @@
 
   <div class="price-container">
     <div class="price-wrapper">
-      <span class="current-price">{{ price }} {{ currency }}</span>
+      <span class="current-price">
+        {{ price }}
+        @if (currency.startsWith('/assets/')) {
+        <img [src]="currency" alt="currency" class="currency-icon" width="16" height="16" />
+        } @else {
+        {{ currency }}
+        }
+      </span>
       @if (originalPrice > 0 && originalPrice !== price) {
-      <span class="original-price">{{ originalPrice }} {{ currency }}</span>
+      <span class="original-price">
+        {{ originalPrice }}
+        @if (currency.startsWith('/assets/')) {
+        <img [src]="currency" alt="currency" class="currency-icon" width="16" height="16" />
+        } @else {
+        {{ currency }}
+        }
+      </span>
       }
     </div>
   </div>

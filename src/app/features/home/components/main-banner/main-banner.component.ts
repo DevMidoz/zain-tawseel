@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 import { MainBannerService, MainBanner } from './services/main-banner.service';
 import { ThemeService } from '@core/services/theme.service';
@@ -30,19 +30,29 @@ export class MainBannerComponent implements OnInit, OnDestroy {
   banner: MainBanner | null = null;
   isLoading = true;
   hasError = false;
+  private currentLang = '';
 
   private langSubscription!: Subscription;
   private bannerSubscription!: Subscription;
 
   ngOnInit(): void {
+    // Store current language
+    this.currentLang = this.translateService.currentLang || 'en';
+
     // Load banner on init
     this.loadBanner();
 
-    // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe(() => {
-      // Reload banner when language changes
-      this.loadBanner();
-    });
+    // Subscribe to language changes - only reload data if language actually changes
+    this.langSubscription = this.translateService.onLangChange
+      .pipe(filter((event) => event.lang !== this.currentLang))
+      .subscribe((event) => {
+        // Clear the service cache when language changes
+        this.mainBannerService.clearCache();
+        this.currentLang = event.lang;
+
+        // Reload banner when language changes
+        this.loadBanner();
+      });
   }
 
   ngOnDestroy(): void {
@@ -64,6 +74,7 @@ export class MainBannerComponent implements OnInit, OnDestroy {
     this.hasError = false;
 
     // Use the service without parameters - it will get country code from the store
+    this.bannerSubscription?.unsubscribe();
     this.bannerSubscription = this.mainBannerService.getMainBanner().subscribe({
       next: (data) => {
         this.banner = data;

@@ -1,93 +1,84 @@
 <nz-header>
   <!-- Desktop Header -->
   <div class="desktop-header">
-  <!-- First Row: Theme switcher, language selector, country selector -->
-  <div class="header-top-row" [class.rtl-mode]="language() === 'ar'">
-    <div class="container">
-      <div class="top-row-content">
-        <!-- Left side (or right in Arabic) -->
-        <div class="top-row-left"></div>
-        
-        <!-- Right side (or left in Arabic) -->
-        <div class="top-row-right">
-          <!-- Country Selector Component -->
-          <app-country-selector></app-country-selector>
-          
-          <!-- Language Selector Component -->
-          <app-language-selector></app-language-selector>
-          
-          <!-- Theme Toggle Component -->
-          <app-theme-toggle></app-theme-toggle>
+    <!-- First Row: Theme switcher, language selector, country selector -->
+    <div class="header-top-row" [class.rtl-mode]="language() === 'ar'">
+      <div class="container">
+        <div class="top-row-content">
+          <!-- Left side (or right in Arabic) -->
+          <div class="top-row-left"></div>
+
+          <!-- Right side (or left in Arabic) -->
+          <div class="top-row-right">
+            <!-- Country Selector Component -->
+            <app-country-selector></app-country-selector>
+
+            <!-- Language Selector Component -->
+            <app-language-selector></app-language-selector>
+
+            <!-- Theme Toggle Component -->
+            <app-theme-toggle></app-theme-toggle>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Second Row: Logo, search bar, login/register, cart -->
-  <div class="header-middle-row" [class.rtl-mode]="language() === 'ar'">
-    <div class="container">
-      <div class="middle-row-content">
-        <!-- Logo -->
-        <div class="logo-container">
-          <a [routerLink]="['/']">
-            <div class="logo"></div>
-          </a>
-        </div>
-        
-        <!-- Search Bar (with autocomplete) -->
-        <div class="search-container">
-          <app-nz-input-group-alt [suffix]="suffixIconSearch" [compact]="false" [searchStyle]="true" [mode]="theme() === 'dark' ? 'dark' : 'light'">
-            <input 
-              nz-input 
-              placeholder="{{ 'APP.SEARCH' | translate }}" 
-              [(ngModel)]="searchValue"
-              (input)="onSearchInput()"
-            />
-          </app-nz-input-group-alt>
-          <ng-template #suffixIconSearch>
-            <nz-icon nzType="search" />
-          </ng-template>
-        </div>
-        
-        <!-- User Controls: Login/Register and Cart -->
-        <div class="user-controls">
-          <!-- Login/Register Button -->
-          <button nz-button nzType="default" class="auth-btn">
-            <span nz-icon nzType="user"></span>
-            <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
-          </button>
-          
-          <!-- Cart Dropdown -->
-          <button 
-            nz-button 
-            nz-dropdown 
-            nzSize="large"
-            [nzDropdownMenu]="cartMenu" 
-            nzTrigger="click"
-            class="cart-btn">
-            <span nz-icon nzType="shopping-cart"></span>
-            <span class="cart-count">{{ cartItems.length }}</span>
-          </button>
 
-          <nz-dropdown-menu #cartMenu="nzDropdownMenu">
-            <div class="cart-dropdown">
-              <div class="cart-header">
-                <h4>{{ 'APP.CART' | translate }}</h4>
-              </div>
-              <div class="cart-items-container">
-                @if (cartItems.length > 0) {
+    <!-- Second Row: Logo, search bar, login/register, cart -->
+    <div class="header-middle-row" [class.rtl-mode]="language() === 'ar'">
+      <div class="container">
+        <div class="middle-row-content">
+          <!-- Logo -->
+          <div class="logo-container">
+            <a [routerLink]="['/']">
+              <div class="logo"></div>
+            </a>
+          </div>
+
+          <!-- Search Bar (with autocomplete) -->
+          <div class="search-container">
+            <app-nz-input-group-alt [suffix]="suffixIconSearch" [compact]="false" [searchStyle]="true"
+              [mode]="theme() === 'dark' ? 'dark' : 'light'">
+              <input nz-input placeholder="{{ 'APP.SEARCH' | translate }}" [(ngModel)]="searchValue"
+                (input)="onSearchInput()" />
+            </app-nz-input-group-alt>
+            <ng-template #suffixIconSearch>
+              <nz-icon nzType="search" />
+            </ng-template>
+          </div>
+
+          <!-- User Controls: Login/Register and Cart -->
+          <div class="user-controls">
+            <!-- Login/Register Button -->
+            <button nz-button nzType="default" class="auth-btn">
+              <span nz-icon nzType="user"></span>
+              <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
+            </button>
+
+            <!-- Cart Dropdown -->
+            <button nz-button nz-dropdown nzSize="large" [nzDropdownMenu]="cartMenu" nzTrigger="click" class="cart-btn">
+              <span nz-icon nzType="shopping-cart"></span>
+              <span class="cart-count">{{ cartItems.length }}</span>
+            </button>
+
+            <nz-dropdown-menu #cartMenu="nzDropdownMenu">
+              <div class="cart-dropdown">
+                <div class="cart-header">
+                  <h4>{{ 'APP.CART' | translate }}</h4>
+                </div>
+                <div class="cart-items-container">
+                  @if (cartItems.length > 0) {
                   <ul nz-menu>
                     @for (item of cartItems; track trackByCartItem($index, item)) {
-                      <li  class="cart-item">
-                        <div class="item-quantity">
-                          <span>{{ 'APP.QUANTITY' | translate }}: {{ item.quantity }}</span>
-                        </div>
-                        <div class="item-name">{{ item.name }}</div>
-                        <div class="item-price">{{ item.price | currency }}</div>
-                      </li>
+                    <li class="cart-item">
+                      <div class="item-quantity">
+                        <span>{{ 'APP.QUANTITY' | translate }}: {{ item.quantity }}</span>
+                      </div>
+                      <div class="item-name">{{ item.name }}</div>
+                      <div class="item-price">{{ item.price | currency }}</div>
+                    </li>
                     }
-                
-                    <li  class="cart-total">
+
+                    <li class="cart-total">
                       <div class="total-label">{{ 'APP.TOTAL' | translate }}</div>
                       <div class="total-value">{{ cartTotal | currency }}</div>
                     </li>
@@ -98,109 +89,109 @@
                       <span>{{ 'APP.COMPLETE_ORDER' | translate }}</span>
                     </button>
                   </div>
-                } @else {
+                  } @else {
                   <div class="empty-cart">
                     <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
                     <p>{{ 'APP.EMPTY_CART' | translate }}</p>
                   </div>
-                }
+                  }
+                </div>
               </div>
-            </div>
-          </nz-dropdown-menu>
+            </nz-dropdown-menu>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Third Row: Navigation menu -->
-  <div class="header-bottom-row" [class.rtl-mode]="language() === 'ar'">
-    <div class="container">
-      <ul nz-menu nzMode="horizontal" class="main-menu">
-        <!-- Categories Menu -->
-        <li nz-submenu nzTitle="{{ 'NAV.CATEGORIES' | translate }}" nzIcon="appstore">
-          <!-- Loading indicator for categories -->
-          @if (loadingCategories) {
+
+    <!-- Third Row: Navigation menu -->
+    <div class="header-bottom-row" [class.rtl-mode]="language() === 'ar'">
+      <div class="container">
+        <ul nz-menu nzMode="horizontal" class="main-menu">
+          <!-- Categories Menu -->
+          <li nz-submenu nzTitle="{{ 'NAV.CATEGORIES' | translate }}" nzIcon="appstore">
+            <!-- Loading indicator for categories -->
+            @if (loadingCategories) {
             <ul>
               <li nz-menu-item>
                 <nz-icon nzType="loading"></nz-icon>
                 <span>Loading...</span>
               </li>
             </ul>
-          } @else if (categories.length === 0) {
+            } @else if (categories.length === 0) {
             <ul>
               <li nz-menu-item>
                 <span>No categories available</span>
               </li>
             </ul>
-          } @else {
+            } @else {
             <ul>
               <!-- Dynamic Categories -->
               @for (category of categories; track trackByCategory($index, category)) {
-                <li nz-submenu (mouseenter)="loadSubcategories(category.id)">
-                  <span title nz-submenu-title>
-                    <!-- Use category image if available, otherwise use a default icon -->
-                    <!-- @if (category.image) {
+              <li nz-submenu (mouseenter)="loadSubcategories(category.id)">
+                <span title nz-submenu-title>
+                  <!-- Use category image if available, otherwise use a default icon -->
+                  <!-- @if (category.image) {
                       <img [src]="category.image" alt="{{ category.name }}" class="category-icon me-2" />
                     } @else {
                       <i class="fa-solid fa-tags me-2"></i>
                     } -->
+                  <span>{{ category.name }}</span>
+                </span>
+
+                <!-- Subcategories -->
+                <ul>
+                  <!-- Loading state for subcategories -->
+                  @if (loadingSubcategories[category.id]) {
+                  <li nz-menu-item>
+                    <nz-icon nzType="loading"></nz-icon>
+                    <span>Loading...</span>
+                  </li>
+                  }
+                  <!-- No subcategories found -->
+                  @else if (subcategories[category.id] && subcategories[category.id].length === 0) {
+                  <li nz-menu-item [routerLink]="[category.link]">
                     <span>{{ category.name }}</span>
-                  </span>
-                  
-                  <!-- Subcategories -->
-                  <ul>
-                    <!-- Loading state for subcategories -->
-                    @if (loadingSubcategories[category.id]) {
-                      <li nz-menu-item>
-                        <nz-icon nzType="loading"></nz-icon>
-                        <span>Loading...</span>
-                      </li>
-                    } 
-                    <!-- No subcategories found -->
-                    @else if (subcategories[category.id] && subcategories[category.id].length === 0) {
-                      <li nz-menu-item [routerLink]="[category.link]">
-                        <span>{{ category.name }}</span>
-                      </li>
-                    } 
-                    <!-- Display subcategories -->
-                    @else if (subcategories[category.id]) {
-                      @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
-                        <li nz-menu-item [routerLink]="['/categories/' + category.id + '/' + subcategory.id]">
-                          <!-- @if (subcategory.image) {
+                  </li>
+                  }
+                  <!-- Display subcategories -->
+                  @else if (subcategories[category.id]) {
+                  @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
+                  <li nz-menu-item [routerLink]="['/categories/' + category.id + '/' + subcategory.id]">
+                    <!-- @if (subcategory.image) {
                             <img [src]="subcategory.image" alt="{{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}" class="category-icon me-2" />
                           } @else {
                             <i class="fa-solid fa-tag me-2"></i>
                           } -->
-                          {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
-                        </li>
-                      }
-                    } 
-                    <!-- Default state before hover -->
-                    @else {
-                      <li nz-menu-item [routerLink]="[category.link]">
-                        <span>{{ category.name }}</span>
-                      </li>
-                    }
-                  </ul>
-                </li>
+                    {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
+                  </li>
+                  }
+                  }
+                  <!-- Default state before hover -->
+                  @else {
+                  <li nz-menu-item [routerLink]="[category.link]">
+                    <span>{{ category.name }}</span>
+                  </li>
+                  }
+                </ul>
+              </li>
               }
-              
+
               <!-- Static categories that are always shown -->
 
             </ul>
-          }
-        </li>
-        
-        <!-- Offers Menu Item -->
-        <li nz-menu-item [routerLink]="['/offers']">
-          <i class="fa-solid fa-tags"></i>
-          <span>{{ 'NAV.OFFERS' | translate }}</span>
-        </li>
-      </ul>
+            }
+          </li>
+
+          <!-- Offers Menu Item -->
+          <li nz-menu-item [routerLink]="['/offers']">
+            <i class="fa-solid fa-tags"></i>
+            <span>{{ 'NAV.OFFERS' | translate }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  </div>
-  
+
   <!-- Mobile Header -->
   <div class="mobile-header">
     <div class="mobile-header-content">
@@ -210,18 +201,12 @@
           <img src="assets/svgs/zain_tawseel_icon.svg" alt="Zain Tawseel Logo">
         </a>
       </div>
-      
+
       <!-- Search Bar -->
       <div class="search-container">
         <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input 
-            type="text" 
-            nz-input 
-            [(ngModel)]="searchValue" 
-            [nzAutocomplete]="auto"
-            (input)="onSearchInput()"
-            [placeholder]="'APP.SEARCH' | translate"
-          />
+          <input type="text" nz-input [(ngModel)]="searchValue" [nzAutocomplete]="auto" (input)="onSearchInput()"
+            [placeholder]="'APP.SEARCH' | translate" />
         </nz-input-group>
         <ng-template #suffixIconSearch>
           <span nz-icon nzType="search"></span>
@@ -259,7 +244,7 @@
     <button class="close-btn" (click)="toggleSidebar()">
       <i class="fa-solid fa-times"></i>
     </button>
-    
+
     <!-- Country Selector -->
     <div class="sidebar-country-selector">
       <div class="country-options">
@@ -267,73 +252,73 @@
       </div>
     </div>
   </div>
-  
+
   <div class="sidebar-content">
     <nz-collapse>
       <!-- Categories -->
-      <nz-collapse-panel [nzHeader]="'NAV.CATEGORIES' | translate" >
+      <nz-collapse-panel [nzHeader]="'NAV.CATEGORIES' | translate">
         <nz-collapse>
           <!-- Loading state for categories -->
           @if (loadingCategories) {
-            <div class="loading-container">
-              <nz-icon nzType="loading"></nz-icon>
-              <span>{{ 'COMMON.LOADING' | translate }}</span>
-            </div>
+          <div class="loading-container">
+            <nz-icon nzType="loading"></nz-icon>
+            <span>{{ 'COMMON.LOADING' | translate }}</span>
+          </div>
           }
-          
+
           <!-- No categories found -->
           @else if (categories.length === 0) {
-            <div class="empty-categories">
-              <i class="fa-solid fa-info-circle me-2"></i>
-              <span>{{ 'COMMON.NO_CATEGORIES' | translate }}</span>
-            </div>
+          <div class="empty-categories">
+            <i class="fa-solid fa-info-circle me-2"></i>
+            <span>{{ 'COMMON.NO_CATEGORIES' | translate }}</span>
+          </div>
           }
-          
+
           <!-- Dynamic Categories -->
           @else {
-            @for (category of categories; track trackByCategory($index, category)) {
-              <nz-collapse-panel [nzHeader]="category.name" (nzActiveChange)="$event && loadSubcategories(category.id)">
-                <ul class="sidebar-submenu">
-                  <!-- Loading state for subcategories -->
-                  @if (loadingSubcategories[category.id]) {
-                    <li class="loading-item">
-                      <nz-icon nzType="loading"></nz-icon>
-                      <span>{{ 'COMMON.LOADING' | translate }}</span>
-                    </li>
-                  }
-                  
-                  <!-- No subcategories found -->
-                  @else if (subcategories[category.id] && subcategories[category.id].length === 0) {
-                    <li [routerLink]="[category.link]" (click)="toggleSidebar()">
-                      <i class="fa-solid fa-tag me-2"></i>
-                      <span>{{ category.name }}</span>
-                    </li>
-                  }
-                  
-                  <!-- Display subcategories -->
-                  @else if (subcategories[category.id]) {
-                    @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
-                      <li [routerLink]="['/categories/' + category.id + '/' + subcategory.id]" (click)="toggleSidebar()">
-                        <i class="fa-solid fa-tag me-2"></i>
-                        {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
-                      </li>
-                    }
-                  }
-                  
-                  <!-- Default state before expansion -->
-                  @else {
-                    <li [routerLink]="[category.link]" (click)="toggleSidebar()">
-                      <i class="fa-solid fa-tag me-2"></i>
-                      <span>{{ category.name }}</span>
-                    </li>
-                  }
-                </ul>
-              </nz-collapse-panel>
-            }
+          @for (category of categories; track trackByCategory($index, category)) {
+          <nz-collapse-panel [nzHeader]="category.name" (nzActiveChange)="$event && loadSubcategories(category.id)">
+            <ul class="sidebar-submenu">
+              <!-- Loading state for subcategories -->
+              @if (loadingSubcategories[category.id]) {
+              <li class="loading-item">
+                <nz-icon nzType="loading"></nz-icon>
+                <span>{{ 'COMMON.LOADING' | translate }}</span>
+              </li>
+              }
+
+              <!-- No subcategories found -->
+              @else if (subcategories[category.id] && subcategories[category.id].length === 0) {
+              <li [routerLink]="[category.link]" (click)="toggleSidebar()">
+                <i class="fa-solid fa-tag me-2"></i>
+                <span>{{ category.name }}</span>
+              </li>
+              }
+
+              <!-- Display subcategories -->
+              @else if (subcategories[category.id]) {
+              @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
+              <li [routerLink]="['/categories/' + category.id + '/' + subcategory.id]" (click)="toggleSidebar()">
+                <i class="fa-solid fa-tag me-2"></i>
+                {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
+              </li>
+              }
+              }
+
+              <!-- Default state before expansion -->
+              @else {
+              <li [routerLink]="[category.link]" (click)="toggleSidebar()">
+                <i class="fa-solid fa-tag me-2"></i>
+                <span>{{ category.name }}</span>
+              </li>
+              }
+            </ul>
+          </nz-collapse-panel>
+          }
           }
         </nz-collapse>
       </nz-collapse-panel>
-      
+
       <!-- Offers - Direct list item -->
       <div class="sidebar-menu-item" [routerLink]="['/offers']" (click)="toggleSidebar()">
         <i class="fa-solid fa-tags me-2"></i>
@@ -341,13 +326,13 @@
       </div>
     </nz-collapse>
   </div>
-  
+
   <div class="sidebar-footer">
     <!-- Theme Switcher -->
     <div class="theme-switcher">
       <app-theme-toggle></app-theme-toggle>
     </div>
-    
+
     <!-- Language Switcher -->
     <div class="language-switcher">
       <app-language-selector></app-language-selector>
