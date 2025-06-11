@@ -14,8 +14,8 @@
     <div class="price-wrapper">
       <span class="current-price">
         {{ price }}
-        @if (currency.startsWith('/assets/')) {
-        <img [src]="currency" alt="currency" class="currency-icon" width="16" height="16" />
+        @if (shouldShowCurrencyIcon()) {
+        <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
         } @else {
         {{ currency }}
         }
@@ -23,8 +23,8 @@
       @if (originalPrice > 0 && originalPrice !== price) {
       <span class="original-price">
         {{ originalPrice }}
-        @if (currency.startsWith('/assets/')) {
-        <img [src]="currency" alt="currency" class="currency-icon" width="16" height="16" />
+        @if (shouldShowCurrencyIcon()) {
+        <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
         } @else {
         {{ currency }}
         }

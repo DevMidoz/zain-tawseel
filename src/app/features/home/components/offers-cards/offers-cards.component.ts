@@ -30,7 +30,6 @@ register();
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
 import { OffersService, Offer } from './services/offers.service';
-import { trackByIndexAndId, trackByValue } from '@shared/utils/track-by.util';
 
 // Import the NzCardAlt component
 import { NzCardAltComponent } from '@shared/components/nz-card-alt/nz-card-alt.component';
@@ -256,6 +255,26 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   trackByIndex(index: number, item: number): string {
-    return index.toString();
+    return `${index}`;
+  }
+
+  /**
+   * Convert a flag code to a full country code
+   * @param flagCode The 2-letter flag code (e.g., 'sa', 'us', 'uk')
+   * @returns The full country code (e.g., 'SAU', 'USA', 'GBR')
+   */
+  getCountryCodeFromFlag(flagCode: string): string {
+    if (!flagCode) return '';
+
+    // Convert the 2-letter flag code to the 3-letter country code
+    const flagToCountryMap: Record<string, string> = {
+      sa: 'SAU', // Saudi Arabia
+      kw: 'KWT', // Kuwait
+      ae: 'UAE', // United Arab Emirates
+      us: 'USA', // United States
+      gb: 'GBR', // Great Britain/United Kingdom
+    };
+
+    return flagToCountryMap[flagCode.toLowerCase()] || flagCode.toUpperCase();
   }
 }

@@ -52,8 +52,8 @@
     <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6" [nzLg]="4" [nzXl]="4">
       <app-nz-card-alt [title]="offer.title" [image]="offer.image" [price]="offer.price"
         [originalPrice]="offer.originalPrice" [currency]="offer.currency" [discount]="offer.discount"
-        [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true" (addToCartClicked)="addToCart(offer)"
-        (buyNowClicked)="buyNow(offer)">
+        [countryCode]="getCountryCodeFromFlag(offer.flag)" [buyNowText]="'HOME.BUY_NOW' | translate"
+        [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)">
       </app-nz-card-alt>
     </div>
     }
@@ -67,8 +67,8 @@
         <div class="offer-card-wrapper">
           <app-nz-card-alt [title]="offer.title" [image]="offer.image" [price]="offer.price"
             [originalPrice]="offer.originalPrice" [currency]="offer.currency" [discount]="offer.discount"
-            [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true" (addToCartClicked)="addToCart(offer)"
-            (buyNowClicked)="buyNow(offer)">
+            [countryCode]="getCountryCodeFromFlag(offer.flag)" [buyNowText]="'HOME.BUY_NOW' | translate"
+            [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)">
           </app-nz-card-alt>
         </div>
       </swiper-slide>

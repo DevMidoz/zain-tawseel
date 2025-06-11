@@ -246,7 +246,7 @@ export class OffersService {
       // Special case for Saudi Arabia: change currency symbol to Riyal.svg from assets
       let currencySymbol = offer.symbol;
       if (offer.country_code === 'SAU') {
-        currencySymbol = '/assets/svgs/Riyal.svg';
+        currencySymbol = 'assets/svgs/Riyal.svg';
       }
 
       return {
