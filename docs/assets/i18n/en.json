@@ -18,6 +18,7 @@
     "DARK": "Dark",
     "SEARCH": "What are you looking for ?",
     "LOGIN_REGISTER": "Login / Register",
+    "CHAT": "Chat",
     "CART": "Shopping Cart",
     "EMPTY_CART": "Your cart is empty",
     "QUANTITY": "Qty",
@@ -37,6 +38,7 @@
     "CONTACT": "Contact",
     "ABOUT_US": "About Us",
     "CONTACT_US": "Contact Us",
+    "CHAT_WITH_US": "Chat with us",
     "CATEGORIES": "Categories",
     "PRIVACY_POLICY": "Privacy Policy",
     "TERMS_CONDITIONS": "Terms & Conditions",
@@ -117,5 +119,80 @@
     "DOWNLOAD_APP": "Download Our App",
     "APP_DESCRIPTION": "Get the best shopping experience with our mobile app",
     "ERROR_LOADING": "Error loading content"
+  },
+  "PRIVACY_POLICY": {
+    "TITLE": "Privacy Policy",
+    "LAST_UPDATED": "Last updated: January 1, 2024",
+    "INTRO": "Zain Tawseel (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.",
+    "INFO_COLLECT": {
+      "TITLE": "Information We Collect",
+      "DESCRIPTION": "We may collect information about you in a variety of ways. The information we may collect on the Site includes:",
+      "PERSONAL_DATA": {
+        "TITLE": "Personal Data",
+        "DESCRIPTION": "Name, email address, and phone number, if voluntarily provided."
+      },
+      "USAGE_DATA": {
+        "TITLE": "Usage Data",
+        "DESCRIPTION": "IP address, browser type, and pages visited."
+      }
+    },
+    "INFO_USE": {
+      "TITLE": "Use of Your Information",
+      "DESCRIPTION": "We use the information we collect to:",
+      "ITEMS": {
+        "ITEM1": "Provide and maintain our services",
+        "ITEM2": "Improve your experience on the website",
+        "ITEM3": "Contact you when necessary"
+      }
+    },
+    "DISCLOSURE": {
+      "TITLE": "Disclosure of Your Information",
+      "DESCRIPTION": "We do not sell, trade, or otherwise transfer your information to outside parties unless required by law or for service provision."
+    },
+    "SECURITY": {
+      "TITLE": "Security",
+      "DESCRIPTION": "We take reasonable measures to protect your personal information but cannot guarantee absolute security."
+    },
+    "RIGHTS": {
+      "TITLE": "Your Rights",
+      "DESCRIPTION": "You have the right to access, correct, or delete your personal information. Contact us if you wish to exercise these rights."
+    },
+    "CONTACT": {
+      "TITLE": "Contact Us",
+      "DESCRIPTION": "If you have any questions about this Privacy Policy, please contact us at:"
+    }
+  },
+  "TERMS_CONDITIONS": {
+    "TITLE": "Terms & Conditions",
+    "WELCOME": "Welcome to Zain Tawseel! These terms and conditions outline the rules and regulations for the use of Zain Tawseel's Website, located at https://zain-tawseel.com.",
+    "ACCEPTANCE": "By accessing this website we assume you accept these terms and conditions. Do not continue to use Zain Tawseel if you do not agree to take all of the terms and conditions stated on this page.",
+    "COOKIES": {
+      "TITLE": "Cookies",
+      "DESCRIPTION": "We employ the use of cookies. By accessing Zain Tawseel, you agreed to use cookies in agreement with the Zain Tawseel's Privacy Policy."
+    },
+    "LICENSE": {
+      "TITLE": "License",
+      "DESCRIPTION": "Unless otherwise stated, Zain Tawseel and/or its licensors own the intellectual property rights for all material on Zain Tawseel. All intellectual property rights are reserved. You may access this from Zain Tawseel for your own personal use subjected to restrictions set in these terms and conditions."
+    },
+    "RESTRICTIONS": {
+      "INTRO": "You must not:",
+      "ITEM1": "Republish material from Zain Tawseel",
+      "ITEM2": "Sell, rent or sub-license material from Zain Tawseel",
+      "ITEM3": "Reproduce, duplicate or copy material from Zain Tawseel",
+      "ITEM4": "Redistribute content from Zain Tawseel"
+    },
+    "COMMENTS": {
+      "TITLE": "User Comments",
+      "DESCRIPTION": "Parts of this website offer an opportunity for users to post and exchange opinions and information. Zain Tawseel does not filter, edit, publish or review Comments prior to their presence on the website. Comments do not reflect the views and opinions of Zain Tawseel, its agents and/or affiliates."
+    },
+    "HYPERLINKING": {
+      "TITLE": "Hyperlinking to our Content",
+      "DESCRIPTION": "The following organizations may link to our Website without prior written approval:",
+      "ITEM1": "Government agencies;",
+      "ITEM2": "Search engines;",
+      "ITEM3": "News organizations;",
+      "ITEM4": "Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses;",
+      "ITEM5": "System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Web site."
+    }
   }
 }
