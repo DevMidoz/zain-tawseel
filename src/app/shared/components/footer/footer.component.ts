@@ -16,38 +16,40 @@ import { Subscription } from 'rxjs';
     TranslateModule,
     NzLayoutModule,
     NzIconModule,
-    NzGridModule
+    NzGridModule,
   ],
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit, OnDestroy {
   private translateService = inject(TranslateService);
-  
+
   // Current year for the footer
   currentYear = new Date().getFullYear();
-  
+
   // Current language
   currentLang = 'en';
-  
+
   private langSubscription!: Subscription;
-  
+
   ngOnInit(): void {
     // Set initial language
     this.currentLang = this.translateService.currentLang;
-    
+
     // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe(event => {
-      this.currentLang = event.lang;
-    });
+    this.langSubscription = this.translateService.onLangChange.subscribe(
+      (event) => {
+        this.currentLang = event.lang;
+      }
+    );
   }
-  
+
   ngOnDestroy(): void {
     if (this.langSubscription) {
       this.langSubscription.unsubscribe();
     }
   }
-  
+
   // Helper method to check if current language is Arabic
   isArabic(): boolean {
     return this.currentLang === 'ar';

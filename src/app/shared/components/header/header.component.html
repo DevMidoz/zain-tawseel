@@ -54,6 +54,12 @@
               <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
             </button>
 
+            <!-- Chat Button -->
+            <button nz-button nzType="default" class="chat-btn" appOpenChat>
+              <span nz-icon nzType="message"></span>
+              <span>{{ 'APP.CHAT' | translate }}</span>
+            </button>
+
             <!-- Cart Dropdown -->
             <button nz-button nz-dropdown nzSize="large" [nzDropdownMenu]="cartMenu" nzTrigger="click" class="cart-btn">
               <span nz-icon nzType="shopping-cart"></span>

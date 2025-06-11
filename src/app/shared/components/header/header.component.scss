@@ -1,5 +1,5 @@
-@use 'sass:color';
-@use '../../../../assets/scss/variables' as vars;
+@use "sass:color";
+@use "../../../../assets/scss/variables" as vars;
 
 nz-header {
   padding: 0;
@@ -11,36 +11,37 @@ nz-header {
   display: flex;
   flex-direction: column;
   height: auto;
-  
+
   .container {
     max-width: 1800px;
     width: 100%;
     margin: 0 auto;
     padding: 0 24px;
-    
+
     @media (max-width: 768px) {
       padding: 0 16px;
     }
   }
-  
+
   // Top row styles
   .header-top-row {
     padding: 20px 0 0 0;
     line-height: 30px;
-    
+
     .top-row-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
+
     .top-row-right {
       display: flex;
       align-items: center;
       gap: 12px;
-      
+
       ::ng-deep {
-        .country-btn, .language-btn {
+        .country-btn,
+        .language-btn {
           background: transparent !important;
           border: none !important;
           color: vars.$text-color-dark !important;
@@ -48,73 +49,73 @@ nz-header {
           height: 28px !important;
           font-size: 14px !important;
           box-shadow: none !important;
-          
+
           &:hover {
             color: rgba(vars.$text-color-dark, 0.8) !important;
           }
         }
       }
     }
-    
+
     &.rtl-mode {
       // RTL styles for top row if needed
     }
   }
-  
+
   // Middle row styles
   .header-middle-row {
     padding: 5px 0;
     line-height: 30px;
-    
+
     .middle-row-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 24px;
     }
-    
+
     .logo-container {
       flex: 0 0 auto;
     }
-    
+
     .search-container {
       flex: 1 1 auto;
       max-width: 750px;
     }
-    
+
     .user-controls {
       display: flex;
       align-items: center;
       gap: 16px;
       padding: 0px 5px;
     }
-    
+
     &.rtl-mode {
       // RTL styles for middle row if needed
     }
   }
-  
+
   // Bottom row styles
   .header-bottom-row {
     display: flex;
     line-height: 40px;
     padding: 10px 0px 20px 0px;
-    
+
     .main-menu {
       background-color: transparent;
       border-bottom: none;
       display: flex;
       color: vars.$text-color-dark;
-      
+
       li {
         margin: 0;
-        
+
         &:hover {
           background-color: transparent;
           color: vars.$text-color-dark;
           border-bottom: none;
         }
-        
+
         i {
           margin-right: 8px;
           font-size: 16px;
@@ -131,7 +132,7 @@ nz-header {
           color: vars.$text-color-dark;
         }
       }
-      
+
       // RTL support for icons
       :host-context(html[dir="rtl"]) & {
         li i {
@@ -139,34 +140,33 @@ nz-header {
           margin-left: 8px;
         }
       }
-    
     }
-    
+
     &.rtl-mode {
       .main-menu {
         direction: rtl;
-        
+
         li {
           li .fa-solid,
           li .fa-brands {
             margin-right: 0;
             margin-left: 8px;
           }
-          
+
           .category-icon {
             margin-right: 0;
             margin-left: 8px;
           }
-          
+
           nz-icon[nzType="loading"] {
             margin-right: 0;
             margin-left: 8px;
           }
-          
+
           // RTL support for subcategory items
           li.ant-menu-item {
-            .category-icon, 
-            .fa-solid, 
+            .category-icon,
+            .fa-solid,
             .fa-brands {
               margin-right: 0;
               margin-left: 8px;
@@ -181,8 +181,8 @@ nz-header {
 // Logo styles
 .logo {
   width: 250px;
-    height: 55px;
-  background-image: url('../../../../assets/svgs/zain_tawseel_logo.svg');
+  height: 55px;
+  background-image: url("../../../../assets/svgs/zain_tawseel_logo.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -191,7 +191,7 @@ nz-header {
 // Search container styles
 .search-container {
   width: 100%;
-  
+
   ::ng-deep {
     .ant-select-dropdown {
       max-width: 500px;
@@ -200,7 +200,9 @@ nz-header {
 }
 
 // User controls styles
-.auth-btn, .cart-btn {
+.auth-btn,
+.cart-btn,
+.chat-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -210,17 +212,17 @@ nz-header {
   padding: 0;
   height: auto;
   box-shadow: none;
-  
+
   &:hover {
     color: vars.$text-color-dark;
   }
-  
+
   &:focus {
     color: vars.$text-color-dark;
   }
-  :host-context(body.dark-theme)  &{
+  :host-context(body.dark-theme) & {
     background-color: transparent !important;
-}
+  }
 }
 
 .cart-btn {
@@ -229,7 +231,7 @@ nz-header {
   .anticon {
     font-size: 20px;
   }
-  
+
   .cart-count {
     position: absolute;
     top: -8px;
@@ -254,35 +256,35 @@ nz-header {
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  
+
   // Ensure cart actions has explicit styling in light theme
   .cart-actions-container {
     background-color: vars.$component-background-light;
   }
-  
+
   .cart-header {
     padding: 12px 16px;
-    border-bottom: 1px solid vars.$border-color-light; 
+    border-bottom: 1px solid vars.$border-color-light;
     background-color: vars.$component-background-light;
-    
+
     h4 {
       margin: 0;
       font-size: 16px;
       font-weight: 500;
     }
   }
-  
+
   .cart-items-container {
     max-height: 400px;
     overflow-y: auto;
-    
+
     ul {
       padding: 0;
       margin: 0;
       background-color: vars.$component-background-dark;
       box-shadow: none;
     }
-    
+
     li.cart-item {
       display: flex;
       justify-content: space-between;
@@ -292,17 +294,16 @@ nz-header {
       color: vars.$text-color-light;
       background-color: vars.$component-background-light;
 
-
       .ant-menu-title-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      
+
       &:hover {
         background-color: rgba(vars.$component-background-light, 0.9);
       }
-      
+
       &.selected {
         background-color: rgba(vars.$primary-color, 0.1);
         font-weight: 500;
@@ -312,7 +313,7 @@ nz-header {
         }
       }
     }
-    
+
     li.cart-total {
       display: flex;
       justify-content: space-between;
@@ -324,28 +325,28 @@ nz-header {
         // Total value styles
       }
     }
-    
+
     .empty-cart {
       padding: 24px 16px;
       text-align: center;
-      
+
       .anticon {
         font-size: 32px;
         color: #d9d9d9;
         margin-bottom: 8px;
       }
-      
+
       p {
         margin: 0;
         color: rgba(0, 0, 0, 0.45);
       }
     }
   }
-  
+
   .cart-actions {
     padding: 12px 16px;
     text-align: center;
-    
+
     .checkout-btn {
       width: 100%;
     }
@@ -357,7 +358,7 @@ nz-header {
 // Desktop/Mobile display control
 .desktop-header {
   display: block;
-  
+
   @media (max-width: 768px) {
     display: none; // Hide on mobile
   }
@@ -365,7 +366,7 @@ nz-header {
 
 .mobile-header {
   display: none;
-  
+
   @media (max-width: 768px) {
     display: block; // Show on mobile
   }
@@ -373,7 +374,7 @@ nz-header {
 
 .sidebar-overlay {
   display: none;
-  
+
   @media (max-width: 768px) {
     &.visible {
       display: block; // Only show when sidebar is visible and on mobile
@@ -385,12 +386,12 @@ nz-header {
 .mobile-header {
   padding: 0px 10px;
   background-color: vars.$header-background;
-  
+
   .mobile-header-content {
     display: flex;
     flex: 1 1 auto;
     gap: 10px;
-    
+
     .logo {
       text-align: center;
       background-image: none;
@@ -400,7 +401,7 @@ nz-header {
         height: 40px;
       }
     }
-    
+
     .search-container {
       width: 100%;
     }
@@ -410,7 +411,7 @@ nz-header {
 // Mobile Bottom Navigation Bar
 .mobile-bottom-nav {
   display: none; // Hide by default
-  
+
   @media (max-width: 768px) {
     display: flex; // Show only on mobile
     position: fixed;
@@ -423,7 +424,7 @@ nz-header {
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     z-index: 100;
   }
-  
+
   .nav-item {
     display: flex;
     flex-direction: column;
@@ -432,12 +433,12 @@ nz-header {
     font-size: 12px;
     cursor: pointer;
     position: relative;
-    
+
     i {
       font-size: 20px;
       margin-bottom: 4px;
     }
-    
+
     .cart-badge {
       position: absolute;
       top: -5px;
@@ -451,7 +452,7 @@ nz-header {
       justify-content: center;
       font-size: 10px;
     }
-    
+
     &:active {
       opacity: 0.7;
     }
@@ -460,7 +461,7 @@ nz-header {
 
 .mobile-sidebar {
   display: none; // Hide by default
-  
+
   @media (max-width: 768px) {
     display: flex; // Show only on mobile and use flexbox layout
     flex-direction: column; // Stack children vertically
@@ -476,11 +477,11 @@ nz-header {
     transition: transform 0.3s ease-in-out;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    
+
     &.visible {
       transform: translateX(0);
     }
-    
+
     .sidebar-header {
       display: flex;
       justify-content: space-between;
@@ -490,7 +491,7 @@ nz-header {
       color: vars.$text-color-light;
       border-bottom: 1px solid #e8e8e8;
       flex-shrink: 0; // Prevent header from shrinking
-      
+
       .close-btn {
         background: transparent;
         border: none;
@@ -502,7 +503,7 @@ nz-header {
           color: vars.$text-color-dark;
         }
       }
-      
+
       .sidebar-country-selector {
         position: relative; // Add position relative for proper dropdown positioning
 
@@ -518,7 +519,7 @@ nz-header {
             color: vars.$text-color-dark !important;
           }
         }
-        
+
         // Style for dropdown menu in sidebar header
         ::ng-deep .ant-dropdown {
           z-index: 1500 !important; // Higher z-index to appear above sidebar
@@ -532,7 +533,7 @@ nz-header {
       }
     }
   }
-  
+
   .sidebar-content {
     flex: 1; // Take up available space
     overflow-y: auto; // Allow scrolling for content
@@ -543,7 +544,7 @@ nz-header {
     :host-context(body.dark-theme) & {
       background-color: vars.$component-background-dark;
     }
-    
+
     .loading-container,
     .empty-categories {
       padding: 20px;
@@ -554,21 +555,21 @@ nz-header {
       justify-content: center;
       gap: 10px;
       color: vars.$text-color-secondary-light;
-      
+
       :host-context(body.dark-theme) & {
         color: vars.$text-color-tertiary-dark;
       }
-      
+
       nz-icon {
         margin-bottom: 10px;
         font-size: 24px;
-        
+
         html[dir="rtl"] & {
           margin-right: 0;
           margin-left: 10px;
         }
       }
-      
+
       i {
         font-size: 18px;
       }
@@ -577,20 +578,20 @@ nz-header {
     ::ng-deep .ant-collapse {
       background-color: transparent;
       border: none;
-      
-      .ant-collapse-content { 
-        border-top: none;
-      //  padding-left: 20px;
 
-      //   :host-context(html[dir="rtl"]) & {
-      //    padding-left: 0;
-      //    padding-right: 20px;
-      //   }
+      .ant-collapse-content {
+        border-top: none;
+        //  padding-left: 20px;
+
+        //   :host-context(html[dir="rtl"]) & {
+        //    padding-left: 0;
+        //    padding-right: 20px;
+        //   }
       }
-      
+
       .ant-collapse-item {
         border-bottom: none;
-        
+
         .ant-collapse-header {
           padding: 10px 15px;
           font-weight: 500;
@@ -602,55 +603,58 @@ nz-header {
             color: vars.$text-color-dark;
           }
         }
-        
+
         .ant-collapse-content {
           background-color: transparent;
-          
+
           .ant-collapse-content-box {
             padding: 0;
           }
         }
       }
     }
-    
+
     .sidebar-submenu {
       list-style: none;
       padding: 0;
       margin: 0;
-      
+
       li {
         padding: 12px 15px 12px 30px;
         cursor: pointer;
         transition: background-color 0.2s;
         background-color: rgba(vars.$component-background-dark, 0.3);
         border-bottom: 1px solid vars.$border-color-dark2;
-        
+
         &.loading-item {
           display: flex;
           align-items: center;
           justify-content: flex-start;
           gap: 10px;
-          
+
           nz-icon {
             margin-right: 10px;
             font-size: 18px;
-            
+
             html[dir="rtl"] & {
               margin-right: 0;
               margin-left: 10px;
             }
           }
         }
-        
+
         &:hover {
           background-color: rgba(vars.$component-background-dark, 0.5);
         }
       }
       :host-context(body.dark-theme) & {
-        background-color: rgba(vars.$component-background-light, 0.5) !important; 
+        background-color: rgba(
+          vars.$component-background-light,
+          0.5
+        ) !important;
       }
     }
-    
+
     .sidebar-menu-item {
       padding: 12px 15px;
       cursor: pointer;
@@ -660,13 +664,13 @@ nz-header {
       display: flex;
       align-items: center;
       transition: background-color 0.2s;
-      
+
       li .fa-solid,
       li .fa-brands {
         margin-right: 8px;
         font-size: 16px;
       }
-      
+
       .category-icon {
         width: 20px;
         height: 20px;
@@ -674,7 +678,7 @@ nz-header {
         vertical-align: middle;
         margin-right: 8px;
       }
-      
+
       // Subcategory item styles
       li.ant-menu-item {
         .category-icon {
@@ -682,13 +686,13 @@ nz-header {
           height: 16px;
         }
       }
-      
+
       nz-icon[nzType="loading"] {
         margin-right: 8px;
         font-size: 16px;
         animation: spin 1s infinite linear;
       }
-      
+
       @keyframes spin {
         from {
           transform: rotate(0deg);
@@ -697,22 +701,22 @@ nz-header {
           transform: rotate(360deg);
         }
       }
-      
+
       &:hover {
         background-color: rgba(vars.$component-background-light, 0.5);
       }
-      
+
       :host-context(body.dark-theme) & {
         color: vars.$text-color-dark;
         border-bottom: 1px solid vars.$border-color-dark2;
-        
+
         &:hover {
           background-color: rgba(vars.$component-background-dark, 0.5);
         }
       }
     }
   }
-  
+
   .sidebar-footer {
     padding: 15px;
     background-color: vars.$body-background-light;
@@ -722,14 +726,14 @@ nz-header {
     gap: 15px;
     flex-shrink: 0; // Prevent footer from shrinking
     position: relative; // Add position relative for proper dropdown positioning
-    
+
     .theme-switcher,
     .language-switcher {
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: relative; // Add position relative for proper dropdown positioning
-      
+
       span {
         margin-right: 10px;
         font-weight: 500;
@@ -746,12 +750,12 @@ nz-header {
           color: vars.$text-color-dark !important;
         }
       }
-      
+
       ::ng-deep .language-btn,
       ::ng-deep .ant-switch {
         margin-left: auto;
       }
-      
+
       // Style for dropdown menus in sidebar footer
       ::ng-deep .ant-dropdown {
         z-index: 1500 !important; // Higher z-index to appear above sidebar
@@ -763,11 +767,10 @@ nz-header {
       background-color: vars.$component-background-dark;
     }
   }
-  
+
   :host-context(body.dark-theme) & {
     background-color: vars.$component-background-dark;
   }
-     
 }
 
 // Mobile sidebar styles
@@ -778,11 +781,11 @@ html[dir="rtl"] {
     left: auto;
     right: 0;
     transform: translateX(100%);
-    
+
     &.visible {
       transform: translateX(0);
     }
-    
+
     .sidebar-content {
       .sidebar-submenu li {
         padding: 12px 30px 12px 15px;
@@ -797,36 +800,36 @@ html[dir="rtl"] {
   .ant-dropdown {
     z-index: 2000 !important; // Even higher z-index to appear above all elements
   }
-  
+
   // Fix for dropdowns in the mobile sidebar
   .cdk-overlay-container {
     z-index: 2000 !important; // Ensure overlay container is above all elements
   }
-  
+
   // Make sure dropdown menus are visible
   .ant-dropdown-menu {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
-  
+
   // Fix for nz-dropdown components
   nz-dropdown-menu {
     pointer-events: auto !important;
   }
-  
+
   // Ensure dropdown content is visible
-  .ant-dropdown-menu-item, 
+  .ant-dropdown-menu-item,
   .ant-dropdown-menu-submenu-title {
     visibility: visible !important;
     opacity: 1 !important;
   }
-  
+
   // Fix for overlay pane positioning
   .cdk-overlay-pane {
     transform: none !important;
   }
-  
+
   // Ensure the overlay is visible
   .cdk-overlay-backdrop {
     z-index: 1999 !important;
@@ -839,18 +842,18 @@ html[dir="rtl"] {
     .header-middle-row {
       .middle-row-content {
         flex-wrap: wrap;
-        
+
         .logo-container {
           order: 1;
           flex: 0 0 50%;
         }
-        
+
         .user-controls {
           order: 2;
           flex: 0 0 50%;
           justify-content: flex-end;
         }
-        
+
         .search-container {
           order: 3;
           flex: 0 0 100%;
@@ -859,23 +862,23 @@ html[dir="rtl"] {
       }
     }
   }
-  
+
   // Hide desktop header
   .desktop-header {
     display: none;
   }
-  
+
   // Show mobile components
   .mobile-header,
   .mobile-bottom-nav {
     display: flex;
   }
-  
+
   .mobile-sidebar {
     display: flex;
     flex-direction: column;
   }
-  
+
   // Add padding to main content to account for bottom nav
   ::ng-deep .ant-layout-content {
     padding-bottom: 60px;

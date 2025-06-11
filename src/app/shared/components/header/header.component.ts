@@ -23,6 +23,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { CountrySelectorComponent } from '../country-selector/country-selector.component';
+import { OpenChatDirective } from '@shared/directives/open-chat.directive';
 
 // Services
 import { ThemeService } from '@core/services/theme.service';
@@ -72,6 +73,7 @@ interface CartItem {
     LanguageSelectorComponent,
     ThemeToggleComponent,
     CountrySelectorComponent,
+    OpenChatDirective,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],

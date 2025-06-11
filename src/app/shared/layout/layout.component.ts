@@ -6,6 +6,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 // Import header and footer components
 import { HeaderComponent } from '@shared/components/header/header.component';
 import { FooterComponent } from '@shared/components/footer/footer.component';
+import { CrispChatComponent } from '@shared/components/crisp-chat/crisp-chat.component';
 
 @Component({
   selector: 'app-layout',
@@ -15,9 +16,10 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
     RouterModule,
     NzLayoutModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CrispChatComponent,
   ],
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent {}
