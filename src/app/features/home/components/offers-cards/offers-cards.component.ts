@@ -90,6 +90,11 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.isBestSeller ? 'HOME.BEST_SELLER' : 'HOME.OFFERS';
   }
 
+  addToCart(offer: Offer): void {
+    // Placeholder function for the addToCart event
+    console.log('Added to cart:', offer);
+  }
+
   buyNow(offer: Offer): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
@@ -231,6 +236,10 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   trackByOfferIdAndIndex(index: number, offer: Offer): string {
     return `${offer.id}-${index}`;
+  }
+
+  trackByIndex(index: number, item: any): string {
+    return `${index}`;
   }
 
   /**

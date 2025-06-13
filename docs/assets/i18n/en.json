@@ -17,6 +17,10 @@
     "LIGHT": "Light",
     "DARK": "Dark",
     "SEARCH": "What are you looking for ?",
+    "SEARCHING": "Searching...",
+    "NO_RESULTS_FOUND": "No results found",
+    "CATEGORY": "Category",
+    "SUBCATEGORY": "Subcategory",
     "LOGIN_REGISTER": "Login / Register",
     "CHAT": "Chat",
     "CART": "Shopping Cart",
@@ -193,6 +197,35 @@
       "ITEM3": "News organizations;",
       "ITEM4": "Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses;",
       "ITEM5": "System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Web site."
+    }
+  },
+  "ABOUT_US": {
+    "TITLE": "About Us",
+    "PARAGRAPH_1": "Zain Tawseel is an application owned by Kuwait Star for General Trading and Contracting, launched in September 2015 after identifying the lack in the market to simplify the purchasing process for customers.",
+    "PARAGRAPH_2": "Over the past ten years, we have served more than 150,000 customers across Kuwait, Qatar, and Saudi Arabia, thanks to our commitment to delivering reliable and fast service.",
+    "PARAGRAPH_3": "Today, we offer over 150 diverse digital products, meeting various customer needs with a wide range of options to choose from.",
+    "PARAGRAPH_4": "Once the payment is completed, the digital card is delivered directly in the app, with no delays or additional steps.",
+    "PARAGRAPH_5": "The application is officially licensed by the Ministry of Commerce and Industry in Kuwait, and we are committed to the highest standards of security and transparency in all our operations.",
+    "PARAGRAPH_6": "Our customer support team is available 24/7 to assist users and respond to any inquiries at any time.",
+    "CONTACT_TITLE": "Contact Us",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "WHATSAPP": "WhatsApp"
+  },
+  "PRODUCT_DETAILS": {
+    "INFO_CARDS": {
+      "PAYMENT": {
+        "TITLE": "Safe and easy ways to pay!",
+        "DESCRIPTION": "Offers a variety of safe and convenient payment methods that suit all your needs, without waiting or complications."
+      },
+      "OFFERS": {
+        "TITLE": "Our offers are unbeatable!",
+        "DESCRIPTION": "Always has the best deals that fit your needs perfectly and save you money! Don't miss out on our amazing offers!"
+      },
+      "SPEED": {
+        "TITLE": "High speed!",
+        "DESCRIPTION": "Once you complete the purchase process, the cards will be received on your email quickly and securely!"
+      }
     }
   }
 }
