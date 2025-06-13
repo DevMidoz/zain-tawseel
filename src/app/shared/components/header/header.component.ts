@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NzInputGroupAltComponent } from '../nz-input-group-alt/nz-input-group-alt.component';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
 
 // NgZorro Modules
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -18,8 +17,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
-// Import new components
+// Import components
 import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { CountrySelectorComponent } from '../country-selector/country-selector.component';
@@ -35,9 +35,6 @@ import {
   SubcategoriesService,
   Subcategory,
 } from '../../../features/home/components/categories-carousel/services/subcategories.service';
-import { trackByIndexAndId } from '@shared/utils/track-by.util';
-
-// Using Subcategory interface from the imported service
 
 // Cart item interface
 interface CartItem {
@@ -45,6 +42,15 @@ interface CartItem {
   name: string;
   price: number;
   quantity: number;
+}
+
+// Search result interface
+interface SearchResult {
+  id: number;
+  name: string;
+  type: 'category' | 'subcategory';
+  parentId?: number; // Only for subcategories
+  image?: string;
 }
 
 @Component({
@@ -66,12 +72,11 @@ interface CartItem {
     NzAutocompleteModule,
     NzCollapseModule,
     FormsModule,
-    NgFor,
-    NgIf,
     RouterLink,
     LanguageSelectorComponent,
     ThemeToggleComponent,
     CountrySelectorComponent,
+    NzSpinModule,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -81,6 +86,7 @@ export class HeaderComponent implements OnInit {
   private languageService = inject(LanguageService);
   private categoriesService = inject(CategoriesService);
   private subcategoriesService = inject(SubcategoriesService);
+  private router = inject(Router);
 
   // Use signals for reactive state
   theme = this.themeService.theme;
@@ -92,6 +98,11 @@ export class HeaderComponent implements OnInit {
   subcategories: { [categoryId: number]: Subcategory[] } = {};
   loadingSubcategories: { [categoryId: number]: boolean } = {};
   activeCategory: number | null = null;
+
+  // Search functionality
+  searchValue: string = '';
+  searchResults: SearchResult[] = [];
+  isSearching = false;
 
   ngOnInit(): void {
     this.loadCategories();
@@ -156,16 +167,6 @@ export class HeaderComponent implements OnInit {
     { id: 2, name: 'PlayStation Giftcard (UAE Store)', price: 50, quantity: 1 },
   ];
 
-  // Search functionality
-  searchValue: string = '';
-  searchOptions: string[] = [
-    'PlayStation Gift Card',
-    'Xbox Game Pass',
-    'Nintendo Switch Online',
-    'Google Play Gift Card',
-    'PUBG Mobile UC',
-  ];
-
   // Country selection
   selectedCountry: string = 'Kuwait';
   countryCode: string = 'KWT';
@@ -211,8 +212,43 @@ export class HeaderComponent implements OnInit {
 
   // Handle search input
   onSearchInput(): void {
-    // In a real app, this would trigger an API call or filter results
-    console.log('Search value:', this.searchValue);
+    if (!this.searchValue || this.searchValue.trim().length < 2) {
+      this.searchResults = [];
+      return;
+    }
+
+    this.isSearching = true;
+    this.searchCategories();
+  }
+
+  // Search categories and subcategories
+  searchCategories(): void {
+    const query = this.searchValue.toLowerCase();
+    const results: SearchResult[] = [];
+
+    // Search in categories only
+    this.categories.forEach((category) => {
+      if (category.name.toLowerCase().includes(query)) {
+        results.push({
+          id: category.id,
+          name: category.name,
+          type: 'category',
+          image: category.image,
+        });
+      }
+    });
+
+    this.searchResults = results;
+    this.isSearching = false;
+  }
+
+  // Handle search result selection
+  onSelectSearchResult(result: SearchResult): void {
+    this.searchValue = '';
+    this.searchResults = [];
+
+    // Only handle category navigation since we only search in categories
+    this.router.navigate(['/category', result.id]);
   }
 
   // Set selected country
@@ -248,19 +284,23 @@ export class HeaderComponent implements OnInit {
 
   // Check if dark theme is active
   isDarkTheme(): boolean {
-    return this.themeService.theme() === 'dark';
+    return this.theme() === 'dark';
   }
 
-  // Tracking functions for @for loops
+  // Track by functions for ngFor
   trackByCartItem(index: number, item: CartItem): string {
-    return trackByIndexAndId(index, item);
+    return `${item.id}`;
   }
 
   trackByCategory(index: number, category: Category): string {
-    return trackByIndexAndId(index, category);
+    return `${category.id}`;
   }
 
   trackBySubcategory(index: number, subcategory: Subcategory): string {
-    return trackByIndexAndId(index, subcategory);
+    return `${subcategory.id}`;
+  }
+
+  trackBySearchResult(index: number, result: SearchResult): string {
+    return `${result.type}-${result.id}`;
   }
 }

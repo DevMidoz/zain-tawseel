@@ -110,7 +110,7 @@ export class CategoriesService {
                 name:
                   lang === 'ar' ? category.web_name_ar : category.web_name_en,
                 image: category.image,
-                link: `/categories/${category.id}`,
+                link: `/category/${category.id}`,
               }));
               observer.next(categories);
               observer.complete();

@@ -43,7 +43,7 @@
     @for (category of categories; track trackByCategory($index, category)) {
     <ng-template carouselSlide [id]="category.id.toString()">
       <div class="category-item">
-        <a [routerLink]="[category.link]" class="category-link">
+        <a [routerLink]="['/category', category.id]" class="category-link">
           <div class="category-image-container" [style.background-image]="'url(' + category.image + ')'">
           </div>
           <h3 class="category-name">{{ category.name }}</h3>

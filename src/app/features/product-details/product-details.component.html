@@ -1,0 +1,185 @@
+<div class="product-details-container">
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="loading-container">
+        <nz-spin nzTip="Loading..."></nz-spin>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (!isLoading && hasError) {
+    <div class="error-container">
+        <h3>Failed to load product details</h3>
+        <button nz-button nzType="primary" (click)="loadProductDetails()">Try Again</button>
+    </div>
+    }
+
+    <!-- Product Details Content -->
+    @if (!isLoading && !hasError) {
+    <!-- Breadcrumb -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+    <div nz-row [nzGutter]="[24, 24]">
+        <!-- Product Image Card -->
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6" [nzLg]="5">
+            <div class="product-card">
+                <img [src]="productImage" [alt]="product?.title || 'Product'" class="product-image"
+                    onerror="this.src='assets/images/placeholder-card.png'">
+            </div>
+
+            <button nz-button class="how-to-use-btn" nzBlock>How to use</button>
+        </div>
+
+        <!-- Product Details -->
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="10" [nzLg]="11">
+            <h1 class="product-title">
+                {{ product?.title || selectedSubcategoryName || 'Product Details' }}
+            </h1>
+
+            <!-- Classifications Section -->
+            <div class="selection-section">
+                <h2 class="section-title">Classifications</h2>
+
+                <!-- Loading State for Subcategories -->
+                @if (loadingSubcategories) {
+                <div class="subcategories-loading">
+                    <nz-spin nzSimple></nz-spin>
+                </div>
+                }
+
+                <!-- Error State for Subcategories -->
+                @if (!loadingSubcategories && subcategoriesError) {
+                <div class="subcategories-error">
+                    <p>Failed to load classifications</p>
+                </div>
+                }
+
+                <!-- Subcategories Content -->
+                @if (!loadingSubcategories && !subcategoriesError && subcategories.length > 0) {
+                <div class="horizontal-scroll-container" #classificationsScroll>
+                    <div class="classifications-options">
+                        @for (subcategory of subcategories; track subcategory.id) {
+                        <div class="classification-option" [class.selected]="selectedSubcategory === subcategory.id"
+                            (click)="selectSubcategory(subcategory.id)">
+                            @if (subcategory.image) {
+                            <div class="icon-container">
+                                <img [src]="subcategory.image" [alt]="getSubcategoryName(subcategory)"
+                                    onerror="this.src='assets/images/placeholder-card.png'">
+                            </div>
+                            }
+                            <div class="classification-text">
+                                <span>{{ getSubcategoryName(subcategory) }}</span>
+                            </div>
+                            @if (selectedSubcategory === subcategory.id) {
+                            <div class="checkmark">✓</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+                }
+
+                <!-- No Subcategories Found -->
+                @if (!loadingSubcategories && !subcategoriesError && subcategories.length === 0) {
+                <div class="no-subcategories">
+                    <p>No classifications available</p>
+                </div>
+                }
+            </div>
+
+            <!-- Card Amount Selection -->
+            <div class="selection-section">
+                <h2 class="section-title">Card Amount</h2>
+
+                <!-- Loading State for Products -->
+                @if (loadingProducts) {
+                <div class="products-loading">
+                    <nz-spin nzSimple></nz-spin>
+                </div>
+                }
+
+                <!-- Error State for Products -->
+                @if (!loadingProducts && productsError) {
+                <div class="products-error">
+                    <p>Failed to load card amounts</p>
+                </div>
+                }
+
+                <!-- Products Content -->
+                @if (!loadingProducts && !productsError && availableAmounts.length > 0) {
+                <div class="horizontal-scroll-container" #amountsScroll>
+                    <div class="amount-options">
+                        @for (amount of availableAmounts; track amount.id) {
+                        <div class="amount-option" [class.selected]="selectedAmount === amount.price"
+                            (click)="selectAmount(amount)">
+                            {{ amount.price }}
+                            @if (amount.countryCode === 'SAU') {
+                            @if (selectedAmount === amount.price) {
+                            <img src="assets/svgs/Riyal_white.svg" alt="SAR" class="currency-icon">
+                            } @else {
+                            <img [src]="'assets/svgs/' + (isDarkTheme ? 'Riyal_white.svg' : 'Riyal.svg')" alt="SAR"
+                                class="currency-icon">
+                            }
+                            } @else {
+                            {{ amount.currencySymbol }}
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+                }
+
+                <!-- No Products Found -->
+                @if (!loadingProducts && !productsError && availableAmounts.length === 0) {
+                <div class="no-products">
+                    <p>No card amounts available</p>
+                </div>
+                }
+            </div>
+
+            <!-- Total Price -->
+            @if (selectedAmount) {
+            <div class="total-price">
+                <h2>
+                    {{ selectedAmount * exchangeRate }}
+                    @if (selectedProduct?.countryCode === 'SAU') {
+                    <img [src]="'assets/svgs/' + (isDarkTheme ? 'Riyal_white.svg' : 'Riyal.svg')" alt="SAR"
+                        class="currency-icon total-price-icon">
+                    } @else {
+                    {{ selectedCurrency }}
+                    }
+                </h2>
+            </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button nz-button nzType="primary" nzSize="large" class="buy-now-btn" (click)="buyNow()">
+                    Buy Now
+                </button>
+                <!-- <button nz-button nzType="default" nzSize="large" class="add-to-cart-btn">
+                    <i nz-icon nzType="shopping-cart" nzTheme="outline"></i>
+                </button> -->
+            </div>
+        </div>
+
+        <!-- Info Cards Column -->
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" [nzLg]="8">
+            <div class="info-cards-column">
+                <div class="info-card">
+                    <h3>{{ 'PRODUCT_DETAILS.INFO_CARDS.PAYMENT.TITLE' | translate }}</h3>
+                    <p>{{ 'PRODUCT_DETAILS.INFO_CARDS.PAYMENT.DESCRIPTION' | translate }}</p>
+                </div>
+                <div class="info-card">
+                    <h3>{{ 'PRODUCT_DETAILS.INFO_CARDS.OFFERS.TITLE' | translate }}</h3>
+                    <p>{{ 'PRODUCT_DETAILS.INFO_CARDS.OFFERS.DESCRIPTION' | translate }}</p>
+                </div>
+                <div class="info-card">
+                    <h3>{{ 'PRODUCT_DETAILS.INFO_CARDS.SPEED.TITLE' | translate }}</h3>
+                    <p>{{ 'PRODUCT_DETAILS.INFO_CARDS.SPEED.DESCRIPTION' | translate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>

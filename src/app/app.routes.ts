@@ -8,6 +8,33 @@ export const routes: Routes = [
   { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'terms-conditions', component: TermsConditionsComponent },
-
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('@features/product-details/product-details.component').then(
+        (m) => m.ProductDetailsComponent
+      ),
+  },
+  {
+    path: 'category/:categoryId',
+    loadComponent: () =>
+      import('@features/product-details/product-details.component').then(
+        (m) => m.ProductDetailsComponent
+      ),
+  },
+  {
+    path: 'category/:categoryId/:subcategoryId',
+    loadComponent: () =>
+      import('@features/product-details/product-details.component').then(
+        (m) => m.ProductDetailsComponent
+      ),
+  },
+  {
+    path: 'about-us',
+    loadComponent: () =>
+      import('@features/about-us/about-us.component').then(
+        (c) => c.AboutUsComponent
+      ),
+  },
   { path: '**', redirectTo: '' }, // Wildcard route for 404
 ];

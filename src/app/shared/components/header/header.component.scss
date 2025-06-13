@@ -180,21 +180,52 @@ nz-header {
 
 // Logo styles
 .logo {
-  width: 250px;
-  height: 55px;
-  background-image: url("../../../../assets/svgs/zain_tawseel_logo.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  span {
+    font-size: 30px;
+    font-weight: bold;
+    color: vars.$text-color-dark;
+  }
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 // Search container styles
 .search-container {
   width: 100%;
+  position: relative;
+}
 
-  ::ng-deep {
-    .ant-select-dropdown {
-      max-width: 500px;
+// Search result styling
+::ng-deep .search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+
+  .search-result-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-right: 12px;
+  }
+
+  .search-result-icon {
+    font-size: 20px;
+    margin-right: 12px;
+    color: vars.$primary-color;
+  }
+}
+
+:host-context(body.dark-theme) {
+  ::ng-deep .search-result-item {
+    .search-result-icon {
+      color: vars.$primary-color-light;
     }
   }
 }

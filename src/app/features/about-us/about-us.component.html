@@ -1,0 +1,81 @@
+<div class="about-us-container">
+    <!-- Breadcrumb -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+    <div class="about-us-content">
+        <h1 nz-typography>{{ 'ABOUT_US.TITLE' | translate }}</h1>
+
+        <nz-divider></nz-divider>
+
+        <div class="about-section">
+            <div nz-row [nzGutter]="[24, 24]">
+                <div nz-col [nzXs]="24" [nzMd]="24">
+                    <div class="about-card">
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_1' | translate }}
+                        </p>
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_2' | translate }}
+                        </p>
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_3' | translate }}
+                        </p>
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_4' | translate }}
+                        </p>
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_5' | translate }}
+                        </p>
+                        <p nz-typography>
+                            {{ 'ABOUT_US.PARAGRAPH_6' | translate }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 nz-typography class="contact-title">{{ 'ABOUT_US.CONTACT_TITLE' | translate }}</h2>
+
+        <nz-divider></nz-divider>
+
+        <div class="contact-section">
+            <div nz-row [nzGutter]="[24, 24]">
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i nz-icon nzType="mail" nzTheme="outline"></i>
+                        </div>
+                        <h3 nz-typography>{{ 'ABOUT_US.EMAIL' | translate }}</h3>
+                        <p nz-typography>
+                            <a href="mailto:info&#64;zain-tawseel.com">info&#64;zain-tawseel.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i nz-icon nzType="phone" nzTheme="outline"></i>
+                        </div>
+                        <h3 nz-typography>{{ 'ABOUT_US.PHONE' | translate }}</h3>
+                        <p nz-typography>
+                            <a href="tel:+96522020001">+965 2202 0001</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i nz-icon nzType="message" nzTheme="outline"></i>
+                        </div>
+                        <h3 nz-typography>{{ 'ABOUT_US.WHATSAPP' | translate }}</h3>
+                        <p nz-typography>
+                            <a href="http://Wa.me/96599332100" target="_blank">+965 9933 2100</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -69,6 +69,66 @@ html[lang="en"] {
   z-index: 1050;
 }
 
+// Global autocomplete dropdown styles
+.ant-select-dropdown {
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08) !important;
+  border-radius: 4px !important;
+  background-color: white !important;
+  border: 1px solid #e8e8e8 !important;
+
+  .ant-select-item {
+    color: vars.$text-color-light !important;
+    padding: 8px 12px !important;
+  }
+
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: rgba(vars.$primary-color, 0.1) !important;
+    color: vars.$text-color-light !important;
+  }
+
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: rgba(vars.$primary-color, 0.2) !important;
+    color: vars.$text-color-light !important;
+  }
+
+  .ant-empty-description {
+    color: vars.$text-color-tertiary-light !important;
+  }
+}
+
+// Dark theme styles - combined for efficiency
+body.dark-theme {
+  // Autocomplete dropdown styles
+  .ant-select-dropdown {
+    background-color: vars.$component-background-dark !important;
+    border-color: vars.$border-color-dark !important;
+
+    .ant-select-item {
+      color: vars.$text-color-dark !important;
+    }
+
+    .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+      background-color: rgba(vars.$primary-color-light, 0.3) !important;
+      color: vars.$text-color-dark !important;
+    }
+
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+      background-color: rgba(vars.$primary-color-light, 0.4) !important;
+      color: vars.$text-color-dark !important;
+    }
+
+    .ant-empty-description {
+      color: vars.$text-color-tertiary-dark !important;
+    }
+  }
+
+  // Search result text color
+  .search-result-item span {
+    color: vars.$text-color-dark !important;
+  }
+}
+
 // Common styles for all themes
 .ant-layout {
   min-height: 100vh;
@@ -152,4 +212,11 @@ html[lang="en"] {
 
 .mt-3 {
   margin-top: 24px;
+}
+
+// Search result styling
+.search-result-item {
+  span {
+    color: vars.$text-color-light;
+  }
 }

@@ -90,14 +90,18 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.isBestSeller ? 'HOME.BEST_SELLER' : 'HOME.OFFERS';
   }
 
-  addToCart(offer: Offer): void {
-    console.log('Added to cart:', offer);
-    // Implement add to cart functionality
+  buyNow(offer: Offer): void {
+    window.open(
+      'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
+      '_blank'
+    );
   }
 
-  buyNow(offer: Offer): void {
-    console.log('Buy now:', offer);
-    // Implement buy now functionality
+  viewProductDetails(offer: Offer): void {
+    window.open(
+      'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
+      '_blank'
+    );
   }
 
   /**
@@ -107,17 +111,14 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoading = true;
     this.hasError = false;
 
-    // Use the service without parameters - it will get country code from the store
     this.offersSubscription?.unsubscribe();
     this.offersSubscription = this.offersService.getOffers().subscribe({
       next: (data) => {
         this.offers = data;
-        // Check if we're showing bestsellers - only if ALL items have isBestSeller flag
         this.isBestSeller =
           data.length > 0 && data.every((offer) => offer.isBestSeller === true);
         this.isLoading = false;
 
-        // Initialize swiper after data is loaded
         setTimeout(() => {
           this.initSwiper();
         }, 0);
@@ -131,26 +132,21 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Store current language
     this.currentLang = this.translateService.currentLang || 'en';
 
-    // Subscribe to language changes - only reload data if language actually changes
     this.langSubscription = this.translateService.onLangChange
       .pipe(filter((event) => event.lang !== this.currentLang))
       .subscribe((event) => {
-        // Clear the service cache when language changes
         this.offersService.clearCache();
         this.currentLang = event.lang;
         this.loadOffers();
       });
 
-    // Initial load of offers
     this.loadOffers();
   }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      // Wait for the DOM to be fully rendered
       setTimeout(() => {
         this.initSwiper();
       }, 0);
@@ -169,17 +165,13 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
       const isRtl = this.language() === 'ar';
       const swiperElement = this.swiperEl.nativeElement;
 
-      // Make sure we destroy any existing instance first
       if (swiperElement.swiper) {
         swiperElement.swiper.destroy();
       }
 
-      // Set direction attribute
       swiperElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
 
-      // Define and apply Swiper parameters
       const params = {
-        // Use fixed width slides instead of slidesPerView
         slidesPerView: 'auto',
         spaceBetween: 16,
         pagination: {
@@ -199,11 +191,10 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
         preventClicks: true,
         touchStartPreventDefault: false,
         centeredSlides: false,
-        cssMode: true, // Use CSS for transitions (smoother on mobile)
+        cssMode: true,
         watchSlidesProgress: true,
-        watchOverflow: true, // Disable navigation/pagination when all slides are visible
+        watchOverflow: true,
 
-        // Fix for infinite sliding - specify more detailed breakpoints
         breakpoints: {
           0: {
             slidesPerView: 'auto',
@@ -220,13 +211,8 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       };
 
-      // Initialize Swiper with parameters
       Object.assign(swiperElement, params);
-
-      // Initialize swiper manually
       swiperElement.initialize();
-
-      // Store reference for cleanup
       this.swiperInstance = swiperElement.swiper;
     } catch (error) {
       console.error('Error initializing Swiper:', error);
@@ -234,28 +220,17 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.langSubscription) {
-      this.langSubscription.unsubscribe();
-    }
+    this.langSubscription?.unsubscribe();
+    this.offersSubscription?.unsubscribe();
 
-    if (this.offersSubscription) {
-      this.offersSubscription.unsubscribe();
-    }
-
-    // Destroy Swiper instance
     if (this.swiperInstance) {
-      this.swiperInstance.destroy();
+      this.swiperInstance.destroy(true, true);
       this.swiperInstance = null;
     }
   }
 
-  // Tracking functions for the @for loops
   trackByOfferIdAndIndex(index: number, offer: Offer): string {
-    return `${index}-${offer.id}`;
-  }
-
-  trackByIndex(index: number, item: number): string {
-    return `${index}`;
+    return `${offer.id}-${index}`;
   }
 
   /**

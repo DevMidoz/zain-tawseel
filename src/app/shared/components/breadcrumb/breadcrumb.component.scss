@@ -9,8 +9,12 @@
 
       .ant-breadcrumb-link {
         a {
-          color: var(--primary-color);
+          color: vars.$primary-color;
           text-decoration: none;
+
+          :host-context(body.dark-theme) & {
+            color: vars.$text-color-dark;
+          }
 
           &:hover {
             text-decoration: underline;
@@ -18,12 +22,20 @@
         }
 
         span {
-          color: var(--text-color-secondary);
+          color: vars.$text-color-secondary-light;
+
+          :host-context(body.dark-theme) & {
+            color: vars.$text-color-dark;
+          }
         }
       }
 
       .ant-breadcrumb-separator {
-        color: var(--text-color-secondary);
+        color: vars.$text-color-secondary-light;
+
+        :host-context(body.dark-theme) & {
+          color: vars.$text-color-tertiary-dark;
+        }
       }
     }
   }

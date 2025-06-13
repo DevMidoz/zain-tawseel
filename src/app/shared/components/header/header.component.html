@@ -30,7 +30,10 @@
           <!-- Logo -->
           <div class="logo-container">
             <a [routerLink]="['/']">
-              <div class="logo"></div>
+              <div class="logo">
+                <img src="../../../../assets/svgs/ZT Updated 4K-01.svg" alt="Zain Tawseel Logo">
+                <span>Zain Tawseel</span>
+              </div>
             </a>
           </div>
 
@@ -39,11 +42,36 @@
             <app-nz-input-group-alt [suffix]="suffixIconSearch" [compact]="false" [searchStyle]="true"
               [mode]="theme() === 'dark' ? 'dark' : 'light'">
               <input nz-input placeholder="{{ 'APP.SEARCH' | translate }}" [(ngModel)]="searchValue"
-                (input)="onSearchInput()" />
+                (input)="onSearchInput()" [nzAutocomplete]="auto" />
             </app-nz-input-group-alt>
             <ng-template #suffixIconSearch>
               <nz-icon nzType="search" />
             </ng-template>
+            <nz-autocomplete #auto>
+              @if (isSearching) {
+              <nz-auto-option>
+                <nz-spin nzSimple></nz-spin>
+                <span class="ml-2">{{ 'APP.SEARCHING' | translate }}</span>
+              </nz-auto-option>
+              } @else if (searchResults.length === 0 && searchValue.length >= 2) {
+              <nz-auto-option>
+                <span>{{ 'APP.NO_RESULTS_FOUND' | translate }}</span>
+              </nz-auto-option>
+              } @else {
+              @for (result of searchResults; track trackBySearchResult($index, result)) {
+              <nz-auto-option [nzValue]="result.name" (click)="onSelectSearchResult(result)">
+                <div class="search-result-item">
+                  @if (result.image) {
+                  <img [src]="result.image" alt="{{ result.name }}" class="search-result-image" />
+                  } @else {
+                  <nz-icon nzType="tag" class="search-result-icon"></nz-icon>
+                  }
+                  <span>{{ result.name }}</span>
+                </div>
+              </nz-auto-option>
+              }
+              }
+            </nz-autocomplete>
           </div>
 
           <!-- User Controls: Login/Register and Cart -->
@@ -156,12 +184,7 @@
                   <!-- Display subcategories -->
                   @else if (subcategories[category.id]) {
                   @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
-                  <li nz-menu-item [routerLink]="['/categories/' + category.id + '/' + subcategory.id]">
-                    <!-- @if (subcategory.image) {
-                            <img [src]="subcategory.image" alt="{{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}" class="category-icon me-2" />
-                          } @else {
-                            <i class="fa-solid fa-tag me-2"></i>
-                          } -->
+                  <li nz-menu-item [routerLink]="['/category', category.id, subcategory.id]">
                     {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
                   </li>
                   }
@@ -198,23 +221,43 @@
       <!-- Logo -->
       <div class="logo">
         <a [routerLink]="['/']">
-          <img src="assets/svgs/zain_tawseel_icon.svg" alt="Zain Tawseel Logo">
+          <img src="assets/svgs/ZT Updated 4K-01.svg" alt="Zain Tawseel Logo">
         </a>
       </div>
 
       <!-- Search Bar -->
       <div class="search-container">
-        <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input type="text" nz-input [(ngModel)]="searchValue" [nzAutocomplete]="auto" (input)="onSearchInput()"
+        <nz-input-group [nzSuffix]="suffixIconMobileSearch">
+          <input type="text" nz-input [(ngModel)]="searchValue" [nzAutocomplete]="autoMobile" (input)="onSearchInput()"
             [placeholder]="'APP.SEARCH' | translate" />
         </nz-input-group>
-        <ng-template #suffixIconSearch>
+        <ng-template #suffixIconMobileSearch>
           <span nz-icon nzType="search"></span>
         </ng-template>
-        <nz-autocomplete #auto>
-          <nz-auto-option *ngFor="let option of searchOptions" [nzValue]="option">
-            {{ option }}
+        <nz-autocomplete #autoMobile>
+          @if (isSearching) {
+          <nz-auto-option>
+            <nz-spin nzSimple></nz-spin>
+            <span class="ml-2">{{ 'APP.SEARCHING' | translate }}</span>
           </nz-auto-option>
+          } @else if (searchResults.length === 0 && searchValue.length >= 2) {
+          <nz-auto-option>
+            <span>{{ 'APP.NO_RESULTS_FOUND' | translate }}</span>
+          </nz-auto-option>
+          } @else {
+          @for (result of searchResults; track trackBySearchResult($index, result)) {
+          <nz-auto-option [nzValue]="result.name" (click)="onSelectSearchResult(result)">
+            <div class="search-result-item">
+              @if (result.image) {
+              <img [src]="result.image" alt="{{ result.name }}" class="search-result-image" />
+              } @else {
+              <nz-icon nzType="tag" class="search-result-icon"></nz-icon>
+              }
+              <span>{{ result.name }}</span>
+            </div>
+          </nz-auto-option>
+          }
+          }
         </nz-autocomplete>
       </div>
     </div>
@@ -298,7 +341,7 @@
               <!-- Display subcategories -->
               @else if (subcategories[category.id]) {
               @for (subcategory of subcategories[category.id]; track trackBySubcategory($index, subcategory)) {
-              <li [routerLink]="['/categories/' + category.id + '/' + subcategory.id]" (click)="toggleSidebar()">
+              <li [routerLink]="['/category', category.id, subcategory.id]" (click)="toggleSidebar()">
                 <i class="fa-solid fa-tag me-2"></i>
                 {{ language() === 'en' ? subcategory.web_name_en : subcategory.web_name_ar }}
               </li>
@@ -324,6 +367,7 @@
         <i class="fa-solid fa-tags me-2"></i>
         {{ 'NAV.OFFERS' | translate }}
       </div>
+
     </nz-collapse>
   </div>
 

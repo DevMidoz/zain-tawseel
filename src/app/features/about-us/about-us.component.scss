@@ -1,0 +1,126 @@
+@use "../../../assets/scss/variables" as vars;
+
+.about-us-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-us-content {
+  margin-top: 20px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: vars.$primary-color;
+
+    :host-context(body.dark-theme) & {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  h2.contact-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 40px;
+    color: vars.$primary-color;
+
+    :host-context(body.dark-theme) & {
+      color: vars.$text-color-dark;
+    }
+  }
+}
+
+.about-section {
+  margin-top: 20px;
+}
+
+.about-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  :host-context(body.dark-theme) & {
+    background-color: rgba(vars.$component-background-light, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    color: vars.$text-color-light;
+
+    :host-context(body.dark-theme) & {
+      color: vars.$text-color-dark;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.contact-section {
+  margin-top: 20px;
+}
+
+.contact-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  height: 100%;
+
+  :host-context(body.dark-theme) & {
+    background-color: rgba(vars.$component-background-light, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .contact-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    color: vars.$primary-color;
+
+    :host-context(body.dark-theme) & {
+      color: vars.$primary-color-light;
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: vars.$primary-color;
+
+    :host-context(body.dark-theme) & {
+      color: vars.$text-color-dark;
+    }
+  }
+
+  p {
+    font-size: 16px;
+
+    a {
+      color: vars.$primary-color;
+      text-decoration: none;
+
+      :host-context(body.dark-theme) & {
+        color: vars.$primary-color-light;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: vars.$screen-md) {
+  .contact-card {
+    margin-bottom: 16px;
+  }
+}

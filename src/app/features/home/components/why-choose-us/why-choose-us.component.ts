@@ -7,7 +7,6 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
-import { trackByIndexAndId } from '@shared/utils/track-by.util';
 
 @Component({
   selector: 'app-why-choose-us',
@@ -17,49 +16,49 @@ import { trackByIndexAndId } from '@shared/utils/track-by.util';
     TranslateModule,
     NzGridModule,
     NzCardModule,
-    NzTypographyModule
+    NzTypographyModule,
   ],
   templateUrl: './why-choose-us.component.html',
-  styleUrls: ['./why-choose-us.component.scss']
+  styleUrls: ['./why-choose-us.component.scss'],
 })
 export class WhyChooseUsComponent {
   private themeService = inject(ThemeService);
   private languageService = inject(LanguageService);
-  
+
   // Use signals for reactive state
   theme = this.themeService.theme;
   language = this.languageService.language;
-  
+
   // Features data
   features = [
     {
       id: 1,
       title: 'HOME.WHY_CHOOSE_US.BEST_PRICES.TITLE',
       description: 'HOME.WHY_CHOOSE_US.BEST_PRICES.DESCRIPTION',
-      icon: 'fa-solid fa-tags'
+      icon: 'fa-solid fa-tags',
     },
     {
       id: 2,
       title: 'HOME.WHY_CHOOSE_US.COMPETITIVE_OFFERS.TITLE',
       description: 'HOME.WHY_CHOOSE_US.COMPETITIVE_OFFERS.DESCRIPTION',
-      icon: 'fa-solid fa-percent'
+      icon: 'fa-solid fa-percent',
     },
     {
       id: 3,
       title: 'HOME.WHY_CHOOSE_US.PREMIUM_SUPPORT.TITLE',
       description: 'HOME.WHY_CHOOSE_US.PREMIUM_SUPPORT.DESCRIPTION',
-      icon: 'fa-solid fa-headset'
+      icon: 'fa-solid fa-headset',
     },
     {
       id: 4,
       title: 'HOME.WHY_CHOOSE_US.VARIETY_PRODUCTS.TITLE',
       description: 'HOME.WHY_CHOOSE_US.VARIETY_PRODUCTS.DESCRIPTION',
-      icon: 'fa-solid fa-box-open'
-    }
+      icon: 'fa-solid fa-box-open',
+    },
   ];
 
   // Tracking function for the @for loop
   trackByFeature(index: number, feature: any): string {
-    return trackByIndexAndId(index, feature);
+    return `${index}-${feature.id}`;
   }
 }

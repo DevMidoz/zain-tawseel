@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,6 +38,7 @@ export class NzCardAltComponent {
 
   @Output() addToCartClicked = new EventEmitter<void>();
   @Output() buyNowClicked = new EventEmitter<void>();
+  @Output() cardClicked = new EventEmitter<void>();
 
   // Path to Riyal SVG icon
   private readonly riyalIconPath: string = 'assets/svgs/Riyal.svg';
@@ -52,6 +59,18 @@ export class NzCardAltComponent {
    */
   getCurrencyIcon(): string {
     return this.riyalIconPath;
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(event: Event): void {
+    // Only emit if the click is directly on the card or its container,
+    // not on the buttons (which have their own click handlers)
+    const target = event.target as HTMLElement;
+    const isButton = target.closest('button') !== null;
+
+    if (!isButton) {
+      this.cardClicked.emit();
+    }
   }
 
   onAddToCart(event: Event): void {

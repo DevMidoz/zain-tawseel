@@ -53,7 +53,8 @@
       <app-nz-card-alt [title]="offer.title" [image]="offer.image" [price]="offer.price"
         [originalPrice]="offer.originalPrice" [currency]="offer.currency" [discount]="offer.discount"
         [countryCode]="getCountryCodeFromFlag(offer.flag)" [buyNowText]="'HOME.BUY_NOW' | translate"
-        [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)">
+        [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)"
+        (cardClicked)="viewProductDetails(offer)" class="clickable-card">
       </app-nz-card-alt>
     </div>
     }
@@ -68,7 +69,8 @@
           <app-nz-card-alt [title]="offer.title" [image]="offer.image" [price]="offer.price"
             [originalPrice]="offer.originalPrice" [currency]="offer.currency" [discount]="offer.discount"
             [countryCode]="getCountryCodeFromFlag(offer.flag)" [buyNowText]="'HOME.BUY_NOW' | translate"
-            [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)">
+            [showAddToCart]="true" (addToCartClicked)="addToCart(offer)" (buyNowClicked)="buyNow(offer)"
+            (cardClicked)="viewProductDetails(offer)" class="clickable-card">
           </app-nz-card-alt>
         </div>
       </swiper-slide>

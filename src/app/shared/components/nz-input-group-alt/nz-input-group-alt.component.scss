@@ -1,4 +1,4 @@
-@use '../../../../assets/scss/variables' as vars;
+@use "../../../../assets/scss/variables" as vars;
 
 :host {
   display: block;
@@ -12,74 +12,101 @@ nz-input-group {
   height: 40px;
 }
 
-:host-context([data-theme="light"]) {
+// Light theme styles
+nz-input-group.light-mode {
   ::ng-deep {
     .ant-input-wrapper {
       .ant-input {
         background-color: white;
-        color: vars.$text-color-dark;
-        
+        color: rgba(0, 0, 0, 0.85);
+        border-color: vars.$border-color-light;
+
         &::placeholder {
           color: vars.$text-color-tertiary-light;
         }
+
+        &:focus {
+          border-color: vars.$primary-color;
+          box-shadow: 0 0 0 2px rgba(vars.$primary-color, 0.2);
+        }
       }
-      
+
       .ant-input-group-addon,
       .ant-input-affix-wrapper {
         background-color: white;
         color: vars.$text-color-tertiary-light;
-        
+        border-color: vars.$border-color-light;
+
         .anticon {
-          color: vars.$text-color-tertiary-light;
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        &:hover,
+        &:focus {
+          border-color: vars.$primary-color;
         }
       }
     }
   }
 }
 
-:host-context([data-theme="dark"]) {
+// Dark theme styles
+nz-input-group.dark-mode {
   ::ng-deep {
     .ant-input-wrapper {
       .ant-input {
         background-color: rgba(vars.$component-background-dark, 0.8);
-        color: vars.$text-color-light;
+        color: rgba(255, 255, 255, 0.9);
         border-color: vars.$border-color-dark;
-        
+
         &::placeholder {
           color: vars.$text-color-tertiary-dark;
         }
+
+        &:focus {
+          border-color: vars.$primary-color-light;
+          box-shadow: 0 0 0 2px rgba(vars.$primary-color-light, 0.3);
+        }
       }
-      
+
       .ant-input-group-addon,
       .ant-input-affix-wrapper {
         background-color: rgba(vars.$component-background-dark, 0.8);
         border-color: vars.$border-color-dark;
-        color: vars.$text-color-tertiary-dark;
-        
+        color: vars.$text-color-dark;
+
         .anticon {
-          color: vars.$text-color-tertiary-dark;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        &:hover,
+        &:focus {
+          border-color: vars.$primary-color-light;
         }
       }
     }
   }
 }
-  
 
-
+// Search style (rounded corners)
 nz-input-group.search-style {
   ::ng-deep {
     .ant-input-wrapper {
       .ant-input {
         border-radius: 20px;
-        
-        &:focus {
-          box-shadow: 0 0 0 2px rgba(vars.$primary-color, 0.2);
-        }
       }
-      
+
       .ant-input-group-addon,
       .ant-input-affix-wrapper {
         border-radius: 20px;
+      }
+
+      .ant-input-affix-wrapper {
+        padding-right: 12px;
+
+        .ant-input-suffix {
+          margin-left: 8px;
+        }
       }
     }
   }
