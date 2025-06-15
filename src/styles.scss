@@ -69,6 +69,33 @@ html[lang="en"] {
   z-index: 1050;
 }
 
+// Fix for modal z-index issues
+.cdk-overlay-backdrop {
+  z-index: 1050 !important;
+}
+
+.cdk-global-overlay-wrapper {
+  z-index: 1051 !important;
+}
+
+.ant-modal-wrap,
+.ant-modal-mask {
+  z-index: 1051 !important;
+}
+
+.ant-modal {
+  z-index: 1052 !important;
+}
+
+// Specific style for the how-to-use modal
+.how-to-use-modal-wrap {
+  z-index: 1052 !important;
+
+  .ant-modal-content {
+    pointer-events: auto !important;
+  }
+}
+
 // Global autocomplete dropdown styles
 .ant-select-dropdown {
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),

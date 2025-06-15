@@ -18,6 +18,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { HttpClientModule } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -38,6 +39,7 @@ import {
   Breadcrumb,
 } from '@shared/components/breadcrumb/breadcrumb.component';
 import { CategoriesService } from '../home/components/categories-carousel/services/categories.service';
+import { HowToUseComponent } from './components/how-to-use/how-to-use.component';
 
 @Component({
   selector: 'app-product-details',
@@ -54,6 +56,7 @@ import { CategoriesService } from '../home/components/categories-carousel/servic
     NzCardModule,
     NzMessageModule,
     NzSpinModule,
+    NzModalModule,
     HttpClientModule,
     BreadcrumbComponent,
   ],
@@ -71,6 +74,7 @@ export class ProductDetailsComponent
   private message = inject(NzMessageService);
   private translateService = inject(TranslateService);
   private countryFacade = inject(CountryFacade);
+  private modalService = inject(NzModalService);
 
   // Subject for unsubscribing from observables
   private destroy$ = new Subject<void>();
@@ -95,6 +99,7 @@ export class ProductDetailsComponent
   subcategories: Subcategory[] = [];
   loadingSubcategories: boolean = false;
   subcategoriesError: boolean = false;
+  showClassificationSection: boolean = true; // New property to control visibility of classification section
 
   // Products (Card Amounts)
   products: Product[] = [];
@@ -201,17 +206,100 @@ export class ProductDetailsComponent
   }
 
   /**
+   * Force the classification section to be shown if there are subcategories
+   * This is a workaround for cases where the section might be incorrectly hidden
+   */
+  private ensureClassificationSectionShown(): void {
+    console.log('ensureClassificationSectionShown called');
+    console.log('Current subcategories:', this.subcategories);
+    console.log(
+      'Current showClassificationSection:',
+      this.showClassificationSection
+    );
+
+    // If we have subcategories, make sure the section is shown
+    if (this.subcategories && this.subcategories.length > 0) {
+      this.showClassificationSection = true;
+      console.log(
+        'Forcing showClassificationSection to true because we have subcategories'
+      );
+    }
+  }
+
+  /**
    * Handle the case when a category is selected
    */
   handleCategorySelection(): void {
     this.isLoading = true;
     this.hasError = false;
+    this.showClassificationSection = true; // Default to showing classification section for categories
 
-    // Load subcategories for the selected category
-    this.loadSubcategories(parseInt(this.categoryId), true);
+    // Set default product image
+    this.productImage = 'assets/images/placeholder-card.png';
 
-    // Set up breadcrumbs for category
-    this.setupCategoryBreadcrumbs();
+    // Fetch category info first to check if it has children
+    const categoryId = parseInt(this.categoryId);
+    const lang = this.translateService.currentLang || 'en';
+
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (categories) => {
+          const category = categories.find((c) => c.id === categoryId);
+          if (category) {
+            this.categoryName = category.name;
+
+            // Update product image with category image
+            if (category.image && category.image.trim() !== '') {
+              this.productImage = category.image;
+            }
+
+            // Set up breadcrumbs for category
+            this.setupCategoryBreadcrumbs();
+
+            // Check if category has children by loading subcategories
+            this.subcategoriesService
+              .getSubcategories(categoryId, this.selectedCountry, lang)
+              .subscribe({
+                next: (subcategories) => {
+                  // Store subcategories regardless of length
+                  this.subcategories = subcategories;
+                  this.loadingSubcategories = false;
+
+                  // Determine if we should show the classification section based on subcategories length
+                  this.showClassificationSection = subcategories.length > 0;
+
+                  if (subcategories.length === 0) {
+                    // If no subcategories, load products directly
+                    this.loadProductsByCategory(categoryId);
+                  } else {
+                    // If has subcategories, select first subcategory
+                    this.selectSubcategory(subcategories[0].id);
+                  }
+
+                  // Setup horizontal scroll after subcategories are loaded
+                  setTimeout(() => this.setupHorizontalScroll(), 300);
+                },
+                error: (error) => {
+                  console.error('Error loading subcategories:', error);
+                  this.subcategoriesError = true;
+                  this.loadingSubcategories = false;
+                  this.isLoading = false;
+                },
+              });
+          } else {
+            // Category not found
+            this.isLoading = false;
+            this.hasError = true;
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching category name:', error);
+          this.isLoading = false;
+          this.hasError = true;
+        },
+      });
   }
 
   /**
@@ -220,12 +308,93 @@ export class ProductDetailsComponent
   handleSubcategorySelection(): void {
     this.isLoading = true;
     this.hasError = false;
+    this.showClassificationSection = true; // Default to showing classification section for subcategories
 
-    // Load subcategories for the parent category and mark the selected subcategory
-    this.loadSubcategories(parseInt(this.categoryId), false);
+    // Set default product image
+    this.productImage = 'assets/images/placeholder-card.png';
+
+    const categoryId = parseInt(this.categoryId);
+    const subcategoryId = parseInt(this.subcategoryId);
+    const lang = this.translateService.currentLang || 'en';
 
     // Set up breadcrumbs for subcategory
     this.setupSubcategoryBreadcrumbs();
+
+    // Fetch category name first
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (categories) => {
+          const category = categories.find((c) => c.id === categoryId);
+          if (category) {
+            this.categoryName = category.name;
+
+            // Then check if the selected subcategory has children
+            this.subcategoriesService
+              .getSubcategories(categoryId, this.selectedCountry, lang)
+              .subscribe({
+                next: (subcategories) => {
+                  this.subcategories = subcategories;
+                  this.loadingSubcategories = false;
+
+                  // Determine if we should show the classification section based on subcategories length
+                  this.showClassificationSection = subcategories.length > 0;
+
+                  // Find the selected subcategory
+                  const selectedSubcategory = subcategories.find(
+                    (s) => s.id === subcategoryId
+                  );
+
+                  if (selectedSubcategory) {
+                    // Update subcategory name
+                    this.subcategoryName =
+                      lang === 'ar'
+                        ? selectedSubcategory.web_name_ar
+                        : selectedSubcategory.web_name_en;
+
+                    // Update product image with subcategory image
+                    if (
+                      selectedSubcategory.image &&
+                      selectedSubcategory.image.trim() !== ''
+                    ) {
+                      this.productImage = selectedSubcategory.image;
+                    }
+
+                    // Set the selected subcategory and load products
+                    this.selectedSubcategory = subcategoryId;
+                    this.loadProductsByCategory(subcategoryId);
+                  } else {
+                    // Subcategory not found in the list, select first one as fallback
+                    if (subcategories.length > 0) {
+                      this.selectSubcategory(subcategories[0].id);
+                    } else {
+                      this.isLoading = false;
+                    }
+                  }
+
+                  // Setup horizontal scroll after subcategories are loaded
+                  setTimeout(() => this.setupHorizontalScroll(), 300);
+                },
+                error: (error) => {
+                  console.error('Error loading subcategories:', error);
+                  this.subcategoriesError = true;
+                  this.loadingSubcategories = false;
+                  this.isLoading = false;
+                },
+              });
+          } else {
+            // Category not found
+            this.isLoading = false;
+            this.hasError = true;
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching category name:', error);
+          this.isLoading = false;
+          this.hasError = true;
+        },
+      });
   }
 
   setupHorizontalScroll(): void {
@@ -316,6 +485,7 @@ export class ProductDetailsComponent
   loadProductDetails(): void {
     this.isLoading = true;
     this.hasError = false;
+    this.showClassificationSection = true; // Default to showing classification section
 
     this.productService
       .getProductDetails(this.productId, this.selectedCountry)
@@ -338,8 +508,39 @@ export class ProductDetailsComponent
             // Set up breadcrumbs for product details
             this.setupProductBreadcrumbs(productDetails);
 
-            // Load subcategories based on the product's category_id
-            this.loadSubcategories(productDetails.categoryId, true);
+            // Check if the product's category has children
+            const lang = this.translateService.currentLang || 'en';
+            this.subcategoriesService
+              .getSubcategories(
+                productDetails.categoryId,
+                this.selectedCountry,
+                lang
+              )
+              .subscribe({
+                next: (subcategories) => {
+                  this.subcategories = subcategories;
+                  this.loadingSubcategories = false;
+
+                  // Determine if we should show the classification section based on subcategories length
+                  this.showClassificationSection = subcategories.length > 0;
+
+                  if (subcategories.length === 0) {
+                    // If no subcategories, load products directly
+                    this.loadProductsByCategory(productDetails.categoryId);
+                  } else {
+                    // If has subcategories, select first one
+                    this.selectSubcategory(subcategories[0].id);
+                  }
+
+                  // Setup horizontal scroll after subcategories are loaded
+                  setTimeout(() => this.setupHorizontalScroll(), 300);
+                },
+                error: (error) => {
+                  console.error('Error loading subcategories:', error);
+                  this.subcategoriesError = true;
+                  this.loadingSubcategories = false;
+                },
+              });
           } else {
             this.handleError();
           }
@@ -371,6 +572,11 @@ export class ProductDetailsComponent
           const category = categories.find((c) => c.id === categoryId);
           if (category) {
             this.categoryName = category.name;
+
+            // If coming directly from category navigation, use category image as product image
+            if (!this.productId && !this.subcategoryId) {
+              this.productImage = category.image;
+            }
           }
 
           // Then fetch subcategories
@@ -395,6 +601,8 @@ export class ProductDetailsComponent
                   }
                 } else {
                   this.isLoading = false;
+                  // If no subcategories, hide classification section
+                  this.showClassificationSection = false;
                 }
 
                 // Setup horizontal scroll after subcategories are loaded
@@ -431,6 +639,9 @@ export class ProductDetailsComponent
           this.subcategories = subcategories;
           this.loadingSubcategories = false;
 
+          // Determine if we should show the classification section based on subcategories length
+          this.showClassificationSection = subcategories.length > 0;
+
           // Handle subcategory selection
           if (subcategories.length > 0) {
             if (selectFirstSubcategory) {
@@ -445,6 +656,8 @@ export class ProductDetailsComponent
             }
           } else {
             this.isLoading = false;
+            // If no subcategories, load products for the category
+            this.loadProductsByCategory(categoryId);
           }
 
           // Setup horizontal scroll after subcategories are loaded
@@ -537,6 +750,9 @@ export class ProductDetailsComponent
       (sub) => sub.id === subcategoryId
     );
     if (selectedSubcategory) {
+      // Don't change showClassificationSection here - it's already set based on whether
+      // the parent category has subcategories or not
+
       if (
         selectedSubcategory.image &&
         selectedSubcategory.image.trim() !== ''
@@ -545,10 +761,10 @@ export class ProductDetailsComponent
       } else {
         this.productImage = 'assets/images/placeholder-card.png';
       }
-    }
 
-    // Load products for the selected subcategory
-    this.loadProductsByCategory(subcategoryId);
+      // Load products for the selected subcategory
+      this.loadProductsByCategory(subcategoryId);
+    }
   }
 
   getSubcategoryName(subcategory: Subcategory): string {
@@ -663,5 +879,18 @@ export class ProductDetailsComponent
           console.error('Error fetching category name:', error);
         },
       });
+  }
+
+  openHowToUseDialog(): void {
+    this.modalService.create({
+      nzContent: HowToUseComponent,
+      nzFooter: null,
+      nzWidth: 600,
+      nzTitle: undefined,
+      nzMaskClosable: true,
+      nzCentered: true,
+      nzZIndex: 1052,
+      nzWrapClassName: 'how-to-use-modal-wrap',
+    });
   }
 }

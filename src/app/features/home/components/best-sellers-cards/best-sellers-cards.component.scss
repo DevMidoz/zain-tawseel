@@ -5,11 +5,11 @@
   width: 100%;
 
   @media (max-width: vars.$screen-md) {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
 
   .section-header {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +20,7 @@
       margin-bottom: 0;
 
       @media (max-width: vars.$screen-sm) {
-        font-size: 17px;
+        font-size: 20px;
       }
     }
 
@@ -210,12 +210,37 @@
   swiper-container {
     // Fix issues with swiper looping
     --swiper-theme-color: var(--primary-color, #1890ff);
+    overflow: visible !important; // Allow the overflow to be visible
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 16px; // Same as slidesOffsetAfter
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1)
+      );
+      z-index: 2;
+      pointer-events: none;
+
+      :host-context(body.dark-theme) & {
+        background: linear-gradient(
+          to right,
+          rgba(14, 20, 40, 0),
+          rgba(14, 20, 40, 1)
+        );
+      }
+    }
 
     // Add custom swiper styles
     swiper-slide {
       height: auto !important; // Allow slides to be their natural height
       width: 160px !important; // Reduced width for cards on mobile
-      margin-right: 8px; // Reduced margin between slides
 
       @media (max-width: 480px) {
         width: 140px !important; // Smaller on mobile

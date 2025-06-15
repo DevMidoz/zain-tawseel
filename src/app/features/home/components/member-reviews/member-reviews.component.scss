@@ -1,23 +1,31 @@
-@use '../../../../../assets/scss/variables' as vars;
+@use "../../../../../assets/scss/variables" as vars;
 
 .member-reviews-section {
-  padding: 40px 0;
+  // padding: 40px 0;
   max-width: 1800px;
   margin: 0 auto;
-  
+
   .section-header {
     margin-bottom: 30px;
     display: flex;
-    
+
+    @media (max-width: 768px) {
+      margin-bottom: 12px;
+    }
+
     h2 {
       font-size: 28px;
       font-weight: 600;
       position: relative;
       display: inline-block;
       margin-bottom: 0;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
     }
   }
-  
+
   .review-card {
     margin: 10px;
     padding: 24px;
@@ -27,19 +35,19 @@
     transition: all 0.3s ease;
     height: 100%;
     min-height: 220px;
-    
+
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     }
-    
+
     &.rtl-mode {
       text-align: right;
-      
+
       .review-header {
         .user-info {
           // flex-direction: row-reverse;
-          
+
           .user-details {
             margin-left: 0;
             margin-right: 15px;
@@ -47,51 +55,51 @@
           }
         }
       }
-      
+
       .section-header h2 i {
         margin-right: 0;
         margin-left: 10px;
       }
     }
-    
+
     :host-context([data-theme="dark"]) & {
       background-color: rgba(vars.$component-background-dark, 0.7);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      
+
       .user-name {
         color: vars.$text-color-light;
       }
-      
+
       .review-date {
         color: vars.$text-color-secondary-dark;
       }
-      
+
       .review-content p {
         color: vars.$text-color-secondary-dark;
       }
     }
   }
-  
+
   .review-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 16px;
-    
+
     .user-info {
       display: flex;
       align-items: center;
-      
+
       .user-details {
         // margin-left: 15px;
-        
+
         .user-name {
           font-size: 16px;
           font-weight: 600;
           margin-bottom: 0;
           color: vars.$primary-color;
         }
-        
+
         .review-date {
           font-size: 12px;
           color: vars.$text-color-secondary-light;
@@ -102,15 +110,15 @@
         }
       }
     }
-    
+
     .rating {
       ::ng-deep {
         .ant-rate {
           font-size: 16px;
-          
+
           .ant-rate-star {
             margin-right: 4px;
-            
+
             &.ant-rate-star-full .ant-rate-star-second {
               color: #fadb14;
             }
@@ -119,7 +127,7 @@
       }
     }
   }
-  
+
   .review-content {
     p {
       font-size: 14px;
@@ -127,27 +135,27 @@
       color: vars.$text-color-secondary-light;
       margin-bottom: 0;
 
-      :host-context(body.dark-theme) & {  
+      :host-context(body.dark-theme) & {
         color: rgba(vars.$text-color-light, 0.85);
       }
     }
   }
-  
+
   ::ng-deep {
     .owl-dots {
       margin-top: 20px;
-      
+
       .owl-dot {
         span {
           background-color: rgba(vars.$primary-color, 0.3);
         }
-        
+
         &.active span {
           background-color: vars.$primary-color;
         }
       }
     }
-    
+
     .owl-nav {
       button.owl-prev,
       button.owl-next {
@@ -159,46 +167,46 @@
         background-color: white !important;
         border-radius: 50% !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        
+
         i {
           font-size: 16px;
           color: vars.$primary-color;
         }
-        
+
         &:hover {
           background-color: vars.$primary-color !important;
-          
+
           i {
             color: white;
           }
         }
       }
-      
+
       button.owl-prev {
         left: -20px;
       }
-      
+
       button.owl-next {
         right: -20px;
       }
     }
   }
-  
+
   @media (max-width: 767px) {
     .review-header {
       flex-direction: column;
-      
+
       .rating {
         margin-top: 10px;
       }
     }
-    
+
     ::ng-deep {
       .owl-nav {
         button.owl-prev {
           left: 0;
         }
-        
+
         button.owl-next {
           right: 0;
         }

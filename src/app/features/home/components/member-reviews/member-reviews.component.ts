@@ -52,7 +52,7 @@ export class MemberReviewsComponent implements OnInit, OnDestroy {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
-    dots: true,
+    dots: false,
     navSpeed: 700,
     autoplay: true,
     autoplayTimeout: 8000,

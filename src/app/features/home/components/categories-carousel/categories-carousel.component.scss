@@ -1,38 +1,36 @@
-@use '../../../../../assets/scss/variables' as vars;
+@use "../../../../../assets/scss/variables" as vars;
 
 // Categories Carousel
 .categories-section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   display: block;
   min-height: 200px;
   width: 100%;
 
   @media (max-width: vars.$screen-md) {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
-
 
   .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    
+    margin-bottom: 12px;
+
     h2 {
       margin-bottom: 0;
       font-size: 24px;
       font-weight: bold;
 
       @media (max-width: vars.$screen-sm) {
-        font-size: 17px;
+        font-size: 20px;
       }
-      
     }
-    
+
     .navigation-buttons {
       display: flex;
       gap: 10px;
-      
+
       button {
         width: 36px;
         height: 36px;
@@ -41,7 +39,12 @@
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        
+
+        @media (max-width: 768px) {
+          width: 24px;
+          height: 24px;
+        }
+
         &:hover {
           background-color: vars.$primary-color;
           color: white;
@@ -49,44 +52,44 @@
       }
     }
   }
-  
+
   // Loading state styles
   .categories-loading {
     width: 100%;
     padding: 20px 0;
-    
+
     .skeleton-container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: space-between;
-      
+
       .skeleton-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: calc(16.66% - 20px);
-        
+
         @media (max-width: 768px) {
           width: calc(33.33% - 20px);
         }
-        
+
         .category-image-skeleton {
           width: 150px;
           height: 150px;
           border-radius: 50%;
           margin-bottom: 15px;
-          
+
           @media (max-width: 768px) {
             width: 85px;
             height: 85px;
           }
         }
-        
+
         .category-name-skeleton {
           width: 80%;
           height: 22px;
-          
+
           @media (max-width: 768px) {
             height: 15px;
           }
@@ -94,40 +97,41 @@
       }
     }
   }
-  
+
   // Error state styles
-  .categories-error, .no-categories {
+  .categories-error,
+  .no-categories {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px 0;
     text-align: center;
-    
+
     p {
       font-size: 18px;
       margin-bottom: 20px;
       color: vars.$text-color-light;
-      
+
       :host-context(body.dark-theme) & {
         color: vars.$text-color-dark;
       }
     }
-    
+
     button {
       min-width: 120px;
     }
   }
-  
+
   .category-item {
     padding: 10px;
     text-align: center;
-    
+
     .category-link {
       display: block;
       text-decoration: none;
       color: inherit;
-      
+
       &:hover {
         .category-image-container {
           transform: translateY(-5px);
@@ -135,7 +139,7 @@
         }
       }
     }
-    
+
     .category-image-container {
       width: 150px;
       height: 150px;
@@ -145,21 +149,21 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
       transition: all 0.3s ease;
       overflow: hidden;
-      background-size:  cover;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
 
       @media (max-width: vars.$screen-md) {
         width: 85px;
-      height: 85px;
+        height: 85px;
       }
 
       @media (max-width: vars.$screen-sm) {
         width: 55px;
-      height: 55px;
+        height: 55px;
       }
     }
-    
+
     .category-name {
       font-size: 22px;
       font-weight: 600;
@@ -173,12 +177,11 @@
       @media (max-width: vars.$screen-sm) {
         font-size: 12px;
       }
-      :host-context(body.dark-theme)  &{
+      :host-context(body.dark-theme) & {
         color: vars.$text-color-dark;
       }
     }
   }
-
 }
 
 // // Dark theme styles

@@ -20,7 +20,7 @@ export interface SubcategoriesResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubcategoriesService {
   private http = inject(HttpClient);
@@ -33,31 +33,40 @@ export class SubcategoriesService {
    * @param lang The language code (e.g., 'en', 'ar')
    * @returns An Observable of Subcategory array
    */
-  getSubcategories(parentId: number, countryCode: string, lang: string): Observable<Subcategory[]> {
+  getSubcategories(
+    parentId: number,
+    countryCode: string,
+    lang: string
+  ): Observable<Subcategory[]> {
     const headers = new HttpHeaders({
-      'lang': lang
+      lang: lang,
     });
 
     const body = {
       parent_id: parentId,
-      country_code: countryCode
+      country_code: countryCode,
     };
 
-    return new Observable<Subcategory[]>(observer => {
-      this.http.post<SubcategoriesResponse>(this.apiUrl, body, { headers }).subscribe({
-        next: (response) => {
-          if (response.status === 'Success' && response.data) {
-            observer.next(response.data);
-            observer.complete();
-          } else {
-            observer.error('Invalid response format');
-          }
-        },
-        error: (error) => {
-          console.error(`Error fetching subcategories for parent ID ${parentId}:`, error);
-          observer.error(error);
-        }
-      });
+    return new Observable<Subcategory[]>((observer) => {
+      this.http
+        .post<SubcategoriesResponse>(this.apiUrl, body, { headers })
+        .subscribe({
+          next: (response) => {
+            if (response.status === 'Success' && response.data) {
+              observer.next(response.data);
+              observer.complete();
+            } else {
+              observer.error('Invalid response format');
+            }
+          },
+          error: (error) => {
+            console.error(
+              `Error fetching subcategories for parent ID ${parentId}:`,
+              error
+            );
+            observer.error(error);
+          },
+        });
     });
   }
 }

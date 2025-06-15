@@ -198,19 +198,26 @@ export class BestSellersCardsComponent
         cssMode: true,
         watchSlidesProgress: true,
         watchOverflow: true,
+        slidesOffsetAfter: 16,
+        slidesOffsetBefore: 0,
+        preventInteractionOnTransition: true,
+        touchMoveStopPropagation: true,
 
         breakpoints: {
           0: {
             slidesPerView: 'auto',
             spaceBetween: 6,
+            slidesOffsetAfter: 16,
           },
           480: {
             slidesPerView: 'auto',
             spaceBetween: 8,
+            slidesOffsetAfter: 16,
           },
           600: {
             slidesPerView: 'auto',
             spaceBetween: 10,
+            slidesOffsetAfter: 16,
           },
         },
       };

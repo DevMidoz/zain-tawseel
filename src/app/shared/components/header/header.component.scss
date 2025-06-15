@@ -860,10 +860,10 @@ html[dir="rtl"] {
     transform: none !important;
   }
 
-  // Ensure the overlay is visible
-  .cdk-overlay-backdrop {
-    z-index: 1999 !important;
-  }
+  // // Ensure the overlay is visible
+  // .cdk-overlay-backdrop {
+  //   z-index: 1999 !important;
+  // }
 }
 
 // Responsive styles

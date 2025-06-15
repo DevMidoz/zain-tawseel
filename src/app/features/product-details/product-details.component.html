@@ -21,22 +21,23 @@
 
     <div nz-row [nzGutter]="[24, 24]">
         <!-- Product Image Card -->
-        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6" [nzLg]="5">
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6" [nzLg]="3">
             <div class="product-card">
                 <img [src]="productImage" [alt]="product?.title || 'Product'" class="product-image"
                     onerror="this.src='assets/images/placeholder-card.png'">
             </div>
 
-            <button nz-button class="how-to-use-btn" nzBlock>How to use</button>
+            <button nz-button class="how-to-use-btn" nzBlock (click)="openHowToUseDialog()">How to use</button>
         </div>
 
         <!-- Product Details -->
-        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="10" [nzLg]="11">
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="10" [nzLg]="13">
             <h1 class="product-title">
                 {{ product?.title || selectedSubcategoryName || 'Product Details' }}
             </h1>
 
             <!-- Classifications Section -->
+            @if (showClassificationSection) {
             <div class="selection-section">
                 <h2 class="section-title">Classifications</h2>
 
@@ -86,6 +87,7 @@
                 </div>
                 }
             </div>
+            }
 
             <!-- Card Amount Selection -->
             <div class="selection-section">
@@ -107,22 +109,53 @@
 
                 <!-- Products Content -->
                 @if (!loadingProducts && !productsError && availableAmounts.length > 0) {
-                <div class="horizontal-scroll-container" #amountsScroll>
-                    <div class="amount-options">
-                        @for (amount of availableAmounts; track amount.id) {
-                        <div class="amount-option" [class.selected]="selectedAmount === amount.price"
-                            (click)="selectAmount(amount)">
-                            {{ amount.price }}
-                            @if (amount.countryCode === 'SAU') {
-                            @if (selectedAmount === amount.price) {
-                            <img src="assets/svgs/Riyal_white.svg" alt="SAR" class="currency-icon">
-                            } @else {
-                            <img [src]="'assets/svgs/' + (isDarkTheme ? 'Riyal_white.svg' : 'Riyal.svg')" alt="SAR"
-                                class="currency-icon">
-                            }
-                            } @else {
-                            {{ amount.currencySymbol }}
-                            }
+                <div class="horizontal-scroll-container product-cards-container" #amountsScroll>
+                    <div class="product-cards">
+                        @for (product of availableAmounts; track product.id) {
+                        <div class="product-card-amount" [class.selected]="selectedAmount === product.price"
+                            (click)="selectAmount(product)">
+                            <div class="card-image-container">
+                                @if (product.discount > 0) {
+                                <div class="discount-badge">-{{ product.discount }}%</div>
+                                }
+                                @if (product.isBestSeller) {
+                                <div class="bestseller-badge">{{ 'HOME.BEST_SELLER' | translate }}</div>
+                                }
+                                <img [src]="product.image" [alt]="product.title" loading="lazy"
+                                    onerror="this.src='assets/images/placeholder-card.png'">
+                            </div>
+                            <div class="card-content">
+                                <div class="card-title">{{ product.title }}</div>
+                                <div class="price-container">
+                                    <div class="price-wrapper">
+                                        <span class="current-price">
+                                            {{ product.price }}
+                                            @if (product.countryCode === 'SAU') {
+                                            <img [src]="'assets/svgs/' + (isDarkTheme ? 'Riyal_white.svg' : 'Riyal.svg')"
+                                                alt="SAR" class="currency-icon">
+                                            } @else {
+                                            {{ product.currencySymbol }}
+                                            }
+                                        </span>
+                                        @if (product.originalPrice > product.price) {
+                                        <span class="original-price">
+                                            {{ product.originalPrice }}
+                                            @if (product.countryCode === 'SAU') {
+                                            <img [src]="'assets/svgs/' + (isDarkTheme ? 'Riyal_white.svg' : 'Riyal.svg')"
+                                                alt="SAR" class="currency-icon">
+                                            } @else {
+                                            {{ product.currencySymbol }}
+                                            }
+                                        </span>
+                                        }
+                                    </div>
+                                </div>
+                                @if (selectedAmount === product.price) {
+                                <div class="selected-indicator">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                }
+                            </div>
                         </div>
                         }
                     </div>

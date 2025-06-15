@@ -55,7 +55,7 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
-    dots: true,
+    dots: false,
     navSpeed: 800,
     autoplay: true,
     autoplayTimeout: 5000,

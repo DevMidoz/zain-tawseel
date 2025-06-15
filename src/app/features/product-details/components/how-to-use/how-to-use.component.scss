@@ -1,0 +1,42 @@
+.how-to-use-dialog {
+  padding: 16px;
+  max-width: 600px;
+  position: relative;
+  z-index: 1052;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .section {
+    margin-bottom: 16px;
+
+    h3 {
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    ol {
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  nz-divider {
+    margin: 16px 0;
+  }
+}
+
+:host ::ng-deep {
+  .ant-modal-content {
+    position: relative;
+    z-index: 1052;
+    pointer-events: auto;
+  }
+}
