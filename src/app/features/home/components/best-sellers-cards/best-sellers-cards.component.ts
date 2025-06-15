@@ -29,13 +29,16 @@ register();
 
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
-import { OffersService, Offer } from './services/offers.service';
+import {
+  BestSellersService,
+  BestSeller,
+} from './services/best-sellers.service';
 
 // Import the NzCardAlt component
 import { NzCardAltComponent } from '@shared/components/nz-card-alt/nz-card-alt.component';
 
 @Component({
-  selector: 'app-offers-cards',
+  selector: 'app-best-sellers-cards',
   standalone: true,
   imports: [
     CommonModule,
@@ -51,15 +54,17 @@ import { NzCardAltComponent } from '@shared/components/nz-card-alt/nz-card-alt.c
     HttpClientModule,
     NzCardAltComponent,
   ],
-  templateUrl: './offers-cards.component.html',
-  styleUrls: ['./offers-cards.component.scss'],
+  templateUrl: './best-sellers-cards.component.html',
+  styleUrls: ['./best-sellers-cards.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BestSellersCardsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   private themeService = inject(ThemeService);
   public translateService = inject(TranslateService);
   private languageService = inject(LanguageService);
-  private offersService = inject(OffersService);
+  private bestSellersService = inject(BestSellersService);
   private platformId = inject(PLATFORM_ID);
 
   // Use signals for reactive state
@@ -67,7 +72,7 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   language = this.languageService.language;
 
   private langSubscription!: Subscription;
-  private offersSubscription!: Subscription;
+  private bestSellersSubscription!: Subscription;
   private swiperInstance: any = null;
   isLoading = true;
   hasError = false;
@@ -75,31 +80,28 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('swiperEl') swiperEl!: ElementRef;
 
-  // Offers data
-  offers: Offer[] = [];
+  // Best Sellers data
+  bestSellers: BestSeller[] = [];
 
-  // Flag to check if we have real offers (not best sellers)
-  hasOffers = false;
-
-  // Limited offers for desktop view
-  get displayedOffers(): Offer[] {
-    // Take the first 6 offers for desktop view
-    return this.offers.slice(0, 6);
+  // Limited best sellers for desktop view
+  get displayedBestSellers(): BestSeller[] {
+    // Take the first 6 best sellers for desktop view
+    return this.bestSellers.slice(0, 6);
   }
 
-  addToCart(offer: Offer): void {
+  addToCart(bestSeller: BestSeller): void {
     // Placeholder function for the addToCart event
-    console.log('Added to cart:', offer);
+    console.log('Added to cart:', bestSeller);
   }
 
-  buyNow(offer: Offer): void {
+  buyNow(bestSeller: BestSeller): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
       '_blank'
     );
   }
 
-  viewProductDetails(offer: Offer): void {
+  viewProductDetails(bestSeller: BestSeller): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
       '_blank'
@@ -107,42 +109,30 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Load offers from the API using the selected country code
+   * Load best sellers from the API using the selected country code
    */
-  public loadOffers(): void {
+  public loadBestSellers(): void {
     this.isLoading = true;
     this.hasError = false;
 
-    this.offersSubscription?.unsubscribe();
-    this.offersSubscription = this.offersService.getOffers().subscribe({
-      next: (data) => {
-        // Check if these are actual offers or best sellers
-        const areBestSellers =
-          data.length > 0 && data.every((offer) => offer.isBestSeller === true);
+    this.bestSellersSubscription?.unsubscribe();
+    this.bestSellersSubscription = this.bestSellersService
+      .getBestSellers()
+      .subscribe({
+        next: (data) => {
+          this.bestSellers = data;
+          this.isLoading = false;
 
-        // Only set offers if they are actual offers (not best sellers)
-        if (!areBestSellers) {
-          this.offers = data;
-          this.hasOffers = data.length > 0;
-        } else {
-          // If they are best sellers, clear the offers array
-          this.offers = [];
-          this.hasOffers = false;
-        }
-
-        this.isLoading = false;
-
-        setTimeout(() => {
-          this.initSwiper();
-        }, 0);
-      },
-      error: (error) => {
-        console.error('Error loading offers:', error);
-        this.isLoading = false;
-        this.hasError = true;
-        this.hasOffers = false;
-      },
-    });
+          setTimeout(() => {
+            this.initSwiper();
+          }, 0);
+        },
+        error: (error) => {
+          console.error('Error loading best sellers:', error);
+          this.isLoading = false;
+          this.hasError = true;
+        },
+      });
   }
 
   ngOnInit(): void {
@@ -151,12 +141,12 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.langSubscription = this.translateService.onLangChange
       .pipe(filter((event) => event.lang !== this.currentLang))
       .subscribe((event) => {
-        this.offersService.clearCache();
+        this.bestSellersService.clearCache();
         this.currentLang = event.lang;
-        this.loadOffers();
+        this.loadBestSellers();
       });
 
-    this.loadOffers();
+    this.loadBestSellers();
   }
 
   ngAfterViewInit(): void {
@@ -235,7 +225,7 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langSubscription?.unsubscribe();
-    this.offersSubscription?.unsubscribe();
+    this.bestSellersSubscription?.unsubscribe();
 
     if (this.swiperInstance) {
       this.swiperInstance.destroy(true, true);
@@ -243,8 +233,8 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  trackByOfferIdAndIndex(index: number, offer: Offer): string {
-    return `${offer.id}-${index}`;
+  trackByBestSellerIdAndIndex(index: number, bestSeller: BestSeller): string {
+    return `${bestSeller.id}-${index}`;
   }
 
   trackByIndex(index: number, item: any): string {

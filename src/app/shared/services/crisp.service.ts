@@ -317,11 +317,11 @@ export class CrispService {
     }
 
     // Set horizontal position based on language
-    if (isRTL) {
-      window.$crisp.push(['config', 'position:reverse', true]);
-    } else {
-      window.$crisp.push(['config', 'position:reverse', false]);
-    }
+    // if (isRTL) {
+    //   window.$crisp.push(['config', 'position:reverse', true]);
+    // } else {
+    //   window.$crisp.push(['config', 'position:reverse', false]);
+    // }
 
     // Set vertical offset based on screen size
     if (window.innerWidth <= 768) {

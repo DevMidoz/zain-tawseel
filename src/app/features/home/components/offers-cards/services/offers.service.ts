@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, take, shareReplay, of } from 'rxjs';
+import { Observable, switchMap, take, shareReplay } from 'rxjs';
 import { environment } from '@env/environment';
 import { CountryFacade } from '../../../../../core/store/country/country.facade';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,7 +46,6 @@ export class OffersService {
   private countryFacade = inject(CountryFacade);
   private translateService = inject(TranslateService);
   private apiUrl = `${environment.apiUrl}/gc-offer`;
-  private bestSellerApiUrl = `${environment.apiUrl}/gc-bestseller`;
 
   // Cache for API responses
   private offersCache: { [key: string]: Observable<Offer[]> } = {};
@@ -139,22 +138,14 @@ export class OffersService {
             response.data.length > 0
           ) {
             // Transform API response to Offer format
-            const offers = this.transformOffersData(response.data, lang, false);
+            const offers = this.transformOffersData(response.data, lang);
             observer.next(offers);
             observer.complete();
           } else {
-            // If no offers data, fetch bestsellers instead
-            console.log('No offers data, fetching bestsellers instead');
-            this.fetchBestSellers(countryCode, lang).subscribe({
-              next: (bestSellers) => {
-                observer.next(bestSellers);
-                observer.complete();
-              },
-              error: (error) => {
-                console.error('Error fetching bestsellers:', error);
-                observer.error(error);
-              },
-            });
+            // Return empty array if no offers
+            console.log('No offers data found');
+            observer.next([]);
+            observer.complete();
           }
         },
         error: (error) => {
@@ -166,63 +157,12 @@ export class OffersService {
   }
 
   /**
-   * Fetch bestsellers from API with specific country code and language
-   * @param countryCode Country code
-   * @param lang Language code
-   * @returns Observable of bestseller offers
-   */
-  private fetchBestSellers(
-    countryCode: string,
-    lang: string
-  ): Observable<Offer[]> {
-    const headers = new HttpHeaders({
-      lang: lang,
-    });
-
-    const body = {
-      country_code: countryCode,
-    };
-
-    return new Observable<Offer[]>((observer) => {
-      this.http
-        .post<OffersResponse>(this.bestSellerApiUrl, body, { headers })
-        .subscribe({
-          next: (response) => {
-            if (response.status === 'Success' && response.data) {
-              // Transform API response to Offer format
-              const bestSellers = this.transformOffersData(
-                response.data,
-                lang,
-                true
-              );
-              observer.next(bestSellers);
-              observer.complete();
-            } else {
-              // Return empty array if no bestsellers
-              observer.next([]);
-              observer.complete();
-            }
-          },
-          error: (error) => {
-            console.error('Error fetching bestsellers:', error);
-            observer.error(error);
-          },
-        });
-    });
-  }
-
-  /**
    * Transform API data to Offer objects
    * @param data API response data
    * @param lang Language code
-   * @param isBestSeller Whether these are bestseller items
    * @returns Array of Offer objects
    */
-  private transformOffersData(
-    data: any[],
-    lang: string,
-    isBestSeller: boolean
-  ): Offer[] {
+  private transformOffersData(data: any[], lang: string): Offer[] {
     return data.map((offer) => {
       // Calculate discount percentage if product_price_before is available
       let discountPercentage = 0;
@@ -261,7 +201,7 @@ export class OffersService {
         currency: currencySymbol,
         discount: discountPercentage,
         flag: flagCode,
-        isBestSeller,
+        isBestSeller: false,
       };
     });
   }

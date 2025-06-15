@@ -1,6 +1,6 @@
 @use "../../../../../assets/scss/variables" as vars;
 
-.offers-section {
+.best-sellers-section {
   margin-bottom: 40px;
   width: 100%;
 
@@ -57,7 +57,7 @@
   }
 
   // Loading state styles
-  .offers-loading {
+  .best-sellers-loading {
     width: 100%;
     padding: 20px 0;
 
@@ -107,8 +107,8 @@
   }
 
   // Error and empty state styles
-  .offers-error,
-  .no-offers {
+  .best-sellers-error,
+  .no-best-sellers {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,153 +192,14 @@
       padding-bottom: 20px; // Reduced space for pagination
     }
 
-    .offers-swiper {
+    .best-sellers-swiper {
       width: 100%;
       margin: 0 auto;
 
-      .offer-card-wrapper {
+      .best-seller-card-wrapper {
         padding: 1px; // Reduced padding to prevent edge touching
         height: 100%;
         display: block;
-      }
-    }
-  }
-
-  .offer-card {
-    height: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    ::ng-deep .ant-card-body {
-      padding: 16px;
-    }
-
-    ::ng-deep .ant-card-meta {
-      margin-bottom: 10px;
-
-      .ant-card-meta-title {
-        font-size: 16px;
-        font-weight: 500;
-        margin-bottom: 0;
-        white-space: normal;
-        line-height: 1.4;
-        height: 44px;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-      }
-    }
-
-    .offer-image-container {
-      height: 200px;
-      // background-size: contain;
-      // background-position: center;
-      // background-repeat: no-repeat;
-      background-color: #f5f5f5;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      padding-top: 17px;
-
-      .discount-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 1;
-        background-color: vars.$danger-color;
-        color: white;
-        padding: 2px 8px;
-        border-radius: 24px;
-        font-weight: bold;
-        font-size: 12px;
-      }
-    }
-
-    .price-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-
-      .price {
-        font-size: 18px;
-        font-weight: bold;
-        color: vars.$primary-color;
-      }
-    }
-
-    .offer-actions {
-      display: flex;
-      width: 100%;
-      gap: 10px;
-
-      .buy-now-container {
-        flex: 7;
-      }
-
-      .cart-btn-container {
-        flex: 3;
-      }
-    }
-  }
-
-  // Style the card actions
-  ::ng-deep .ant-card-actions {
-    display: flex;
-    padding: 0;
-    background-color: transparent;
-    border-top: none;
-
-    > li {
-      width: 100%;
-      margin: 0;
-
-      &:first-child {
-        width: 60%;
-      }
-
-      &:last-child {
-        width: 40%;
-      }
-
-      .buy-now-btn,
-      .add-to-cart-btn {
-        height: 40px;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        border-radius: 7px !important;
-        overflow: hidden;
-      }
-
-      .buy-now-btn {
-        background-color: vars.$primary-color !important;
-        border-color: vars.$primary-color !important;
-        color: white;
-        font-weight: 500;
-
-        &:hover,
-        &:focus {
-          background-color: vars.$primary-color-light !important;
-          border-color: vars.$primary-color-light !important;
-        }
-      }
-
-      .add-to-cart-btn {
-        color: vars.$primary-color;
-
-        span[nz-icon] {
-          font-size: 18px;
-        }
       }
     }
   }
@@ -354,6 +215,7 @@
     swiper-slide {
       height: auto !important; // Allow slides to be their natural height
       width: 160px !important; // Reduced width for cards on mobile
+      margin-right: 8px; // Reduced margin between slides
 
       @media (max-width: 480px) {
         width: 140px !important; // Smaller on mobile

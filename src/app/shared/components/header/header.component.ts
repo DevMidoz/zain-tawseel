@@ -158,13 +158,13 @@ export class HeaderComponent implements OnInit {
 
   // Sample cart items (in a real app, this would come from a service)
   cartItems: CartItem[] = [
-    {
-      id: 1,
-      name: 'Apple & iTunes Giftcard (US Store)',
-      price: 500,
-      quantity: 2,
-    },
-    { id: 2, name: 'PlayStation Giftcard (UAE Store)', price: 50, quantity: 1 },
+    // {
+    //   id: 1,
+    //   name: 'Apple & iTunes Giftcard (US Store)',
+    //   price: 500,
+    //   quantity: 2,
+    // },
+    // { id: 2, name: 'PlayStation Giftcard (UAE Store)', price: 50, quantity: 1 },
   ];
 
   // Country selection

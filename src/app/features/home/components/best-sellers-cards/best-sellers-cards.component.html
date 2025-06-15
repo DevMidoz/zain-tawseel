@@ -1,0 +1,87 @@
+<section class="best-sellers-section">
+    <div class="section-header">
+        <h2 nz-typography>{{ 'HOME.BEST_SELLER' | translate }}</h2>
+        <button nz-button nzType="link" class="show-more-btn" [routerLink]="['/best-sellers']">
+            {{ 'HOME.SHOW_MORE' | translate }}
+            <i class="fa-solid fa-arrow-right ms-2" [class.fa-arrow-left]="language() === 'ar'"></i>
+        </button>
+    </div>
+
+    <!-- Loading state -->
+    @if (isLoading) {
+    <div class="best-sellers-loading">
+        <div class="desktop-view" nz-row [nzGutter]="[12, 16]">
+            @for (i of [1,2,3,4,5,6]; track trackByIndex($index, i)) {
+            <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6" [nzLg]="6" [nzXl]="4">
+                <div class="skeleton-card">
+                    <nz-skeleton-element nzType="image" [nzActive]="true"
+                        class="card-image-skeleton"></nz-skeleton-element>
+                    <nz-skeleton-element nzType="input" [nzActive]="true"
+                        class="card-title-skeleton"></nz-skeleton-element>
+                    <nz-skeleton-element nzType="input" [nzActive]="true"
+                        class="card-price-skeleton"></nz-skeleton-element>
+                    <div class="card-buttons-skeleton">
+                        <nz-skeleton-element nzType="button" [nzActive]="true"></nz-skeleton-element>
+                        <nz-skeleton-element nzType="button" [nzActive]="true"></nz-skeleton-element>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- Error state -->
+    @if (hasError) {
+    <div class="best-sellers-error">
+        <p>{{ 'COMMON.ERROR_LOADING' | translate }}</p>
+        <button nz-button nzType="primary" (click)="loadBestSellers()">
+            {{ 'COMMON.RETRY' | translate }}
+        </button>
+    </div>
+    }
+
+    <!-- Best Sellers content -->
+    @if (!isLoading && !hasError) {
+    <!-- No best sellers found -->
+    @if (bestSellers.length === 0) {
+    <div class="no-best-sellers">
+        <p>{{ 'HOME.NO_BEST_SELLERS' | translate }}</p>
+    </div>
+    } @else {
+    <!-- Desktop View: Grid Layout (6 cards in a single row on desktop, 4 on tablet) -->
+    <div class="desktop-view" nz-row [nzGutter]="[12, 16]">
+        @for (bestSeller of displayedBestSellers; track trackByBestSellerIdAndIndex($index, bestSeller)) {
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="6" [nzLg]="6" [nzXl]="4">
+            <app-nz-card-alt [title]="bestSeller.title" [image]="bestSeller.image" [price]="bestSeller.price"
+                [originalPrice]="bestSeller.originalPrice" [currency]="bestSeller.currency"
+                [discount]="bestSeller.discount" [countryCode]="getCountryCodeFromFlag(bestSeller.flag)"
+                [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true"
+                (addToCartClicked)="addToCart(bestSeller)" (buyNowClicked)="buyNow(bestSeller)"
+                (cardClicked)="viewProductDetails(bestSeller)" class="clickable-card">
+            </app-nz-card-alt>
+        </div>
+        }
+    </div>
+
+    <!-- Mobile View: Swiper Carousel (2 cards per slide) -->
+    <div class="mobile-view">
+        <swiper-container #swiperEl class="best-sellers-swiper">
+            @for (bestSeller of bestSellers; track trackByBestSellerIdAndIndex($index, bestSeller)) {
+            <swiper-slide>
+                <div class="best-seller-card-wrapper">
+                    <app-nz-card-alt [title]="bestSeller.title" [image]="bestSeller.image" [price]="bestSeller.price"
+                        [originalPrice]="bestSeller.originalPrice" [currency]="bestSeller.currency"
+                        [discount]="bestSeller.discount" [countryCode]="getCountryCodeFromFlag(bestSeller.flag)"
+                        [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true"
+                        (addToCartClicked)="addToCart(bestSeller)" (buyNowClicked)="buyNow(bestSeller)"
+                        (cardClicked)="viewProductDetails(bestSeller)" class="clickable-card">
+                    </app-nz-card-alt>
+                </div>
+            </swiper-slide>
+            }
+        </swiper-container>
+    </div>
+    }
+    }
+</section>
