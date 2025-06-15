@@ -1,40 +1,40 @@
 // Responsive Design
-@use 'variables' as vars;
+@use "variables" as vars;
 
 // Mobile styles
 @media (max-width: vars.$screen-sm) {
   .mobile-hidden {
     display: none !important;
   }
-  
+
   .ant-layout-content {
-    padding: 20px !important;
+    padding: 12px 20px !important;
   }
-  
+
   // Adjust header for mobile
   .header-container {
     padding: 0 8px;
   }
-  
+
   .header-controls {
     gap: 5px;
   }
-  
+
   // Adjust footer for mobile
   .footer-container {
     padding: 0 8px;
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    
+
     .copyright {
       margin-bottom: 16px;
     }
   }
-  
+
   // Offer card styling is handled in the component
 }
 
@@ -43,16 +43,16 @@
   .tablet-hidden {
     display: none !important;
   }
-  
+
   .ant-layout-content {
     padding: 20px !important;
   }
-  
+
   // Adjust header for tablet
   .header-container {
     padding: 0 12px;
   }
-  
+
   .search-container {
     max-width: 200px;
   }
@@ -63,12 +63,12 @@
   .desktop-hidden {
     display: none !important;
   }
-  
+
   // Center content on large screens
   .header-container,
   .footer-container,
   .inner-content {
-     max-width: 1800px;
+    max-width: 1800px;
     margin: 0 auto;
   }
 }
