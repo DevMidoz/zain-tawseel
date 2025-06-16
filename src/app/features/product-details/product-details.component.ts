@@ -198,6 +198,9 @@ export class ProductDetailsComponent
     this.setupHorizontalScroll();
   }
 
+  /**
+   * Buy Now functionality - redirect to App Store
+   */
   buyNow(): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',

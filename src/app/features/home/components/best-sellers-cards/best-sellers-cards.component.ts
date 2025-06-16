@@ -94,6 +94,9 @@ export class BestSellersCardsComponent
     console.log('Added to cart:', bestSeller);
   }
 
+  /**
+   * Buy Now button handler - redirect to App Store
+   */
   buyNow(bestSeller: BestSeller): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
@@ -101,6 +104,9 @@ export class BestSellersCardsComponent
     );
   }
 
+  /**
+   * Navigate to product details - redirect to App Store
+   */
   viewProductDetails(bestSeller: BestSeller): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',

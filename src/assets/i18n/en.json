@@ -227,5 +227,9 @@
         "DESCRIPTION": "Once you complete the purchase process, the cards will be received on your email quickly and securely!"
       }
     }
+  },
+  "PRODUCT_INFO": {
+    "RELATED_PRODUCTS": "Related Products",
+    "NO_PRODUCTS": "No products available for this banner."
   }
 }

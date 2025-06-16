@@ -1,0 +1,63 @@
+<div class="product-info-container">
+    <!-- Breadcrumb -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+    <!-- Banner Information -->
+    @if (banner) {
+    <div class="banner-section">
+        <div class="banner-image-container">
+            <img [src]="banner.img" [alt]="banner.name" class="banner-image">
+        </div>
+        <h1 nz-typography class="banner-title">{{ banner.name }}</h1>
+    </div>
+
+    <!-- Products List -->
+    @if (products && products.length > 0) {
+    <div class="products-section">
+        <h2 nz-typography class="section-title">{{ 'PRODUCT_INFO.RELATED_PRODUCTS' | translate }}</h2>
+
+        <!-- Desktop View with Grid -->
+        @if (!isMobile) {
+        <div nz-row [nzGutter]="[16, 24]">
+            @for (product of products; track trackByProductId($index, product)) {
+            <div nz-col [nzXs]="12" [nzSm]="8" [nzMd]="6" [nzLg]="6" [nzXl]="4">
+                <app-nz-card-alt [title]="getProductName(product)" [image]="product.image"
+                    [price]="product.product_price" [originalPrice]="product.product_price_before"
+                    [currency]="product.symbol" [discount]="product.offer" [countryCode]="product.country_code"
+                    [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true"
+                    (addToCartClicked)="addToCart(product)" (buyNowClicked)="buyNow(product)"
+                    (cardClicked)="viewProductDetails(product)" class="product-card">
+                </app-nz-card-alt>
+            </div>
+            }
+        </div>
+        } @else {
+        <!-- Mobile View with Swiper -->
+        <div class="swiper-container">
+            <swiper-container #swiperEl [attr.direction]="language() === 'ar' ? 'rtl' : 'ltr'">
+                @for (product of products; track trackByProductId($index, product)) {
+                <swiper-slide>
+                    <app-nz-card-alt [title]="getProductName(product)" [image]="product.image"
+                        [price]="product.product_price" [originalPrice]="product.product_price_before"
+                        [currency]="product.symbol" [discount]="product.offer" [countryCode]="product.country_code"
+                        [buyNowText]="'HOME.BUY_NOW' | translate" [showAddToCart]="true"
+                        (addToCartClicked)="addToCart(product)" (buyNowClicked)="buyNow(product)"
+                        (cardClicked)="viewProductDetails(product)" class="product-card">
+                    </app-nz-card-alt>
+                </swiper-slide>
+                }
+            </swiper-container>
+        </div>
+        }
+    </div>
+    } @else {
+    <div class="no-products">
+        <p nz-typography>{{ 'PRODUCT_INFO.NO_PRODUCTS' | translate }}</p>
+    </div>
+    }
+    } @else {
+    <div class="loading-container">
+        <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 6 }"></nz-skeleton>
+    </div>
+    }
+</div>

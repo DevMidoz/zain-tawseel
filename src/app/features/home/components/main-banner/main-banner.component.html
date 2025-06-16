@@ -18,7 +18,7 @@
 
   <!-- Banner content -->
   @if (!isLoading && !hasError && banner) {
-  <div class="main-banner">
+  <div class="main-banner" [class.clickable]="isBannerClickable()" (click)="onBannerClick()">
     <img [src]="banner.img" [alt]="banner.name" class="banner-image">
   </div>
   }

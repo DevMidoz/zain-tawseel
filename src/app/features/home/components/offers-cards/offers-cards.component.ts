@@ -92,6 +92,9 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('Added to cart:', offer);
   }
 
+  /**
+   * Buy Now button handler - redirect to App Store
+   */
   buyNow(offer: Offer): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
@@ -99,6 +102,9 @@ export class OffersCardsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  /**
+   * Navigate to product details - redirect to App Store
+   */
   viewProductDetails(offer: Offer): void {
     window.open(
       'https://apps.apple.com/us/app/zain-tawseel/id1042615361',

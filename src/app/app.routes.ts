@@ -9,6 +9,13 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'terms-conditions', component: TermsConditionsComponent },
   {
+    path: 'product-info',
+    loadComponent: () =>
+      import('@features/product-info/product-info.component').then(
+        (m) => m.ProductInfoComponent
+      ),
+  },
+  {
     path: 'product/:id',
     loadComponent: () =>
       import('@features/product-details/product-details.component').then(

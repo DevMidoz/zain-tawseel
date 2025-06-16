@@ -10,6 +10,11 @@
 @use "assets/scss/spacing";
 @use "assets/scss/dropdown";
 
+// Add Swiper styles at the beginning
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
 // Global styles
 html,
 body {

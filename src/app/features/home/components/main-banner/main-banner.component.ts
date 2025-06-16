@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -21,6 +22,7 @@ export class MainBannerComponent implements OnInit, OnDestroy {
   private languageService = inject(LanguageService);
   private translateService = inject(TranslateService);
   private mainBannerService = inject(MainBannerService);
+  private router = inject(Router);
 
   // Use signals for reactive state
   theme = this.themeService.theme;
@@ -55,17 +57,6 @@ export class MainBannerComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    // Clean up subscriptions
-    if (this.langSubscription) {
-      this.langSubscription.unsubscribe();
-    }
-
-    if (this.bannerSubscription) {
-      this.bannerSubscription.unsubscribe();
-    }
-  }
-
   /**
    * Load main banner from API
    */
@@ -86,5 +77,41 @@ export class MainBannerComponent implements OnInit, OnDestroy {
         this.hasError = true;
       },
     });
+  }
+
+  /**
+   * Check if the banner is clickable
+   */
+  isBannerClickable(): boolean {
+    return this.banner?.clickable === 1;
+  }
+
+  /**
+   * Handle banner click and navigate to the product-info page if clickable
+   */
+  onBannerClick(): void {
+    if (this.isBannerClickable() && this.banner) {
+      // Navigate to product-info page with the banner data
+      this.mainBannerService.setCurrentBanner(this.banner);
+      this.router.navigate(['/product-info']);
+    }
+  }
+
+  /**
+   * Buy Now functionality - redirect to the App Store
+   */
+  buyNow(): void {
+    window.open(
+      'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
+      '_blank'
+    );
+  }
+
+  /**
+   * Clean up subscriptions on component destruction
+   */
+  ngOnDestroy(): void {
+    this.langSubscription?.unsubscribe();
+    this.bannerSubscription?.unsubscribe();
   }
 }

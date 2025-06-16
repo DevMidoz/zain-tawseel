@@ -9,53 +9,53 @@
   </ng-template>
 
   <div class="card-content">
-  <nz-card-meta [nzTitle]="title"></nz-card-meta>
+    <nz-card-meta [nzTitle]="title"></nz-card-meta>
 
-  <div class="price-container">
-    <div class="price-wrapper">
-      <span class="current-price">
-        {{ price }}
-        @if (shouldShowCurrencyIcon()) {
-        <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
-        } @else {
-        {{ currency }}
+    <div class="price-container">
+      <div class="price-wrapper">
+        <span class="current-price">
+          {{ price }}
+          @if (shouldShowCurrencyIcon()) {
+          <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
+          } @else {
+          {{ currency }}
+          }
+        </span>
+        @if (originalPrice > 0 && originalPrice !== price) {
+        <span class="original-price">
+          {{ originalPrice }}
+          @if (shouldShowCurrencyIcon()) {
+          <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
+          } @else {
+          {{ currency }}
+          }
+        </span>
         }
-      </span>
-      @if (originalPrice > 0 && originalPrice !== price) {
-      <span class="original-price">
-        {{ originalPrice }}
-        @if (shouldShowCurrencyIcon()) {
-        <img [src]="getCurrencyIcon()" alt="currency" class="currency-icon" width="16" height="16" />
-        } @else {
-        {{ currency }}
-        }
-      </span>
+      </div>
+    </div>
+
+    <div class="card-actions">
+      @if (link) {
+      <a [routerLink]="[link]" class="buy-now-container">
+        <button nz-button nzType="primary" class="buy-now-btn" nzBlock="true" (click)="onBuyNow($event)">
+          {{ buyNowText }}
+        </button>
+      </a>
+      } @else {
+      <div class="buy-now-container">
+        <button nz-button nzType="primary" class="buy-now-btn" nzBlock="true" (click)="onBuyNow($event)">
+          {{ buyNowText }}
+        </button>
+      </div>
       }
-    </div>
-  </div>
 
-  <div class="card-actions">
-    @if (link) {
-    <a [routerLink]="[link]" class="buy-now-container">
-      <button nz-button nzType="primary" class="buy-now-btn" nzBlock="true" (click)="onBuyNow($event)">
-        {{ buyNowText }}
-      </button>
-    </a>
-    } @else {
-    <div class="buy-now-container">
-      <button nz-button nzType="primary" class="buy-now-btn" nzBlock="true" (click)="onBuyNow($event)">
-        {{ buyNowText }}
-      </button>
-    </div>
-    }
-
-    @if (showAddToCart) {
-    <div class="cart-btn-container">
-      <button nz-button nzType="default" (click)="onAddToCart($event)" class="add-to-cart-btn" nzBlock="true">
-        <i class="fa-solid fa-cart-shopping"></i>
-      </button>
-    </div>
-    }
+      @if (showAddToCart) {
+      <div class="cart-btn-container">
+        <button nz-button nzType="default" (click)="onAddToCart($event)" class="add-to-cart-btn" nzBlock="true">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+      </div>
+      }
     </div>
   </div>
 </nz-card>
