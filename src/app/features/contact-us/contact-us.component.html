@@ -1,0 +1,79 @@
+<div class="contact-us-container">
+    <!-- Breadcrumb -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+    <div class="contact-content">
+        <h1 nz-typography class="page-title">{{ 'CONTACT_US.TITLE' | translate }}</h1>
+
+        <p nz-typography class="page-description">
+            {{ 'CONTACT_US.DESCRIPTION' | translate }}
+        </p>
+
+        <!-- Contact Cards -->
+        <div class="contact-cards-container">
+            <!-- Email Card -->
+            <div class="contact-card email-card" (click)="sendEmail()">
+                <div class="contact-card-content">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3 nz-typography>{{ 'CONTACT_US.EMAIL' | translate }}</h3>
+                        <p nz-typography class="contact-value">{{ contactInfo.email }}</p>
+                    </div>
+                </div>
+                <button nz-button nzType="primary" class="action-button">
+                    {{ 'CONTACT_US.SEND_EMAIL' | translate }}
+                </button>
+            </div>
+
+            <!-- Phone Card -->
+            <div class="contact-card phone-card" (click)="callPhone()">
+                <div class="contact-card-content">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3 nz-typography>{{ 'CONTACT_US.PHONE' | translate }}</h3>
+                        <p nz-typography class="contact-value">{{ contactInfo.phone }}</p>
+                    </div>
+                </div>
+                <button nz-button nzType="primary" class="action-button">
+                    {{ 'CONTACT_US.CALL_US' | translate }}
+                </button>
+            </div>
+
+            <!-- WhatsApp Card -->
+            <div class="contact-card whatsapp-card" (click)="openWhatsApp()">
+                <div class="contact-card-content">
+                    <div class="icon-container">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div class="card-details">
+                        <h3 nz-typography>{{ 'CONTACT_US.WHATSAPP' | translate }}</h3>
+                        <p nz-typography class="contact-value">{{ contactInfo.whatsapp }}</p>
+                    </div>
+                </div>
+                <button nz-button nzType="primary" class="action-button">
+                    {{ 'CONTACT_US.MESSAGE_US' | translate }}
+                </button>
+            </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <div class="social-media-section">
+            <h2 nz-typography class="section-title">{{ 'CONTACT_US.FOLLOW_US' | translate }}</h2>
+
+            <div class="social-icons-container">
+                @for (social of socialMedia; track social.name) {
+                <div class="social-icon-wrapper" (click)="openLink(social.url)">
+                    <div class="social-icon">
+                        <i class="fa-brands fa-{{social.icon}}"></i>
+                    </div>
+                    <!-- <span class="social-name">{{ social.name }}</span> -->
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

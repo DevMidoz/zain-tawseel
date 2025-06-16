@@ -206,9 +206,11 @@
           </li>
 
           <!-- Offers Menu Item -->
-          <li nz-menu-item [routerLink]="['/offers']">
-            <i class="fa-solid fa-tags"></i>
-            <span>{{ 'NAV.OFFERS' | translate }}</span>
+          <li nz-menu-item>
+            <a href="javascript:void(0)" (click)="scrollToOffers($event)">
+              <i class="fa-solid fa-tags"></i>
+              <span>{{ 'NAV.OFFERS' | translate }}</span>
+            </a>
           </li>
         </ul>
       </div>
@@ -363,7 +365,7 @@
       </nz-collapse-panel>
 
       <!-- Offers - Direct list item -->
-      <div class="sidebar-menu-item" [routerLink]="['/offers']" (click)="toggleSidebar()">
+      <div class="sidebar-menu-item" (click)="scrollToOffers($event); toggleSidebar()">
         <i class="fa-solid fa-tags me-2"></i>
         {{ 'NAV.OFFERS' | translate }}
       </div>

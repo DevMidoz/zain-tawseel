@@ -5,7 +5,13 @@
       <!-- Brand Section -->
       <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="8" class="brand-section">
         <div class="logo-container">
-          <img src="assets/svgs/zain_tawseel_logo.svg" alt="{{ 'APP.TITLE' | translate }}" class="footer-logo" />
+          <a [routerLink]="['/']">
+            <div class="logo">
+              <img src="assets/svgs/ZT Updated 4K-01.svg" alt="Zain Tawseel Logo">
+              <span>Zain Tawseel</span>
+            </div>
+          </a>
+          <!-- <img src="assets/svgs/zain_tawseel_logo.svg" alt="{{ 'APP.TITLE' | translate }}" class="footer-logo" /> -->
         </div>
         <p class="tagline">{{ 'FOOTER.ABOUT_US' | translate }}</p>
         <div class="social-links">
@@ -23,12 +29,14 @@
         <h3>{{ 'FOOTER.HELP' | translate }}</h3>
         <div class="footer-links-container">
           <ul class="footer-links">
-            <li><a [routerLink]="['/categories']">{{ 'NAV.CATEGORIES' | translate }}</a></li>
-            <li><a [routerLink]="['/offers']">{{ 'NAV.OFFERS' | translate }}</a></li>
+            <li><a href="javascript:void(0)" (click)="scrollToSection('categories-section')">{{ 'NAV.CATEGORIES' |
+                translate }}</a></li>
+            <li><a href="javascript:void(0)" (click)="scrollToSection('offers-section')">{{ 'NAV.OFFERS' | translate
+                }}</a></li>
             <li><a [routerLink]="['/about-us']">{{ 'NAV.ABOUT_US' | translate }}</a></li>
           </ul>
           <ul class="footer-links">
-            <li><a [routerLink]="['/contact']">{{ 'NAV.CONTACT_US' | translate }}</a></li>
+            <li><a [routerLink]="['/contact-us']">{{ 'NAV.CONTACT_US' | translate }}</a></li>
             <li><a [routerLink]="['/privacy-policy']">{{ 'FOOTER.PRIVACY' | translate }}</a></li>
             <li><a [routerLink]="['/terms-conditions']">{{ 'FOOTER.TERMS' | translate }}</a></li>
           </ul>

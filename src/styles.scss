@@ -10,10 +10,10 @@
 @use "assets/scss/spacing";
 @use "assets/scss/dropdown";
 
-// Add Swiper styles at the beginning
-@import "swiper/css";
-@import "swiper/css/navigation";
-@import "swiper/css/pagination";
+// Update Swiper styles to use @use instead of @import
+@use "swiper/css" as swiper;
+@use "swiper/css/navigation" as swiper-navigation;
+@use "swiper/css/pagination" as swiper-pagination;
 
 // Global styles
 html,

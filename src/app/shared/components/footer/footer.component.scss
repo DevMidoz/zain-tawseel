@@ -1,4 +1,4 @@
-@use '../../../../assets/scss/variables' as vars;
+@use "../../../../assets/scss/variables" as vars;
 
 nz-footer {
   padding: 60px 0 20px;
@@ -18,9 +18,9 @@ h3 {
   font-weight: 600;
   color: white;
   position: relative;
-  
+
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -8px;
     left: 0;
@@ -28,7 +28,7 @@ h3 {
     height: 2px;
     background-color: vars.$primary-color-light;
   }
-  
+
   :host-context(html[dir="rtl"]) & {
     &:after {
       left: auto;
@@ -59,26 +59,43 @@ p {
 // Brand section styles
 .brand-section {
   margin-bottom: 24px;
-  
+
   .logo-container {
     margin-bottom: 16px;
-    
+
     .footer-logo {
       max-height: 40px;
       margin-bottom: 16px;
     }
+
+    // Logo styles
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      span {
+        font-size: 30px;
+        font-weight: bold;
+        color: vars.$text-color-dark;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
   }
-  
+
   .tagline {
     margin-bottom: 24px;
     max-width: 300px;
   }
-  
+
   .social-links {
     display: flex;
     gap: 12px;
     margin-top: 16px;
-    
+
     .social-icon {
       display: flex;
       align-items: center;
@@ -89,11 +106,11 @@ p {
       background-color: rgba(255, 255, 255, 0.1);
       color: white;
       transition: all 0.3s ease;
-      
+
       i {
         font-size: 16px;
       }
-      
+
       &:hover {
         background-color: vars.$primary-color-light;
         transform: translateY(-3px);
@@ -107,7 +124,7 @@ p {
   .footer-links-container {
     display: flex;
     gap: 40px;
-    
+
     // // For RTL support
     // :host-context(html[dir="rtl"]) & {
     //   flex-direction: row-reverse;
@@ -116,29 +133,29 @@ p {
       justify-content: center;
     }
   }
-  
+
   .footer-links {
     list-style: none;
     padding: 0;
     margin: 0;
     min-width: 120px;
-    
+
     li {
       margin-bottom: 12px;
       transition: transform 0.3s;
-      
+
       a {
         color: vars.$text-color-dark;
         text-decoration: none;
         font-size: 15px;
         transition: color 0.3s;
         display: inline-block;
-        
+
         &:hover {
           color: white;
         }
       }
-      
+
       &:hover {
         transform: translateX(5px);
       }
@@ -159,13 +176,13 @@ p {
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 16px;
-    
+
     .app-badge {
       img {
         height: 40px;
         transition: transform 0.1s;
       }
-      
+
       &:hover img {
         transform: translateY(-3px);
       }
@@ -182,22 +199,23 @@ p {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  
+
   .copyright {
     color: vars.$text-color-tertiary-dark;
     font-size: 14px;
     margin-bottom: 8px;
   }
-  
+
   .payment-methods {
     display: flex;
     gap: 10px;
     align-items: center;
-    
+
     .payment-icon {
       height: 24px;
     }
-    .payment-icon.Visa, .payment-icon.ApplePay{
+    .payment-icon.Visa,
+    .payment-icon.ApplePay {
       height: 35px;
     }
   }
@@ -208,46 +226,47 @@ p {
   nz-footer {
     padding: 40px 0 90px;
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 16px;
-    
+
     .copyright {
       margin-bottom: 16px;
       text-align: center;
     }
   }
-  
+
   .brand-section {
     text-align: center;
-    
+
     .tagline {
       margin-left: auto;
       margin-right: auto;
     }
-    
+
     .social-links {
       justify-content: center;
     }
-    
+
     h3:after {
       left: 50%;
       transform: translateX(-50%);
     }
   }
-  
-  .links-section, .download-section {
+
+  .links-section,
+  .download-section {
     text-align: center;
-    
+
     h3:after {
       left: 50%;
       transform: translateX(-50%);
     }
   }
-  
+
   .app-badges {
     justify-content: center;
   }
@@ -267,7 +286,7 @@ p {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    
+
     .copyright {
       margin-bottom: 16px;
     }

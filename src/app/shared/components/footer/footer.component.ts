@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { Subscription } from 'rxjs';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { ScrollService } from '@core/services/scroll.service';
 
 @Component({
   selector: 'app-footer',
@@ -14,44 +13,37 @@ import { Subscription } from 'rxjs';
     CommonModule,
     RouterModule,
     TranslateModule,
-    NzLayoutModule,
-    NzIconModule,
     NzGridModule,
+    NzLayoutModule,
   ],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
 })
-export class FooterComponent implements OnInit, OnDestroy {
-  private translateService = inject(TranslateService);
+export class FooterComponent implements OnInit {
+  currentYear: number = new Date().getFullYear();
 
-  // Current year for the footer
-  currentYear = new Date().getFullYear();
+  // Header height offset for scrolling (adjust based on your header height)
+  private readonly HEADER_OFFSET = 80;
 
-  // Current language
-  currentLang = 'en';
+  constructor(
+    private translateService: TranslateService,
+    private scrollService: ScrollService
+  ) {}
 
-  private langSubscription!: Subscription;
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    // Set initial language
-    this.currentLang = this.translateService.currentLang;
-
-    // Subscribe to language changes
-    this.langSubscription = this.translateService.onLangChange.subscribe(
-      (event) => {
-        this.currentLang = event.lang;
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    if (this.langSubscription) {
-      this.langSubscription.unsubscribe();
-    }
-  }
-
-  // Helper method to check if current language is Arabic
+  /**
+   * Check if the current language is Arabic
+   */
   isArabic(): boolean {
-    return this.currentLang === 'ar';
+    return this.translateService.currentLang === 'ar';
+  }
+
+  /**
+   * Navigate to a section on the home page
+   * @param section The section ID to scroll to
+   */
+  scrollToSection(section: string): void {
+    this.scrollService.navigateAndScroll('/', section, this.HEADER_OFFSET);
   }
 }

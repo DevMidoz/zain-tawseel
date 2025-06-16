@@ -27,6 +27,7 @@ import { CountrySelectorComponent } from '../country-selector/country-selector.c
 // Services
 import { ThemeService } from '@core/services/theme.service';
 import { LanguageService } from '@core/services/language.service';
+import { ScrollService } from '@core/services/scroll.service';
 import {
   CategoriesService,
   Category,
@@ -87,6 +88,10 @@ export class HeaderComponent implements OnInit {
   private categoriesService = inject(CategoriesService);
   private subcategoriesService = inject(SubcategoriesService);
   private router = inject(Router);
+  private scrollService = inject(ScrollService);
+
+  // Header height offset for scrolling
+  private readonly HEADER_OFFSET = 80;
 
   // Use signals for reactive state
   theme = this.themeService.theme;
@@ -106,6 +111,18 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+  }
+
+  /**
+   * Scroll to the offers section on the home page
+   */
+  scrollToOffers(event: Event): void {
+    event.preventDefault();
+    this.scrollService.navigateAndScroll(
+      '/',
+      'offers-section',
+      this.HEADER_OFFSET
+    );
   }
 
   // Load categories

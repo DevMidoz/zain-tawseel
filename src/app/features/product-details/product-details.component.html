@@ -39,7 +39,7 @@
             <!-- Classifications Section -->
             @if (showClassificationSection) {
             <div class="selection-section">
-                <h2 class="section-title">Classifications</h2>
+                <h2 class="section-title">Account country</h2>
 
                 <!-- Loading State for Subcategories -->
                 @if (loadingSubcategories) {
@@ -115,9 +115,9 @@
                         <div class="product-card-amount" [class.selected]="selectedAmount === product.price"
                             (click)="selectAmount(product)">
                             <div class="card-image-container">
-                                @if (product.discount > 0) {
+                                <!-- @if (product.discount > 0) {
                                 <div class="discount-badge">-{{ product.discount }}%</div>
-                                }
+                                } -->
                                 @if (product.isBestSeller) {
                                 <div class="bestseller-badge">{{ 'HOME.BEST_SELLER' | translate }}</div>
                                 }
