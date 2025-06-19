@@ -77,13 +77,13 @@
           <!-- User Controls: Login/Register and Cart -->
           <div class="user-controls">
             <!-- Login/Register Button -->
-            <button nz-button nzType="default" class="auth-btn">
+            <button nz-button nzType="default" class="auth-btn" (click)="openAppStore()">
               <span nz-icon nzType="user"></span>
               <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
             </button>
 
             <!-- Cart Dropdown -->
-            <button nz-button nz-dropdown nzSize="large" [nzDropdownMenu]="cartMenu" nzTrigger="click" class="cart-btn">
+            <button nz-button nzSize="large" class="cart-btn" (click)="openAppStore()">
               <span nz-icon nzType="shopping-cart"></span>
               <span class="cart-count">{{ cartItems.length }}</span>
             </button>
@@ -272,11 +272,11 @@
     <i class="fa-solid fa-bars"></i>
     <span>{{ 'NAV.MENU' | translate }}</span>
   </div>
-  <div class="nav-item" [routerLink]="['/auth/login']">
+  <div class="nav-item" (click)="openAppStore()">
     <i class="fa-solid fa-user"></i>
     <span>{{ 'APP.LOGIN_REGISTER' | translate }}</span>
   </div>
-  <div class="nav-item" (click)="toggleCart()">
+  <div class="nav-item" (click)="openAppStore()">
     <i class="fa-solid fa-cart-shopping"></i>
     <span>{{ 'APP.CART' | translate }}</span>
     <span class="cart-badge" *ngIf="cartItems.length > 0">{{ cartItems.length }}</span>

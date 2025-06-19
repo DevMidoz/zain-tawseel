@@ -12,6 +12,8 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
   styleUrls: ['./how-to-use.component.scss'],
 })
 export class HowToUseComponent {
+  @Input() selectedCategory: string = 'PSN'; // Default category
+
   constructor(private modalRef: NzModalRef) {}
 
   closeModal(): void {

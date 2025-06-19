@@ -18,7 +18,11 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import {
+  NzModalModule,
+  NzModalService,
+  ModalOptions,
+} from 'ng-zorro-antd/modal';
 import { HttpClientModule } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -885,7 +889,14 @@ export class ProductDetailsComponent
   }
 
   openHowToUseDialog(): void {
-    this.modalService.create({
+    // Get the category name from selected subcategory or product
+    let categoryName = 'PSN'; // Default category name
+
+    if (this.categoryName && this.categoryName.length > 0) {
+      categoryName = this.categoryName;
+    }
+
+    const modal = this.modalService.create<HowToUseComponent>({
       nzContent: HowToUseComponent,
       nzFooter: null,
       nzWidth: 600,
@@ -895,5 +906,11 @@ export class ProductDetailsComponent
       nzZIndex: 1052,
       nzWrapClassName: 'how-to-use-modal-wrap',
     });
+
+    // Set the component input value after creating the modal
+    const instance = modal.getContentComponent();
+    if (instance) {
+      instance.selectedCategory = categoryName;
+    }
   }
 }

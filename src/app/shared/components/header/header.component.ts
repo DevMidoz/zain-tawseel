@@ -320,4 +320,14 @@ export class HeaderComponent implements OnInit {
   trackBySearchResult(index: number, result: SearchResult): string {
     return `${result.type}-${result.id}`;
   }
+
+  /**
+   * Open the App Store URL
+   */
+  openAppStore(): void {
+    window.open(
+      'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
+      '_blank'
+    );
+  }
 }

@@ -42,7 +42,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
   :host-context(body.dark-theme) & {
-    background-color: rgba(vars.$component-background-light, 0.5);
+    background-color: rgba(vars.$component-background-light, 0.7);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
@@ -75,7 +75,7 @@
   height: 100%;
 
   :host-context(body.dark-theme) & {
-    background-color: rgba(vars.$component-background-light, 0.5);
+    background-color: rgba(vars.$component-background-light, 0.7);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
