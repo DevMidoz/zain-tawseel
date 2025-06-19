@@ -129,11 +129,11 @@ body.dark-theme {
   }
 
   .ant-card.card-alt {
-    background-color: rgba(vars.$component-background-light, 0.6);
+    background-color: rgba(vars.$component-background-light, 0.8);
     color: vars.$text-color-dark;
 
     .ant-card-meta-title {
-      color: vars.$primary-color-light;
+      color: vars.$primary-color;
     }
 
     .price {
