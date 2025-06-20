@@ -24,8 +24,21 @@ export class ScrollService {
             this.pendingScrollElement = null;
             this.pendingScrollOffset = 0;
           }, 300); // Delay to ensure the DOM is ready
+        } else {
+          // If no specific element to scroll to, scroll to top
+          this.scrollToTop();
         }
       });
+  }
+
+  /**
+   * Scrolls to the top of the page
+   */
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   /**

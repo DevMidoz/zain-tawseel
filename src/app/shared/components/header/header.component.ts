@@ -1,4 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  Renderer2,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -82,16 +89,22 @@ interface SearchResult {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private themeService = inject(ThemeService);
   private languageService = inject(LanguageService);
   private categoriesService = inject(CategoriesService);
   private subcategoriesService = inject(SubcategoriesService);
   private router = inject(Router);
   private scrollService = inject(ScrollService);
+  private renderer = inject(Renderer2);
 
   // Header height offset for scrolling
   private readonly HEADER_OFFSET = 80;
+
+  // Scroll position tracking
+  isScrolled = false;
+  private lastScrollPosition = 0;
+  private readonly SCROLL_THRESHOLD = 100; // Pixels to scroll before changing header
 
   // Use signals for reactive state
   theme = this.themeService.theme;
@@ -109,8 +122,41 @@ export class HeaderComponent implements OnInit {
   searchResults: SearchResult[] = [];
   isSearching = false;
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    // Only update if we've scrolled past the threshold
+    if (currentScrollPosition > this.SCROLL_THRESHOLD) {
+      if (!this.isScrolled) {
+        this.isScrolled = true;
+        this.renderer.addClass(document.body, 'header-scrolled');
+        console.log('Header is now scrolled, position:', currentScrollPosition);
+      }
+    } else {
+      if (this.isScrolled) {
+        this.isScrolled = false;
+        this.renderer.removeClass(document.body, 'header-scrolled');
+        console.log('Header is now at top, position:', currentScrollPosition);
+      }
+    }
+
+    this.lastScrollPosition = currentScrollPosition;
+  }
+
   ngOnInit(): void {
     this.loadCategories();
+    // Initialize scroll position
+    this.onWindowScroll();
+  }
+
+  ngOnDestroy(): void {
+    // Remove the class when component is destroyed
+    this.renderer.removeClass(document.body, 'header-scrolled');
   }
 
   /**

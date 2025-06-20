@@ -1,8 +1,8 @@
-<nz-header>
+<nz-header [class.scrolled]="isScrolled">
   <!-- Desktop Header -->
   <div class="desktop-header">
     <!-- First Row: Theme switcher, language selector, country selector -->
-    <div class="header-top-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="header-top-row" [class.rtl-mode]="language() === 'ar'" [class.hidden]="isScrolled">
       <div class="container">
         <div class="top-row-content">
           <!-- Left side (or right in Arabic) -->
@@ -24,13 +24,13 @@
     </div>
 
     <!-- Second Row: Logo, search bar, login/register, cart -->
-    <div class="header-middle-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="header-middle-row" [class.rtl-mode]="language() === 'ar'" [class.compact]="isScrolled">
       <div class="container">
         <div class="middle-row-content">
           <!-- Logo -->
           <div class="logo-container">
             <a [routerLink]="['/']">
-              <div class="logo">
+              <div class="logo" [class.compact]="isScrolled">
                 <img src="assets/svgs/ZT Updated 4K-01.svg" alt="Zain Tawseel Logo">
                 <span>Zain Tawseel</span>
               </div>
@@ -132,7 +132,7 @@
     </div>
 
     <!-- Third Row: Navigation menu -->
-    <div class="header-bottom-row" [class.rtl-mode]="language() === 'ar'">
+    <div class="header-bottom-row" [class.rtl-mode]="language() === 'ar'" [class.hidden]="isScrolled">
       <div class="container">
         <ul nz-menu nzMode="horizontal" class="main-menu">
           <!-- Categories Menu -->

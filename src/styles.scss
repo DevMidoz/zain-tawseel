@@ -22,6 +22,17 @@ body {
   padding: 0;
   height: 100%;
   font-family: "Hanken Grotesk", Arial, Helvetica, sans-serif;
+  padding-top: 95px; /* Adjust this value based on your header height */
+  transition: padding-top 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding-top: 40px;
+  }
+}
+
+// When header is scrolled and compact, reduce the body padding
+body.header-scrolled {
+  padding-top: 70px; /* Smaller value for compact header */
 }
 
 // Arabic font family
@@ -252,3 +263,5 @@ body.dark-theme {
     color: vars.$text-color-light;
   }
 }
+
+// Note: theme.less is imported in angular.json, not needed here
