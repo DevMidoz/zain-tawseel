@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CountryFacade } from '../store/country/country.facade';
-import { switchMap, take } from 'rxjs/operators';
+import { filter, switchMap, take } from 'rxjs/operators';
 
 /**
  * Interceptor that automatically adds the country code to API requests
@@ -23,22 +23,22 @@ export const countryCodeInterceptor: HttpInterceptorFn = (
     return next(request);
   }
 
-  // Get the current country code from the store
+  // Skip interceptor for country API requests to avoid circular dependency
+  if (isCountryApiRequest(request.url)) {
+    return next(request);
+  }
+
+  // Wait for a valid country code before proceeding with the request
   return countryFacade.selectedCountryCode$.pipe(
+    filter((countryCode) => countryCode !== null && countryCode !== ''),
     take(1),
     switchMap((countryCode) => {
-      // If we have a country code, add it to the request headers
-      if (countryCode) {
-        const modifiedRequest = request.clone({
-          setHeaders: {
-            'country-code': countryCode,
-          },
-        });
-        return next(modifiedRequest);
-      }
-
-      // Otherwise, proceed with the original request
-      return next(request);
+      const modifiedRequest = request.clone({
+        setHeaders: {
+          'country-code': countryCode as string,
+        },
+      });
+      return next(modifiedRequest);
     })
   );
 };
@@ -53,4 +53,13 @@ function isApiRequest(url: string): boolean {
   const apiPatterns = ['https://dev.zaintawseel.com/api', '/api/v1/'];
 
   return apiPatterns.some((pattern) => url.includes(pattern));
+}
+
+/**
+ * Check if the request is for the countries API endpoint
+ * @param url Request URL
+ * @returns true if it's a countries API request
+ */
+function isCountryApiRequest(url: string): boolean {
+  return url.includes('/gc-countries');
 }

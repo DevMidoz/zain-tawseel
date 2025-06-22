@@ -6,6 +6,7 @@ import { LanguageService } from '@core/services/language.service';
 import { CountryFacade } from '@core/store/country/country.facade';
 import { initCountryState } from '@core/store/country/country.actions';
 import { Country } from '@core/services/country.service';
+import { take, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -54,29 +55,50 @@ export class AppComponent implements OnInit {
       this.themeService.setTheme('light');
     }
 
-    // Initialize country state from localStorage
+    // Initialize country state - first load from localStorage, then fetch countries
     console.log('AppComponent: Initializing country state');
-    this.countryFacade.loadCountries();
+    this.initializeCountry();
+  }
+
+  /**
+   * Initialize country selection with proper sequence to avoid race conditions
+   */
+  private initializeCountry(): void {
+    // First initialize from localStorage
     this.countryFacade.initializeState();
 
-    // Set a default country if none is selected
-    setTimeout(() => {
-      this.countryFacade.selectedCountry$.subscribe((country) => {
-        if (!country) {
-          console.log(
-            'AppComponent: No country selected, setting default country (Kuwait)'
-          );
-          // Set default country (Kuwait)
-          const defaultCountry: Country = {
-            country_code: 'KWT',
-            name_en: 'Kuwait',
-            name_ar: 'الكويت',
-            flag_picture: '',
-          };
-          this.countryFacade.setSelectedCountry(defaultCountry);
-        }
-      });
-    }, 500);
+    // Then load countries list
+    this.countryFacade.loadCountries();
+
+    // Check if we have a country selected after loading from localStorage
+    this.countryFacade.selectedCountry$.pipe(take(1)).subscribe((country) => {
+      if (!country) {
+        // No country in localStorage, set default country
+        console.log(
+          'AppComponent: No country in localStorage, setting default country (Kuwait)'
+        );
+        this.setDefaultCountry();
+      } else {
+        console.log(
+          'AppComponent: Country loaded from localStorage:',
+          country.country_code
+        );
+      }
+    });
+  }
+
+  /**
+   * Set Kuwait as the default country
+   */
+  private setDefaultCountry(): void {
+    const defaultCountry: Country = {
+      country_code: 'KWT',
+      name_en: 'Kuwait',
+      name_ar: 'الكويت',
+      flag_picture:
+        'https://dev.zaintawseel.com/api/file-path/images/uploads/2024/12/10/1733822427_7184737.jpg',
+    };
+    this.countryFacade.setSelectedCountry(defaultCountry);
   }
 
   // No need for setHtmlLangAttribute as LanguageService already handles this
