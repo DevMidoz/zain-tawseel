@@ -1,0 +1,105 @@
+import { Injectable } from '@angular/core';
+import { fromEvent, Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+
+// Define interface for the Screen Orientation API
+interface ScreenOrientationAPI extends ScreenOrientation {
+  lock(orientation: OrientationLockType): Promise<void>;
+}
+
+// Define the orientation lock types
+type OrientationLockType =
+  | 'any'
+  | 'natural'
+  | 'landscape'
+  | 'portrait'
+  | 'portrait-primary'
+  | 'portrait-secondary'
+  | 'landscape-primary'
+  | 'landscape-secondary';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class OrientationService {
+  /**
+   * Observable that emits the current orientation
+   */
+  public orientation$: Observable<OrientationType> = fromEvent(
+    window,
+    'orientationchange'
+  ).pipe(
+    startWith(null),
+    map(() => this.getOrientation())
+  );
+
+  constructor() {
+    this.lockToPortrait();
+
+    // Listen for orientation changes and reapply lock
+    window.addEventListener('orientationchange', () => {
+      this.lockToPortrait();
+    });
+  }
+
+  /**
+   * Get the current orientation
+   */
+  private getOrientation(): OrientationType {
+    // Check if screen orientation API is available
+    if (window.screen && window.screen.orientation) {
+      return window.screen.orientation.type;
+    } else if (window.orientation !== undefined) {
+      // Fallback for older browsers
+      const angle = window.orientation as number;
+      if (angle === 0 || angle === 180) {
+        return 'portrait-primary';
+      } else {
+        return 'landscape-primary';
+      }
+    } else {
+      // Default to portrait if we can't detect
+      return 'portrait-primary';
+    }
+  }
+
+  /**
+   * Get the current orientation as an observable
+   */
+  getCurrentOrientation(): Observable<OrientationType> {
+    return new Observable((observer) => {
+      observer.next(this.getOrientation());
+      observer.complete();
+    });
+  }
+
+  /**
+   * Lock the screen orientation to portrait
+   */
+  lockToPortrait(): void {
+    try {
+      // Try to use the Screen Orientation API if available
+      if (window.screen && window.screen.orientation) {
+        // Cast to our extended interface that includes the lock method
+        const screenOrientation = window.screen
+          .orientation as unknown as ScreenOrientationAPI;
+
+        if (screenOrientation.lock) {
+          screenOrientation.lock('portrait').catch((error: Error) => {
+            console.warn('Failed to lock orientation: ', error);
+          });
+        }
+      }
+    } catch (error: unknown) {
+      console.warn('Screen Orientation API not supported', error);
+    }
+  }
+}
+
+// Type definition for orientation
+type OrientationType =
+  | 'portrait-primary'
+  | 'portrait-secondary'
+  | 'landscape-primary'
+  | 'landscape-secondary'
+  | string; // Fallback for other values

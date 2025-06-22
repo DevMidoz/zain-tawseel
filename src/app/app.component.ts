@@ -7,6 +7,7 @@ import { CountryFacade } from '@core/store/country/country.facade';
 import { initCountryState } from '@core/store/country/country.actions';
 import { Country } from '@core/services/country.service';
 import { take, filter } from 'rxjs/operators';
+import { OrientationService } from '@core/services/orientation.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
   private languageService = inject(LanguageService);
   private countryFacade = inject(CountryFacade);
+  private orientationService = inject(OrientationService);
 
   title = 'Zain Tawseel';
 
@@ -55,9 +57,23 @@ export class AppComponent implements OnInit {
       this.themeService.setTheme('light');
     }
 
+    // Lock screen orientation to portrait on mobile devices
+    if (this.isMobileDevice()) {
+      this.orientationService.lockToPortrait();
+    }
+
     // Initialize country state - first load from localStorage, then fetch countries
     console.log('AppComponent: Initializing country state');
     this.initializeCountry();
+  }
+
+  /**
+   * Check if the current device is a mobile device
+   */
+  private isMobileDevice(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
   }
 
   /**
