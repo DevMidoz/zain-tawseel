@@ -6,4 +6,5 @@ export const environment = {
   apiUrl: 'https://dev.zaintawseel.com/api/v1',
   defaultLanguage: 'en',
   supportedLanguages: ['en', 'ar'],
+  allowedHosts: ['localhost'],
 };
