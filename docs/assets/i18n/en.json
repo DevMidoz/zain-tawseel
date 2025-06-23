@@ -34,6 +34,9 @@
       "NGZORRO": "Beautiful UI components from NgZorro Ant Design",
       "LOCALIZATION": "Full support for Arabic and English languages",
       "THEMES": "Customizable light and dark themes"
+    },
+    "ORIENTATION": {
+      "ROTATE_MESSAGE": "Please rotate your device to portrait mode"
     }
   },
   "NAV": {
