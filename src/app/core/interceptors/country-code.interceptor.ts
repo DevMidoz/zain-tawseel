@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { CountryFacade } from '../store/country/country.facade';
 import { filter, switchMap, take } from 'rxjs/operators';
+import { environment } from '@env/environment';
 
 /**
  * Interceptor that automatically adds the country code to API requests
@@ -49,8 +50,11 @@ export const countryCodeInterceptor: HttpInterceptorFn = (
  * @returns true if it's an API request
  */
 function isApiRequest(url: string): boolean {
+  // Extract base URL from environment
+  const baseApiUrl = environment.apiUrl.replace(/\/api\/v1$/, '/api');
+
   // Add all your API URL patterns here
-  const apiPatterns = ['https://dev.zaintawseel.com/api', '/api/v1/'];
+  const apiPatterns = [baseApiUrl, '/api/v1/'];
 
   return apiPatterns.some((pattern) => url.includes(pattern));
 }

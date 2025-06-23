@@ -24,6 +24,11 @@ export class CrispService {
       return;
     }
 
+    // Disable shim warnings
+    if (window.$crisp) {
+      window.$crisp.push(['safe', true]);
+    }
+
     // Set initial language
     this.setLanguage(this.translateService.currentLang || 'en');
 

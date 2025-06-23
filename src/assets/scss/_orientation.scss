@@ -1,0 +1,50 @@
+// Styles for forcing portrait orientation
+// Default state - hidden
+.landscape-block {
+  display: none;
+
+  // Only show this on actual mobile devices in landscape mode
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .dark-theme & {
+    background-color: #141414;
+    color: #fff;
+  }
+
+  .rotate-icon {
+    font-size: 3rem;
+    animation: rotate 1.5s infinite ease-in-out;
+    margin-bottom: 1rem;
+  }
+
+  .rotate-message {
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 0 2rem;
+  }
+}
+
+// Rotation animation
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  75% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

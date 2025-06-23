@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, shareReplay } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '@env/environment';
 
 export interface Country {
   flag_picture: string;
@@ -19,7 +20,7 @@ export interface CountryResponse {
   providedIn: 'root',
 })
 export class CountryService {
-  private apiUrl = 'https://dev.zaintawseel.com/api/v1/gc-countries';
+  private apiUrl = `${environment.apiUrl}/gc-countries`;
 
   // Cache for API responses
   private countriesCache: { [key: string]: Observable<Country[]> } = {};

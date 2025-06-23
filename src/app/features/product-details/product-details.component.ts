@@ -45,6 +45,9 @@ import {
 import { CategoriesService } from '../home/components/categories-carousel/services/categories.service';
 import { HowToUseComponent } from './components/how-to-use/how-to-use.component';
 
+// Update the placeholder image to use the SVG logo
+const PLACEHOLDER_IMAGE = 'assets/svgs/ZT Updated 4K-02.svg';
+
 @Component({
   selector: 'app-product-details',
   standalone: true,
@@ -64,6 +67,7 @@ import { HowToUseComponent } from './components/how-to-use/how-to-use.component'
     HttpClientModule,
     BreadcrumbComponent,
   ],
+  providers: [HowToUseComponent],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
@@ -93,7 +97,7 @@ export class ProductDetailsComponent
 
   // Product data
   product: ProductDetails | null = null;
-  productImage: string = 'assets/images/placeholder-card.png';
+  productImage: string = PLACEHOLDER_IMAGE;
 
   // Loading state
   isLoading: boolean = true;
@@ -149,12 +153,13 @@ export class ProductDetailsComponent
     });
     observer.observe(document.body, { attributes: true });
 
-    // Subscribe to the selected country from the store
+    // Get country code for API requests
     this.countryFacade.selectedCountryCode$
       .pipe(takeUntil(this.destroy$))
       .subscribe((countryCode) => {
         if (countryCode) {
           this.selectedCountry = countryCode;
+          this.setSelectedCurrency(countryCode);
 
           // Reload data if we already have a product ID or category ID
           if (this.productId) {
@@ -206,10 +211,24 @@ export class ProductDetailsComponent
    * Buy Now functionality - redirect to App Store
    */
   buyNow(): void {
-    window.open(
-      'https://apps.apple.com/us/app/zain-tawseel/id1042615361',
-      '_blank'
-    );
+    if (!this.selectedProduct) return;
+
+    // Implementation will depend on your checkout flow
+    console.log('Buy Now clicked for product:', this.selectedProduct);
+  }
+
+  /**
+   * Open the how-to-use dialog
+   */
+  openHowToUseDialog(): void {
+    this.modalService.create({
+      nzContent: HowToUseComponent,
+      nzClassName: 'how-to-use-modal-wrap',
+      nzMaskClosable: true,
+      nzClosable: true,
+      nzFooter: null,
+      nzBodyStyle: { padding: '24px' },
+    });
   }
 
   /**
@@ -242,7 +261,7 @@ export class ProductDetailsComponent
     this.showClassificationSection = true; // Default to showing classification section for categories
 
     // Set default product image
-    this.productImage = 'assets/images/placeholder-card.png';
+    this.productImage = PLACEHOLDER_IMAGE;
 
     // Fetch category info first to check if it has children
     const categoryId = parseInt(this.categoryId);
@@ -318,7 +337,7 @@ export class ProductDetailsComponent
     this.showClassificationSection = true; // Default to showing classification section for subcategories
 
     // Set default product image
-    this.productImage = 'assets/images/placeholder-card.png';
+    this.productImage = PLACEHOLDER_IMAGE;
 
     const categoryId = parseInt(this.categoryId);
     const subcategoryId = parseInt(this.subcategoryId);
@@ -766,7 +785,7 @@ export class ProductDetailsComponent
       ) {
         this.productImage = selectedSubcategory.image;
       } else {
-        this.productImage = 'assets/images/placeholder-card.png';
+        this.productImage = PLACEHOLDER_IMAGE;
       }
 
       // Load products for the selected subcategory
@@ -888,29 +907,17 @@ export class ProductDetailsComponent
       });
   }
 
-  openHowToUseDialog(): void {
-    // Get the category name from selected subcategory or product
-    let categoryName = 'PSN'; // Default category name
-
-    if (this.categoryName && this.categoryName.length > 0) {
-      categoryName = this.categoryName;
-    }
-
-    const modal = this.modalService.create<HowToUseComponent>({
-      nzContent: HowToUseComponent,
-      nzFooter: null,
-      nzWidth: 600,
-      nzTitle: undefined,
-      nzMaskClosable: true,
-      nzCentered: true,
-      nzZIndex: 1052,
-      nzWrapClassName: 'how-to-use-modal-wrap',
-    });
-
-    // Set the component input value after creating the modal
-    const instance = modal.getContentComponent();
-    if (instance) {
-      instance.selectedCategory = categoryName;
+  // Set the selected currency based on country code
+  setSelectedCurrency(countryCode: string): void {
+    switch (countryCode) {
+      case 'KWT':
+        this.selectedCurrency = 'KWD';
+        break;
+      case 'SAU':
+        this.selectedCurrency = 'SAR';
+        break;
+      default:
+        this.selectedCurrency = 'USD';
     }
   }
 }

@@ -23,8 +23,8 @@
         <!-- Product Image Card -->
         <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6" [nzLg]="3">
             <div class="product-card">
-                <img [src]="productImage" [alt]="product?.title || 'Product'" class="product-image"
-                    onerror="this.src='assets/images/placeholder-card.png'">
+                <img *ngIf="productImage" [src]="productImage" alt="Product Image" class="product-image"
+                    onerror="this.src='assets/svgs/ZT Updated 4K-02.svg'">
             </div>
 
             <button nz-button class="how-to-use-btn" nzBlock (click)="openHowToUseDialog()">How to use</button>
@@ -39,7 +39,7 @@
             <!-- Classifications Section -->
             @if (showClassificationSection) {
             <div class="selection-section">
-                <h2 class="section-title">Account country</h2>
+                <h2 class="section-title">Account country</h2>
 
                 <!-- Loading State for Subcategories -->
                 @if (loadingSubcategories) {
@@ -65,7 +65,7 @@
                             @if (subcategory.image) {
                             <div class="icon-container">
                                 <img [src]="subcategory.image" [alt]="getSubcategoryName(subcategory)"
-                                    onerror="this.src='assets/images/placeholder-card.png'">
+                                    onerror="this.src='assets/svgs/ZT Updated 4K-02.svg'">
                             </div>
                             }
                             <div class="classification-text">
@@ -121,8 +121,8 @@
                                 @if (product.isBestSeller) {
                                 <div class="bestseller-badge">{{ 'HOME.BEST_SELLER' | translate }}</div>
                                 }
-                                <img [src]="product.image" [alt]="product.title" loading="lazy"
-                                    onerror="this.src='assets/images/placeholder-card.png'">
+                                <img loading="lazy" [src]="product.image" [alt]="product.title"
+                                    onerror="this.src='assets/svgs/ZT Updated 4K-02.svg'">
                             </div>
                             <div class="card-content">
                                 <div class="card-title">{{ product.title }}</div>

@@ -1,0 +1,33 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+/* Ensure landscape message is displayed properly */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .landscape-block {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  app-layout {
+    display: none !important;
+  }
+}
+
+/* Dark theme support for landscape message */
+:host-context(.dark-theme) {
+  .landscape-block {
+    background-color: #141414;
+    color: #fff;
+  }
+}

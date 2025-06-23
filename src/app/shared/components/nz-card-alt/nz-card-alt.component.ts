@@ -44,7 +44,8 @@ export class NzCardAltComponent {
   private readonly riyalIconPath: string = 'assets/svgs/Riyal.svg';
 
   // Default placeholder image to use when the original image fails to load
-  private readonly placeholderImage: string = 'assets/images/offer1.png';
+  private readonly placeholderImage: string =
+    'assets/svgs/ZT Updated 4K-02.svg';
 
   /**
    * Check if we should show the currency as an SVG icon (only for Saudi Arabia)

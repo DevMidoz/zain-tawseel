@@ -24,7 +24,7 @@ export interface SubcategoriesResponse {
 })
 export class SubcategoriesService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://dev.zaintawseel.com/api/v1/gc-subcategories';
+  private apiUrl = `${environment.apiUrl}/gc-subcategories`;
 
   /**
    * Get subcategories for a specific parent category

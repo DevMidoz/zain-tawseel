@@ -8,15 +8,7 @@ interface ScreenOrientationAPI extends ScreenOrientation {
 }
 
 // Define the orientation lock types
-type OrientationLockType =
-  | 'any'
-  | 'natural'
-  | 'landscape'
-  | 'portrait'
-  | 'portrait-primary'
-  | 'portrait-secondary'
-  | 'landscape-primary'
-  | 'landscape-secondary';
+type OrientationLockType = 'portrait' | 'landscape';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +69,11 @@ export class OrientationService {
    * Lock the screen orientation to portrait
    */
   lockToPortrait(): void {
+    // Only attempt to lock on mobile devices
+    if (!this.isMobileDevice()) {
+      return;
+    }
+
     try {
       // Try to use the Screen Orientation API if available
       if (window.screen && window.screen.orientation) {
@@ -93,6 +90,17 @@ export class OrientationService {
     } catch (error: unknown) {
       console.warn('Screen Orientation API not supported', error);
     }
+  }
+
+  /**
+   * Check if the current device is a mobile device
+   */
+  private isMobileDevice(): boolean {
+    return (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ) && window.innerWidth <= 825
+    );
   }
 }
 

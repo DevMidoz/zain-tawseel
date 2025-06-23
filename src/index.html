@@ -33,6 +33,9 @@
     window.$crisp = [];
     window.CRISP_WEBSITE_ID = "3f7f980c-dd6e-4d31-89ab-e8556b33c7ff";
 
+    // Disable shim warning
+    window.$crisp.push(["safe", true]);
+
     // Initialize Crisp
     (function () {
       var d = document;
@@ -42,31 +45,6 @@
       d.getElementsByTagName("head")[0].appendChild(s);
     })();
   </script>
-
-  <!-- Script to handle orientation -->
-  <script type="text/javascript">
-    // Function to handle orientation changes
-    function handleOrientationChange() {
-      if (window.innerWidth <= 768) { // Mobile device check
-        try {
-          // Try to use the Screen Orientation API if available
-          if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('portrait').catch(function (error) {
-              console.log('Screen orientation lock failed:', error);
-            });
-          }
-        } catch (e) {
-          console.log('Screen orientation API not supported');
-        }
-      }
-    }
-
-    // Run when the page loads
-    window.addEventListener('DOMContentLoaded', handleOrientationChange);
-    // Also run when orientation changes
-    window.addEventListener('orientationchange', handleOrientationChange);
-  </script>
-
 </head>
 
 <body>
