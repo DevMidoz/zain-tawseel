@@ -4,9 +4,10 @@ import {
   importProvidersFrom,
 } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
-
 import { routes } from './app.routes';
-import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import ar from '@angular/common/locales/ar';
@@ -15,12 +16,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {
   provideHttpClient,
   withInterceptorsFromDi,
-  HttpClientModule,
+  withFetch,
+  withJsonpSupport,
   withInterceptors,
+  HttpClient,
 } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/services/translation-loader.factory';
-import { HttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -40,10 +42,14 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withViewTransitions()),
-    provideNzI18n(en_US),
+    provideClientHydration(),
+    provideAnimations(),
+    { provide: NZ_I18N, useValue: en_US },
     provideHttpClient(
       withInterceptors([countryCodeInterceptor]),
-      withInterceptorsFromDi()
+      withInterceptorsFromDi(),
+      withFetch(),
+      withJsonpSupport()
     ),
     provideAnimationsAsync(),
     // NgRx setup

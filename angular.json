@@ -76,15 +76,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "allowedHosts": ["localhost", "front.zaintawseel.com"]
-          },
+          "options": {},
           "configurations": {
             "production": {
-              "buildTarget": "zain-tawseel:build:production"
+              "buildTarget": "zain-tawseel:build:production",
+              "port": 80,
+              "allowedHosts": ["front.zaintawseel.com"]
             },
             "development": {
-              "buildTarget": "zain-tawseel:build:development"
+              "buildTarget": "zain-tawseel:build:development",
+              "port": 4200,
+              "allowedHosts": ["localhost"]
             }
           },
           "defaultConfiguration": "development"
