@@ -17,7 +17,7 @@
 @use "swiper/css/pagination" as swiper-pagination;
 
 // Force portrait orientation on mobile devices
-@media screen and (max-width: 825px) {
+@media screen and (max-width: 926px) {
   /* This will be applied when device is in landscape mode */
   @media (orientation: landscape) {
     html,

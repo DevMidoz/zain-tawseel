@@ -83,8 +83,21 @@ export class AppComponent implements OnInit {
    * Check and handle device orientation
    */
   private checkOrientation(): void {
+    const isDeviceMobile = this.isMobileDevice();
+    const isDeviceLandscape = this.isLandscape();
+
+    // Log for debugging
+    console.log('Orientation check:', {
+      isMobile: isDeviceMobile,
+      isLandscape: isDeviceLandscape,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+      orientation: window.orientation,
+      userAgent: navigator.userAgent,
+    });
+
     // Only show rotation message for mobile devices in landscape orientation
-    if (this.isMobileDevice() && this.isLandscape()) {
+    if (isDeviceMobile && isDeviceLandscape) {
       document.body.classList.add('force-portrait');
       const landscapeMessage = document.getElementById('landscape-message');
       if (landscapeMessage) {
@@ -103,6 +116,20 @@ export class AppComponent implements OnInit {
    * Check if the device is in landscape orientation
    */
   private isLandscape(): boolean {
+    // iOS devices often need multiple detection methods
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      // For iOS, use multiple detection methods including aspect ratio
+      const aspectRatio = window.innerWidth / window.innerHeight;
+
+      return (
+        window.innerHeight < window.innerWidth ||
+        aspectRatio > 1 || // If width > height, it's landscape
+        (window.orientation !== undefined &&
+          (window.orientation === 90 || window.orientation === -90))
+      );
+    }
+
+    // Standard detection for other devices
     return window.innerHeight < window.innerWidth;
   }
 
@@ -110,10 +137,15 @@ export class AppComponent implements OnInit {
    * Check if the current device is a mobile device
    */
   private isMobileDevice(): boolean {
+    // Special handling for iPhone 14 Pro Max and other newer iOS devices
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
     return (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      (/Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
-      ) && window.innerWidth <= 825
+      ) ||
+        isIOS) &&
+      (window.innerWidth <= 926 || window.innerHeight <= 926) // iPhone 14 Pro Max width is 430 x 932
     );
   }
 
